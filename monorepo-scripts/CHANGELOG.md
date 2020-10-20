@@ -5,7 +5,21 @@ Edit the package's CHANGELOG.json file only.
 
 CHANGELOG
 
-## v1.0.5 - _August 13, 2018_
+## v2.0.0 - _October 20, 2020_
+
+    * Upgrade the bignumber.js to v8.0.2 (#1517)
+    * Add `Set` to `EXTERNAL_TYPE_MAP`. (#2350)
+    * Add `TFillData` to `EXTERNAL_TYPE_MAP` (#2613)
+
+## v1.0.6 - _Invalid date_
+
+    * Render date formats in UTC to prevent conflicts when publishing in different timezones. (#1143)
+    * Add AssetBuyerError to the IGNORED_EXCESSIVE_TYPES array (#1139)
+    * Add ForwarderError to the IGNORED_EXCESSIVE_TYPES array (#1147)
+    * Fix a bug when hardcoded CHANGELOG paths cause fetching release notes to fail (#1311)
+    * Added DutchAuctionWrapper to the CLASSES_WITH_HIDDEN_CONSTRUCTORS array (#1465)
+
+## v1.0.5 - _August 14, 2018_
 
     * Dependencies updated
 
