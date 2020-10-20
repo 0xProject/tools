@@ -1,6 +1,6 @@
 {
     "name": "ethereum-types",
-    "version": "3.3.0",
+    "version": "3.3.1",
     "engines": {
         "node": ">=6.12"
     },
@@ -33,7 +33,7 @@
     "homepage": "https://github.com/0xProject/tools/ethereum-types",
     "devDependencies": {
         "@0x/ts-doc-gen": "^0.0.22",
-        "@0x/tslint-config": "^4.1.1",
+        "@0x/tslint-config": "^4.1.2",
         "make-promises-safe": "^1.1.0",
         "shx": "^0.2.2",
         "tslint": "5.11.0",
