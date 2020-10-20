@@ -15,6 +15,10 @@ const args = yargs
             'Space-separated list of packages to generated release notes for. If not supplied, it does all `Lerna updated` packages.',
         type: 'string',
     })
+    .option('repo', {
+        required: true,
+        type: 'string',
+    })
     .example('$0 --isDryRun true --packages "0x.js @0x/web3-wrapper"', 'Full usage example').argv;
 
 (async () => {
@@ -28,7 +32,7 @@ const args = yargs
         packages = await utils.getPackagesByNameAsync(packageNames);
     }
 
-    await publishReleaseNotesAsync(packages, isDryRun);
+    await publishReleaseNotesAsync(packages, args.repo, isDryRun);
     process.exit(0);
 })().catch(err => {
     utils.log(err);

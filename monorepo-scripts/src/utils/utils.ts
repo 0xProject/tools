@@ -14,6 +14,9 @@ export const utils = {
     log(...args: any[]): void {
         console.log(...args); // tslint:disable-line:no-console
     },
+    warn(...args: any[]): void {
+        console.warn(...args); // tslint:disable-line:no-console
+    },
     readJSONFile<T>(path: string): T {
         const JSONString = fs.readFileSync(path, 'utf8');
         const parsed: T = JSON.parse(JSONString);

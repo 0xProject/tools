@@ -206,11 +206,11 @@ export class DocGenerateUtils {
         // HACK: For some reason calling `typedoc` command directly from here, even with `cwd` set to the
         // packages root dir, does not work. It only works when called via a `package.json` script located
         // in the package's root.
-        await execAsync(`JSON_FILE_PATH=${jsonFilePath} PROJECT_FILES="${projectFiles}" yarn docs:json`, {
+        await execAsync(`JSON_FILE_PATH=${jsonFilePath} PROJECT_FILES="${projectFiles}" npm run docs:json`, {
             cwd,
         });
         utils.log(`GENERATE_DOCS: Generating Typedoc Markdown for ${this._packageName}...`);
-        await execAsync(`MD_FILE_DIR=${mdFileDir} PROJECT_FILES="${projectFiles}" yarn docs:md`, {
+        await execAsync(`MD_FILE_DIR=${mdFileDir} PROJECT_FILES="${projectFiles}" npm run docs:md`, {
             cwd,
         });
 

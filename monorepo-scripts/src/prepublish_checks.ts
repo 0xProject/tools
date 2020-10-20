@@ -6,8 +6,6 @@ import semverSort = require('semver-sort');
 import { constants } from './constants';
 import { Package } from './types';
 import { changelogUtils } from './utils/changelog_utils';
-import { configs } from './utils/configs';
-import { dockerHubUtils } from './utils/docker_hub_utils';
 import { npmUtils } from './utils/npm_utils';
 import { utils } from './utils/utils';
 
@@ -19,12 +17,6 @@ async function prepublishChecksAsync(): Promise<void> {
     await checkChangelogFormatAsync(updatedPublicPackages);
     await checkGitTagsForNextVersionAndDeleteIfExistAsync(updatedPublicPackages);
     await checkPublishRequiredSetupAsync(updatedPublicPackages);
-    await checkDockerHubSetupAsync();
-}
-
-async function checkDockerHubSetupAsync(): Promise<void> {
-    await dockerHubUtils.checkUserAddedToOrganizationOrThrowAsync(configs.DOCKER_HUB_ORG);
-    await dockerHubUtils.loginUserToDockerCommandlineOrThrowAsync();
 }
 
 async function checkGitTagsForNextVersionAndDeleteIfExistAsync(updatedPublicPackages: Package[]): Promise<void> {
@@ -133,17 +125,15 @@ async function checkChangelogFormatAsync(updatedPublicPackages: Package[]): Prom
 async function checkPublishRequiredSetupAsync(updatedPublicPackages: Package[]): Promise<void> {
     // check to see if logged into npm before publishing
     try {
-        // HACK: for some reason on some setups, the `npm whoami` will not recognize a logged-in user
-        // unless run with `sudo` (i.e Fabio's NVM setup) but is fine for others (Jacob's NVM setup).
         utils.log('Checking that the user is logged in on npm...');
-        await execAsync(`sudo npm whoami`);
+        await execAsync(`npm whoami`, { env: process.env });
     } catch (err) {
         throw new Error('You must be logged into npm in the commandline to publish. Run `npm login` and try again.');
     }
 
     // check to see that all required write permissions exist
     utils.log(`Checking that all necessary npm write permissions exist...`);
-    const pkgPermissionsResult = await execAsync(`sudo npm access ls-packages`);
+    const pkgPermissionsResult = await execAsync(`npm access ls-packages`);
     const pkgPermissions = JSON.parse(pkgPermissionsResult.stdout);
     const writePermissions = Object.keys(pkgPermissions).filter(pkgName => {
         return pkgPermissions[pkgName] === 'read-write';
@@ -174,19 +164,7 @@ async function checkPublishRequiredSetupAsync(updatedPublicPackages: Package[]):
 
     // Check to see if discord URL is set up
     if (constants.discordAlertWebhookUrl === undefined) {
-        throw new Error(
-            'You must have a discord webhook URL set to an envVar named `DISCORD_GITHUB_RELEASE_WEBHOOK_URL`. Add it then try again.',
-        );
-    }
-
-    // Check Yarn version is 1.X
-    utils.log('Checking the yarn version...');
-    const result = await execAsync(`yarn --version`);
-    const version = result.stdout;
-    const versionSegments = version.split('.');
-    const majorVersion = _.parseInt(versionSegments[0]);
-    if (majorVersion < 1) {
-        throw new Error('Your yarn version must be v1.x or higher. Upgrade yarn and try again.');
+        utils.warn('No discord webhook URL set at envVar named `DISCORD_GITHUB_RELEASE_WEBHOOK_URL`.');
     }
 
     // Check that `aws` commandline tool is installed

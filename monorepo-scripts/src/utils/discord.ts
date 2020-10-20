@@ -11,8 +11,9 @@ export const alertDiscordAsync = async (releaseNotes: string): Promise<void> => 
     }
 
     utils.log('Alerting discord...');
+    const releasesUrl = `https://github.com/0xProject/${process.env.REPO_NAME}/releases`;
     const payload = {
-        content: `New monorepo package released!  View at ${constants.releasesUrl} \n\n ${releaseNotes}`,
+        content: `New monorepo package released!  View at ${releasesUrl} \n\n ${releaseNotes}`,
     };
     await fetchAsync(webhookUrl, {
         method: 'POST',

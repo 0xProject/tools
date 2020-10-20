@@ -14,6 +14,7 @@ const publishReleaseAsync = promisify(publishRelease);
 // tslint:disable-next-line:completed-docs
 export async function publishReleaseNotesAsync(
     packagesToPublish: Package[],
+    repo: string,
     isDryRun: boolean,
 ): Promise<string | undefined> {
     // Git push a tag representing this publish (publish-{commit-hash}) (truncate hash)
@@ -54,10 +55,10 @@ export async function publishReleaseNotesAsync(
     const finalAssets = adjustAssetPaths(assets);
 
     const publishReleaseConfigs = {
+        repo,
         token: constants.githubPersonalAccessToken,
         owner: '0xProject',
         tag: tagName,
-        repo: '0x-monorepo',
         name: releaseName,
         notes: aggregateNotes,
         draft: false,

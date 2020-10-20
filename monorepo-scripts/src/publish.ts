@@ -1,17 +1,17 @@
 #!/usr/bin/env node
 
 import { PackageJSON } from '@0x/types';
-import { logUtils } from '@0x/utils';
 import { spawn } from 'child_process';
 import * as promisify from 'es6-promisify';
 import * as fs from 'fs';
 import * as _ from 'lodash';
 import * as moment from 'moment';
 import * as path from 'path';
-import { exec as execAsync, spawn as spawnAsync } from 'promisify-child-process';
+import { exec as execAsync } from 'promisify-child-process';
 import * as prompt from 'prompt';
 import semver = require('semver');
 import semverSort = require('semver-sort');
+import * as yargs from 'yargs';
 
 import { constants } from './constants';
 import { Package, PackageToNextVersion, VersionChangelog } from './types';
@@ -23,6 +23,14 @@ import { publishReleaseNotesAsync } from './utils/github_release_utils';
 import { utils } from './utils/utils';
 
 const TODAYS_TIMESTAMP = moment().unix();
+
+const ARGV = yargs
+    .option('repo', {
+        required: true,
+        type: 'string',
+    })
+    .option('upload-docs', { default: false })
+    .option('auto-commit', { default: true }).argv;
 
 async function confirmAsync(message: string): Promise<void> {
     prompt.start();
@@ -72,7 +80,9 @@ async function confirmAsync(message: string): Promise<void> {
     if (!configs.IS_LOCAL_PUBLISH) {
         // Generate markdown docs for packages
         await generateDocMDAsync(packagesWithDocs);
-        await pushChangelogsAndMDDocsToGithubAsync();
+        if (ARGV.autoCommit) {
+            await pushChangelogsAndMDDocsToGithubAsync();
+        }
     }
 
     // Call LernaPublish
@@ -84,15 +94,12 @@ async function confirmAsync(message: string): Promise<void> {
     await lernaPublishAsync(packageToNextVersion);
 
     const isDryRun = configs.IS_LOCAL_PUBLISH;
-    if (!isDryRun) {
-        // Publish docker images to DockerHub
-        await publishImagesToDockerHubAsync(allPackagesToPublish);
-
+    if (!isDryRun && ARGV.uploadDocs) {
         // Upload markdown docs to S3 bucket
-        await execAsync(`yarn upload_md_docs`, { cwd: constants.monorepoRootPath });
+        await execAsync(`npm run upload_md_docs`, { cwd: constants.monorepoRootPath });
     }
 
-    const releaseNotes = await publishReleaseNotesAsync(updatedPublicPackages, isDryRun);
+    const releaseNotes = await publishReleaseNotesAsync(updatedPublicPackages, ARGV.repo, isDryRun);
     utils.log('Published release notes');
 
     if (!isDryRun && releaseNotes) {
@@ -107,39 +114,6 @@ async function confirmAsync(message: string): Promise<void> {
     utils.log(err);
     process.exit(1);
 });
-
-async function publishImagesToDockerHubAsync(allUpdatedPackages: Package[]): Promise<void> {
-    for (const pkg of allUpdatedPackages) {
-        const packageJSON = pkg.packageJson;
-        const shouldPublishDockerImage =
-            packageJSON.config !== undefined &&
-            packageJSON.config.postpublish !== undefined &&
-            packageJSON.config.postpublish.dockerHubRepo !== undefined;
-        if (!shouldPublishDockerImage) {
-            continue;
-        }
-        const dockerHubRepo = _.get(packageJSON, 'config.postpublish.dockerHubRepo');
-        const pkgName = pkg.packageJson.name;
-        const packageDirName = _.startsWith(pkgName, '@0x/') ? pkgName.split('/')[1] : pkgName;
-
-        // Build the Docker image
-        logUtils.log(`Building '${dockerHubRepo}' docker image...`);
-        await spawnAsync('docker', ['build', '-t', dockerHubRepo, '.'], {
-            cwd: `${constants.monorepoRootPath}/packages/${packageDirName}`,
-        });
-
-        // Tag the docker image with the latest version
-        const version = pkg.packageJson.version;
-        logUtils.log(`Tagging '${dockerHubRepo}' docker image with version ${version}...`);
-        await execAsync(`docker tag ${dockerHubRepo} ${configs.DOCKER_HUB_ORG}/${dockerHubRepo}:${version}`);
-        await execAsync(`docker tag ${dockerHubRepo} ${configs.DOCKER_HUB_ORG}/${dockerHubRepo}:latest`);
-
-        // Publish to DockerHub
-        logUtils.log(`Pushing '${dockerHubRepo}' docker image to DockerHub...`);
-        await execAsync(`docker push ${configs.DOCKER_HUB_ORG}/${dockerHubRepo}:${version}`);
-        await execAsync(`docker push ${configs.DOCKER_HUB_ORG}/${dockerHubRepo}:latest`);
-    }
-}
 
 function getPackagesWithDocs(allUpdatedPackages: Package[]): Package[] {
     const rootPackageJsonPath = `${constants.monorepoRootPath}/package.json`;
