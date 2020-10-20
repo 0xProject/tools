@@ -178,7 +178,7 @@ workflows:
             - test-doc-generation:
                   requires:
                       - build
-            - submit-coverage:
-                  requires:
-                      - test-rest
-                      - static-tests
+            # - submit-coverage:
+            #       requires:
+            #           - test-rest
+            #           - static-tests
