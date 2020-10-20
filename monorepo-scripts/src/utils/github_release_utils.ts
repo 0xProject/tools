@@ -22,7 +22,7 @@ export async function publishReleaseNotesAsync(
     const latestGitCommit = result.stdout;
     const prefixLength = 7;
     const shortenedGitCommit = latestGitCommit.slice(0, prefixLength);
-    const tagName = `monorepo@${shortenedGitCommit}`;
+    const tagName = `${repo}@${shortenedGitCommit}`;
 
     if (!isDryRun) {
         try {
@@ -40,7 +40,7 @@ export async function publishReleaseNotesAsync(
         }
     }
 
-    const releaseName = `0x monorepo - ${shortenedGitCommit}`;
+    const releaseName = `${repo} - ${shortenedGitCommit}`;
 
     let assets: string[] = [];
     let aggregateNotes = '';
