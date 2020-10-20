@@ -18,7 +18,8 @@
                 "note": "Added abi encoder support for uint80 lol",
                 "pr": 2728
             }
-        ]
+        ],
+        "timestamp": 1603231564
     },
     {
         "timestamp": 1594788383,

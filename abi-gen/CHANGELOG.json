@@ -6,7 +6,8 @@
                 "note": "Allow overriding of `data` with contract calls and transactions",
                 "pr": 2626
             }
-        ]
+        ],
+        "timestamp": 1603231564
     },
     {
         "timestamp": 1594788383,

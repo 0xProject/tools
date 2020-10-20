@@ -6,7 +6,8 @@
                 "note": "Add `exchangeProxyMetaTransactionSchema`",
                 "pr": 2657
             }
-        ]
+        ],
+        "timestamp": 1603231564
     },
     {
         "version": "5.1.0",

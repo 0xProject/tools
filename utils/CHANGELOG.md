@@ -5,6 +5,13 @@ Edit the package's CHANGELOG.json file only.
 
 CHANGELOG
 
+## v5.6.0 - _October 20, 2020_
+
+    * Added support for nested rich revert decoding (#2668)
+    * Add EP flavor of `IllegalReentrancyError`. (#2657)
+    * Added LiquidityProviderFeature errors (#2691)
+    * Added abi encoder support for uint80 lol (#2728)
+
 ## v5.5.1 - _July 15, 2020_
 
     * Dependencies updated

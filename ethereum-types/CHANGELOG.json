@@ -6,7 +6,8 @@
                 "note": "Make `payable` field in `ConstructorAbi` optional",
                 "pr": 2648
             }
-        ]
+        ],
+        "timestamp": 1603231564
     },
     {
         "version": "3.2.0",

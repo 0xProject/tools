@@ -5,6 +5,10 @@ Edit the package's CHANGELOG.json file only.
 
 CHANGELOG
 
+## v4.2.0 - _October 20, 2020_
+
+    * Add solidity 0.7.x support (#2710)
+
 ## v4.1.1 - _July 15, 2020_
 
     * Dependencies updated

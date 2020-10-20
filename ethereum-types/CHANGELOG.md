@@ -5,6 +5,10 @@ Edit the package's CHANGELOG.json file only.
 
 CHANGELOG
 
+## v3.3.0 - _October 20, 2020_
+
+    * Make `payable` field in `ConstructorAbi` optional (#2648)
+
 ## v3.2.0 - _July 15, 2020_
 
     * Add geth eth_call types (#2620)
