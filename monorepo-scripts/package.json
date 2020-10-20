@@ -30,7 +30,7 @@
     "bugs": {
         "url": "https://github.com/0xProject/tools/issues"
     },
-    "homepage": "https://github.com/0xProject/tools/packages/monorepo-scripts/README.md",
+    "homepage": "https://github.com/0xProject/tools/monorepo-scripts",
     "devDependencies": {
         "@types/glob": "5.0.35",
         "@types/mkdirp": "^0.5.2",

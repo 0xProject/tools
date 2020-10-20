@@ -60,7 +60,7 @@
     "bugs": {
         "url": "https://github.com/0xProject/tools/issues"
     },
-    "homepage": "https://github.com/0xProject/tools/packages/abi-gen/README.md",
+    "homepage": "https://github.com/0xProject/tools/abi-gen",
     "dependencies": {
         "@0x/types": "^3.2.1",
         "@0x/typescript-typings": "^5.1.2",

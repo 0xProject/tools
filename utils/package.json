@@ -27,7 +27,7 @@
     "bugs": {
         "url": "https://github.com/0xProject/tools/issues"
     },
-    "homepage": "https://github.com/0xProject/tools/packages/utils/README.md",
+    "homepage": "https://github.com/0xProject/tools/utils",
     "devDependencies": {
         "@0x/tslint-config": "^4.1.1",
         "@types/detect-node": "2.0.0",

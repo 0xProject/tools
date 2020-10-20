@@ -30,7 +30,7 @@
     "bugs": {
         "url": "https://github.com/0xProject/tools/issues"
     },
-    "homepage": "https://github.com/0xProject/tools/packages/ethereum-types/README.md",
+    "homepage": "https://github.com/0xProject/tools/ethereum-types",
     "devDependencies": {
         "@0x/ts-doc-gen": "^0.0.22",
         "@0x/tslint-config": "^4.1.1",

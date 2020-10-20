@@ -28,7 +28,7 @@
     "bugs": {
         "url": "https://github.com/0xProject/tools/issues"
     },
-    "homepage": "https://github.com/0xProject/tools/packages/base-contract/README.md",
+    "homepage": "https://github.com/0xProject/tools/base-contract",
     "devDependencies": {
         "@0x/tslint-config": "^4.1.1",
         "@0x/types": "^3.2.1",

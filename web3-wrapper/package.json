@@ -37,7 +37,7 @@
     "bugs": {
         "url": "https://github.com/0xProject/tools/issues"
     },
-    "homepage": "https://github.com/0xProject/tools/packages/web3-wrapper/README.md",
+    "homepage": "https://github.com/0xProject/tools/web3-wrapper",
     "devDependencies": {
         "@0x/ts-doc-gen": "^0.0.22",
         "@0x/tslint-config": "^4.1.1",

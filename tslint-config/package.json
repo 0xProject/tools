@@ -32,7 +32,7 @@
     "bugs": {
         "url": "https://github.com/0xProject/tools/issues"
     },
-    "homepage": "https://github.com/0xProject/tools/packages/tslint-config/README.md",
+    "homepage": "https://github.com/0xProject/tools/tslint-config",
     "devDependencies": {
         "@types/lodash": "4.14.104",
         "make-promises-safe": "^1.1.0",
