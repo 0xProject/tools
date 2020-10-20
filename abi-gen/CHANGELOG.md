@@ -5,6 +5,10 @@ Edit the package's CHANGELOG.json file only.
 
 CHANGELOG
 
+## v5.4.1 - _October 20, 2020_
+
+    * Dependencies updated
+
 ## v5.4.0 - _October 20, 2020_
 
     * Allow overriding of `data` with contract calls and transactions (#2626)

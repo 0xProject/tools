@@ -5,6 +5,10 @@ Edit the package's CHANGELOG.json file only.
 
 CHANGELOG
 
+## v5.6.1 - _October 20, 2020_
+
+    * Dependencies updated
+
 ## v5.6.0 - _October 20, 2020_
 
     * Added support for nested rich revert decoding (#2668)

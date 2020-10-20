@@ -5,6 +5,10 @@ Edit the package's CHANGELOG.json file only.
 
 CHANGELOG
 
+## v5.2.1 - _October 20, 2020_
+
+    * Dependencies updated
+
 ## v5.2.0 - _October 20, 2020_
 
     * Add `exchangeProxyMetaTransactionSchema` (#2657)
