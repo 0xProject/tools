@@ -36,7 +36,7 @@
     "bugs": {
         "url": "https://github.com/0xProject/tools/issues"
     },
-    "homepage": "https://github.com/0xProject/tools/sol-tracing-utils",
+    "homepage": "https://github.com/0xProject/tools/tree/main/sol-tracing-utils",
     "dependencies": {
         "@0x/dev-utils": "^3.3.2",
         "@0x/sol-compiler": "^4.2.1",

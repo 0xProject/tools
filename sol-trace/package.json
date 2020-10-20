@@ -31,7 +31,7 @@
     "bugs": {
         "url": "https://github.com/0xProject/tools/issues"
     },
-    "homepage": "https://github.com/0xProject/tools/sol-trace",
+    "homepage": "https://github.com/0xProject/tools/tree/main/sol-trace",
     "dependencies": {
         "@0x/sol-tracing-utils": "^7.1.2",
         "@0x/subproviders": "^6.1.3",

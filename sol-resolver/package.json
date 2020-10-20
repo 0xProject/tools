@@ -22,7 +22,7 @@
     "bugs": {
         "url": "https://github.com/0xProject/tools/issues"
     },
-    "homepage": "https://github.com/0xProject/tools/resolver",
+    "homepage": "https://github.com/0xProject/tools/tree/main/resolver",
     "devDependencies": {
         "@0x/tslint-config": "^4.1.2",
         "make-promises-safe": "^1.1.0",

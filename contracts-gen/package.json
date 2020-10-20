@@ -25,7 +25,7 @@
     "bugs": {
         "url": "https://github.com/0xProject/tools/issues"
     },
-    "homepage": "https://github.com/0xProject/tools/contracts-gen",
+    "homepage": "https://github.com/0xProject/tools/tree/main/contracts-gen",
     "dependencies": {
         "@0x/sol-compiler": "^4.2.1",
         "@0x/sol-resolver": "^3.1.2",

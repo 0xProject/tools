@@ -44,7 +44,7 @@
     "bugs": {
         "url": "https://github.com/0xProject/tools/issues"
     },
-    "homepage": "https://github.com/0xProject/tools/sol-compiler",
+    "homepage": "https://github.com/0xProject/tools/tree/main/sol-compiler",
     "devDependencies": {
         "@0x/dev-utils": "^3.3.2",
         "@0x/ts-doc-gen": "^0.0.22",
