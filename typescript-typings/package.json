@@ -12,7 +12,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/0xProject/0x-monorepo.git"
+        "url": "git+https://github.com/0xProject/tools.git"
     },
     "author": "Fabio Berger",
     "contributors": [
@@ -20,9 +20,9 @@
     ],
     "license": "Apache-2.0",
     "bugs": {
-        "url": "https://github.com/0xProject/0x-monorepo/issues"
+        "url": "https://github.com/0xProject/tools/issues"
     },
-    "homepage": "https://github.com/0xProject/0x-monorepo/packages/typescript-typings#readme",
+    "homepage": "https://github.com/0xProject/tools/packages/typescript-typings#readme",
     "dependencies": {
         "@types/bn.js": "^4.11.0",
         "@types/node": "12.12.54",

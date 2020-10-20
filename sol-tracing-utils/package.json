@@ -30,13 +30,13 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/0xProject/0x-monorepo.git"
+        "url": "https://github.com/0xProject/tools.git"
     },
     "license": "Apache-2.0",
     "bugs": {
-        "url": "https://github.com/0xProject/0x-monorepo/issues"
+        "url": "https://github.com/0xProject/tools/issues"
     },
-    "homepage": "https://github.com/0xProject/0x-monorepo/packages/sol-tracing-utils/README.md",
+    "homepage": "https://github.com/0xProject/tools/packages/sol-tracing-utils/README.md",
     "dependencies": {
         "@0x/dev-utils": "^3.3.0",
         "@0x/sol-compiler": "^4.1.1",

@@ -20,7 +20,7 @@
     },
     "config": {
         "outputDir": "./docs",
-        "repoBlobRoot": "https://github.com/0xProject/0x-monorepo/blob",
+        "repoBlobRoot": "https://github.com/0xProject/tools/blob",
         "sources": "../contracts/exchange/contracts/src/Exchange.sol ../contracts/exchange-forwarder/contracts/src/Forwarder.sol ../../contracts/staking/contracts/src/Staking.sol ../contracts/coordinator/contracts/src/Coordinator.sol",
         "contracts": "Exchange Forwarder Staking Coordinator",
         "s3DocsPath": "@0x/contracts-docs/v3.0.0"
@@ -28,7 +28,7 @@
     "bin": {
         "sol-doc": "bin/sol-doc.js"
     },
-    "repository": "https://github.com/0xProject/0x-monorepo.git",
+    "repository": "https://github.com/0xProject/tools.git",
     "author": "F. Eugene Aumson",
     "license": "Apache-2.0",
     "dependencies": {

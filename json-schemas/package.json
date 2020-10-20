@@ -34,14 +34,14 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/0xProject/0x-monorepo.git"
+        "url": "https://github.com/0xProject/tools.git"
     },
     "author": "",
     "license": "Apache-2.0",
     "bugs": {
-        "url": "https://github.com/0xProject/0x-monorepo/issues"
+        "url": "https://github.com/0xProject/tools/issues"
     },
-    "homepage": "https://github.com/0xProject/0x-monorepo/packages/json-schemas/README.md",
+    "homepage": "https://github.com/0xProject/tools/packages/json-schemas/README.md",
     "dependencies": {
         "@0x/typescript-typings": "^5.1.1",
         "@types/node": "12.12.54",

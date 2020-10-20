@@ -15,7 +15,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "git://github.com/0xProject/0x-monorepo.git"
+        "url": "git://github.com/0xProject/tools.git"
     },
     "keywords": [
         "tslint",
@@ -30,9 +30,9 @@
     },
     "license": "Apache-2.0",
     "bugs": {
-        "url": "https://github.com/0xProject/0x-monorepo/issues"
+        "url": "https://github.com/0xProject/tools/issues"
     },
-    "homepage": "https://github.com/0xProject/0x-monorepo/packages/tslint-config/README.md",
+    "homepage": "https://github.com/0xProject/tools/packages/tslint-config/README.md",
     "devDependencies": {
         "@types/lodash": "4.14.104",
         "make-promises-safe": "^1.1.0",

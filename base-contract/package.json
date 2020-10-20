@@ -23,12 +23,12 @@
     "license": "Apache-2.0",
     "repository": {
         "type": "git",
-        "url": "https://github.com/0xProject/0x-monorepo.git"
+        "url": "https://github.com/0xProject/tools.git"
     },
     "bugs": {
-        "url": "https://github.com/0xProject/0x-monorepo/issues"
+        "url": "https://github.com/0xProject/tools/issues"
     },
-    "homepage": "https://github.com/0xProject/0x-monorepo/packages/base-contract/README.md",
+    "homepage": "https://github.com/0xProject/tools/packages/base-contract/README.md",
     "devDependencies": {
         "@0x/tslint-config": "^4.1.0",
         "@0x/types": "^3.2.0",

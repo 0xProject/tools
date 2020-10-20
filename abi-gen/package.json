@@ -15,7 +15,7 @@
         "build:ci": "yarn build",
         "test": "run-p run_mocha && yarn test_cli",
         "test:circleci": "yarn test:coverage && yarn test_cli",
-        "run_mocha": "(uname -s | grep -q Darwin && echo 'HACK! skipping mocha run due to https://github.com/0xProject/0x-monorepo/issues/2000') || mocha --require source-map-support/register --require make-promises-safe lib/test/*_test.js --timeout 100000 --bail --exit",
+        "run_mocha": "(uname -s | grep -q Darwin && echo 'HACK! skipping mocha run due to https://github.com/0xProject/tools/issues/2000') || mocha --require source-map-support/register --require make-promises-safe lib/test/*_test.js --timeout 100000 --bail --exit",
         "test:coverage": "nyc npm run test --all && yarn coverage:report:lcov",
         "coverage:report:lcov": "nyc report --reporter=text-lcov > coverage/lcov.info",
         "test_cli": "run-p test_cli:test_typescript diff_contract_wrappers test_cli:lint",
@@ -54,13 +54,13 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/0xProject/0x-monorepo.git"
+        "url": "https://github.com/0xProject/tools.git"
     },
     "license": "Apache-2.0",
     "bugs": {
-        "url": "https://github.com/0xProject/0x-monorepo/issues"
+        "url": "https://github.com/0xProject/tools/issues"
     },
-    "homepage": "https://github.com/0xProject/0x-monorepo/packages/abi-gen/README.md",
+    "homepage": "https://github.com/0xProject/tools/packages/abi-gen/README.md",
     "dependencies": {
         "@0x/types": "^3.2.0",
         "@0x/typescript-typings": "^5.1.1",

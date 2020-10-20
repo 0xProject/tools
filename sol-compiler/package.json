@@ -37,14 +37,14 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/0xProject/0x-monorepo.git"
+        "url": "https://github.com/0xProject/tools.git"
     },
     "author": "Amir Bandeali",
     "license": "Apache-2.0",
     "bugs": {
-        "url": "https://github.com/0xProject/0x-monorepo/issues"
+        "url": "https://github.com/0xProject/tools/issues"
     },
-    "homepage": "https://github.com/0xProject/0x-monorepo/packages/sol-compiler/README.md",
+    "homepage": "https://github.com/0xProject/tools/packages/sol-compiler/README.md",
     "devDependencies": {
         "@0x/dev-utils": "^3.3.0",
         "@0x/ts-doc-gen": "^0.0.22",
