@@ -4,7 +4,7 @@ jobs:
     build:
         resource_class: medium+
         docker:
-            - image: nikolaik/python-nodejs:python3.7-nodejs8
+            - image: nikolaik/python-nodejs:python3.7-nodejs10
         working_directory: ~/repo
         steps:
             - checkout
@@ -27,7 +27,7 @@ jobs:
     test-publish:
         resource_class: medium+
         docker:
-            - image: nikolaik/python-nodejs:python3.7-nodejs8
+            - image: nikolaik/python-nodejs:python3.7-nodejs10
             - image: 0xorg/verdaccio
         working_directory: ~/repo
         steps:
@@ -41,7 +41,7 @@ jobs:
                   path: ~/.npm/_logs
     test-doc-generation:
         docker:
-            - image: nikolaik/python-nodejs:python3.7-nodejs8
+            - image: nikolaik/python-nodejs:python3.7-nodejs10
         working_directory: ~/repo
         steps:
             - restore_cache:
@@ -52,7 +52,7 @@ jobs:
                   no_output_timeout: 1200
     test-rest:
         docker:
-            - image: nikolaik/python-nodejs:python3.7-nodejs8
+            - image: nikolaik/python-nodejs:python3.7-nodejs10
         working_directory: ~/repo
         steps:
             - restore_cache:
@@ -113,7 +113,7 @@ jobs:
         resource_class: large
         working_directory: ~/repo
         docker:
-            - image: nikolaik/python-nodejs:python3.7-nodejs8
+            - image: nikolaik/python-nodejs:python3.7-nodejs10
         steps:
             - restore_cache:
                   keys:
@@ -124,7 +124,7 @@ jobs:
             - run: yarn diff_md_docs:ci
     submit-coverage:
         docker:
-            - image: nikolaik/python-nodejs:python3.7-nodejs8
+            - image: nikolaik/python-nodejs:python3.7-nodejs10
         working_directory: ~/repo
         steps:
             - restore_cache:
