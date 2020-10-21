@@ -31,6 +31,13 @@ export const utils = {
         );
         return topsortedPackages;
     },
+    loadPackageInfo(pathToPackageJson: string): Package {
+        const packageJson = utils.readJSONFile<PackageJSON>(`${pathToPackageJson}/package.json`);
+        return {
+            location: pathToPackageJson,
+            packageJson,
+        };
+    },
     getPackages(rootDir: string): Package[] {
         const rootPackageJson = utils.readJSONFile<PackageJSON>(`${rootDir}/package.json`);
         if (rootPackageJson.workspaces === undefined) {
@@ -48,12 +55,7 @@ export const utils = {
                 }
                 const pathToPackageJson = `${rootDir}/${workspacePath}${subpackageName}`;
                 try {
-                    const packageJson = utils.readJSONFile<PackageJSON>(`${pathToPackageJson}/package.json`);
-                    const pkg = {
-                        location: pathToPackageJson,
-                        packageJson,
-                    };
-                    packages.push(pkg);
+                    packages.push(utils.loadPackageInfo(pathToPackageJson));
                 } catch (err) {
                     // Couldn't find a 'package.json' for package. Skipping.
                 }
