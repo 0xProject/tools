@@ -703,10 +703,10 @@
     npmlog "^4.1.2"
     write-file-atomic "^2.3.0"
 
-"@0x/ts-doc-gen@^0.0.26":
-  version "0.0.26"
-  resolved "https://registry.yarnpkg.com/@0x/ts-doc-gen/-/ts-doc-gen-0.0.26.tgz#1447988533f12104d228e8100c77ddb817804a9c"
-  integrity sha512-NrA2jWPZGlEf28A6qabABSi6yhoAKg0KUONjjITl74vLNli4IXPDQXQ7Dzuxb/LFx0YtiinZzgj+w8LnUo8NVA==
+"@0x/ts-doc-gen@^0.0.27":
+  version "0.0.27"
+  resolved "https://registry.yarnpkg.com/@0x/ts-doc-gen/-/ts-doc-gen-0.0.27.tgz#598bcbe65c355fceb12781614da29310a527c645"
+  integrity sha512-JpOilt23jH5LTy0x0YNIsYjLvTzXMtAHTCaEAijv/QTbjjeMTwlt/Qi2paBdUMDVrTDYcdzc+vb2nbc45neQVw==
   dependencies:
     "@0x/typescript-typings" "^5.0.1"
     "@0x/utils" "^5.1.1"
@@ -714,7 +714,7 @@
     promisify-child-process "^3.1.1"
     rimraf "^2.6.3"
     typedoc "^0.16.11"
-    typedoc-plugin-markdown "~2.2.17"
+    typedoc-plugin-markdown "~2.1.0"
     yargs "^10.0.3"
 
 "@0xproject/npm-cli-login@^0.0.11":
@@ -6829,7 +6829,7 @@ growl@1.10.5:
   resolved "https://registry.yarnpkg.com/growl/-/growl-1.10.5.tgz#f2735dc2283674fa67478b10181059355c369e5e"
   integrity sha512-qBr4OuELkhPenW6goKVXiv47US3clb3/IbuWF9KNKEijAy9oeHxU9IgzjvJhHkUzhaj7rOUD7+YGWqUjLp5oSA==
 
-handlebars@^4.0.1, handlebars@^4.0.3, handlebars@^4.1.2, handlebars@^4.7.0, handlebars@^4.7.2, handlebars@^4.7.3, handlebars@^4.7.6:
+handlebars@^4.0.1, handlebars@^4.0.3, handlebars@^4.1.2, handlebars@^4.7.0, handlebars@^4.7.2, handlebars@^4.7.6:
   version "4.7.6"
   resolved "https://registry.yarnpkg.com/handlebars/-/handlebars-4.7.6.tgz#d4c05c1baf90e9945f77aa68a7a219aa4a7df74e"
   integrity sha512-1f2BACcBfiwAfStCKZNrUCgqNZkGsAT7UM3kkYtXuLo0KnaVfjKOyf7PRzB6++aK9STyT1Pd2ZCPe3EGOXleXA==
@@ -12619,13 +12619,12 @@ typedoc-default-themes@^0.7.2:
     lunr "^2.3.8"
     underscore "^1.9.1"
 
-typedoc-plugin-markdown@~2.2.17:
-  version "2.2.17"
-  resolved "https://registry.yarnpkg.com/typedoc-plugin-markdown/-/typedoc-plugin-markdown-2.2.17.tgz#aaef7420e8268170e62c764f43740e10f842548d"
-  integrity sha512-eE6cTeqsZIbjur6RG91Lhx1vTwjR49OHwVPRlmsxY3dthS4FNRL8sHxT5Y9pkosBwv1kSmNGQEPHjMYy1Ag6DQ==
+typedoc-plugin-markdown@~2.1.0:
+  version "2.1.12"
+  resolved "https://registry.yarnpkg.com/typedoc-plugin-markdown/-/typedoc-plugin-markdown-2.1.12.tgz#e392b5fb5857b4a1873eaa2d12e4e634255d9d0f"
+  integrity sha512-McgbGv2o/MvDk2o/8rkreITrbCvH15btPHbx3yu2BWPuLRRLsy77lt9KBmiMxqNDZjZ0Tq/ngG8Agbm5jnljfQ==
   dependencies:
     fs-extra "^8.1.0"
-    handlebars "^4.7.3"
 
 typedoc@^0.15.0:
   version "0.15.8"
