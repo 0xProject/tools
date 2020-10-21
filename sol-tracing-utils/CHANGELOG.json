@@ -1,5 +1,13 @@
 [
     {
+        "version": "7.1.4",
+        "changes": [
+            {
+                "note": "Fix ts build error"
+            }
+        ]
+    },
+    {
         "timestamp": 1603248537,
         "version": "7.1.3",
         "changes": [
