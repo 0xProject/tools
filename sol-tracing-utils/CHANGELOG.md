@@ -5,6 +5,10 @@ Edit the package's CHANGELOG.json file only.
 
 CHANGELOG
 
+## v7.1.4 - _October 21, 2020_
+
+    * Fix ts build error
+
 ## v7.1.3 - _October 21, 2020_
 
     * Dependencies updated

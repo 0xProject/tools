@@ -5,7 +5,8 @@
             {
                 "note": "Add `touchAccount` to `ethereumjs-vm.StateManager`"
             }
-        ]
+        ],
+        "timestamp": 1603261008
     },
     {
         "timestamp": 1603248537,

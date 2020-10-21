@@ -5,6 +5,10 @@ Edit the package's CHANGELOG.json file only.
 
 CHANGELOG
 
+## v3.3.3 - _October 21, 2020_
+
+    * Add `touchAccount` to `ethereumjs-vm.StateManager`
+
 ## v3.3.2 - _October 21, 2020_
 
     * Dependencies updated
