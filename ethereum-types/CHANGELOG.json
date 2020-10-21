@@ -1,5 +1,13 @@
 [
     {
+        "version": "3.3.3",
+        "changes": [
+            {
+                "note": "Add `touchAccount` to `ethereumjs-vm.StateManager`"
+            }
+        ]
+    },
+    {
         "timestamp": 1603248537,
         "version": "3.3.2",
         "changes": [

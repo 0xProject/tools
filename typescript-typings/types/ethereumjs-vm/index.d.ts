@@ -124,6 +124,7 @@ declare module 'ethereumjs-vm' {
         accountIsEmpty(address: Buffer, cb: any): void;
         cleanupTouchedAccounts(cb: any): void;
         _clearOriginalStorageCache(): void;
+        touchAccount(address: Buffer): void;
     }
 
     class Cache {
