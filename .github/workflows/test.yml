@@ -1,0 +1,33 @@
+name: test
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'check successful status'
+        run: |
+            REF_STATUS=$(curl \
+                'https://api.github.com/repos/${{ github.repository }}/commits/${{ github.ref }}/status' \
+                | jq .state)
+            [[ "${REF_STATUS}" == '"pending"' ]]
+      - uses: actions/checkout@v2
+        with:
+          ref: 'development'
+          # persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 10
+      - name: 'configure git'
+        run: |
+            git config --global user.email "github-actions@github.com"
+            git config --global user.name "Github Actions"
+      - name: 'update repo'
+        run: |
+            echo `date` > poop
+            git add poop
+            git commit -m 'add poop'
+            git push -f origin ${{ github.ref }}:poop
