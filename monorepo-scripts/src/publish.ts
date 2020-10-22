@@ -29,6 +29,7 @@ const ARGV = yargs
         required: true,
         type: 'string',
     })
+    .option('yes', { default: false })
     .option('upload-docs', { default: false })
     .option('auto-commit', { default: true }).argv;
 
@@ -52,7 +53,7 @@ async function confirmAsync(message: string): Promise<void> {
     }
     const packagesWithDocs = getPackagesWithDocs(allPackagesToPublish);
 
-    if (!configs.IS_LOCAL_PUBLISH) {
+    if (!configs.IS_LOCAL_PUBLISH && !ARGV.yes) {
         await confirmAsync(
             'THIS IS NOT A TEST PUBLISH! You are about to publish one or more packages to npm. Are you sure you want to continue? (y/n)',
         );
@@ -224,6 +225,9 @@ async function lernaPublishAsync(packageToNextVersion: { [name: string]: string 
         if (configs.IS_LOCAL_PUBLISH) {
             lernaPublishArgs.push('--no-git-tag-version');
             lernaPublishArgs.push('--no-push');
+        }
+        if (process.env.NPM_TOKEN) {
+            lernaPublishArgs.push('--no-verify-access');
         }
         if (configs.DIST_TAG !== '') {
             lernaPublishArgs.push(`--dist-tag=${configs.DIST_TAG}`);

@@ -56,7 +56,7 @@ export async function publishReleaseNotesAsync(
 
     const publishReleaseConfigs = {
         repo,
-        token: constants.githubPersonalAccessToken,
+        token: constants.githubToken,
         owner: '0xProject',
         tag: tagName,
         name: releaseName,

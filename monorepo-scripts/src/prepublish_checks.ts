@@ -1,4 +1,5 @@
 import * as _ from 'lodash';
+import { env as ENV } from 'process';
 import { exec as execAsync } from 'promisify-child-process';
 import semver = require('semver');
 import semverSort = require('semver-sort');
@@ -123,42 +124,46 @@ async function checkChangelogFormatAsync(updatedPublicPackages: Package[]): Prom
 }
 
 async function checkPublishRequiredSetupAsync(updatedPublicPackages: Package[]): Promise<void> {
+    // If no automation token is present in the env vars,
     // check to see if logged into npm before publishing
-    try {
-        utils.log('Checking that the user is logged in on npm...');
-        await execAsync(`npm whoami`, { env: process.env });
-    } catch (err) {
-        throw new Error('You must be logged into npm in the commandline to publish. Run `npm login` and try again.');
-    }
-
-    // check to see that all required write permissions exist
-    utils.log(`Checking that all necessary npm write permissions exist...`);
-    const pkgPermissionsResult = await execAsync(`npm access ls-packages`);
-    const pkgPermissions = JSON.parse(pkgPermissionsResult.stdout);
-    const writePermissions = Object.keys(pkgPermissions).filter(pkgName => {
-        return pkgPermissions[pkgName] === 'read-write';
-    });
-    const unwriteablePkgs = [];
-    for (const pkg of updatedPublicPackages) {
-        const isPackagePublished =
-            (await npmUtils.getPackageRegistryJsonIfExistsAsync(pkg.packageJson.name)) !== undefined;
-        const isPackageWritePermissionsGranted = writePermissions.includes(pkg.packageJson.name);
-        if (isPackagePublished && !isPackageWritePermissionsGranted) {
-            unwriteablePkgs.push(pkg);
+    if (!ENV.NPM_TOKEN) {
+        try {
+            utils.log('Checking that the user is logged in on npm...');
+            await execAsync(`npm whoami`, { env: process.env });
+        } catch (err) {
+            throw new Error(
+                'You must be logged into npm in the commandline to publish. Run `npm login` and try again.',
+            );
         }
-    }
-    if (unwriteablePkgs.length > 0) {
-        utils.log(`Missing write permissions for the following packages:`);
-        unwriteablePkgs.forEach(pkg => {
-            utils.log(pkg.packageJson.name);
+        // check to see that all required write permissions exist
+        utils.log(`Checking that all necessary npm write permissions exist...`);
+        const pkgPermissionsResult = await execAsync(`npm access ls-packages`);
+        const pkgPermissions = JSON.parse(pkgPermissionsResult.stdout);
+        const writePermissions = Object.keys(pkgPermissions).filter(pkgName => {
+            return pkgPermissions[pkgName] === 'read-write';
         });
-        throw new Error(`Obtain necessary write permissions to continue.`);
+        const unwriteablePkgs = [];
+        for (const pkg of updatedPublicPackages) {
+            const isPackagePublished =
+                (await npmUtils.getPackageRegistryJsonIfExistsAsync(pkg.packageJson.name)) !== undefined;
+            const isPackageWritePermissionsGranted = writePermissions.includes(pkg.packageJson.name);
+            if (isPackagePublished && !isPackageWritePermissionsGranted) {
+                unwriteablePkgs.push(pkg);
+            }
+        }
+        if (unwriteablePkgs.length > 0) {
+            utils.log(`Missing write permissions for the following packages:`);
+            unwriteablePkgs.forEach(pkg => {
+                utils.log(pkg.packageJson.name);
+            });
+            throw new Error(`Obtain necessary write permissions to continue.`);
+        }
     }
 
     // Check to see if Git personal token setup
-    if (constants.githubPersonalAccessToken === undefined) {
+    if (constants.githubToken === undefined) {
         throw new Error(
-            'You must have a Github personal access token set to an envVar named `GITHUB_PERSONAL_ACCESS_TOKEN_0X_JS`. Add it then try again.',
+            'You must have a Github personal access token set to an envVar named `GITHUB_TOKEN`. Add it then try again.',
         );
     }
 
