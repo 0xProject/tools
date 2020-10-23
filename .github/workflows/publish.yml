@@ -34,18 +34,13 @@ jobs:
             - name: 'install dependencies'
               run: |
                   yarn -D
-            - name: 'build and publush'
+            - name: 'build and publish'
               run: |
                   echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' > .npmrc
                   npm run run:publish:gha
               env:
                   NPM_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
                   GITHUB_TOKEN: ${{ github.token }}
-              # - name: 'commit publish'
-              #   run: |
-              #       git add .
-              #       git commit -m 'post-publish: update packages and md docs'
-              #       git push
             - name: 'merge into main branch'
               run: |
                   git checkout main && \
