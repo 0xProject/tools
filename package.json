@@ -18,7 +18,7 @@
         "test:installation:local": "IS_LOCAL_PUBLISH=true node ./monorepo-scripts/lib/test_installation.js --skip-install @0x/abi-gen --skip-install @0x/monorepo-scripts",
         "test:publish:circleci": "yarn npm-cli-login -u test -p test -e test@example.com -r http://localhost:4873 && IS_LOCAL_PUBLISH=true run-s script:publish test:installation:local",
         "run:publish": "run-s install:all build:monorepo_scripts script:prepublish_checks rebuild script:publish",
-        "run:publish:gha": "run-s install:all build:monorepo_scripts rebuild script:publish:gha",
+        "run:publish:gha": "run-s build:monorepo_scripts rebuild script:publish:gha",
         "run:publish:local": "IS_LOCAL_PUBLISH=true yarn run:publish",
         "script:prepublish_checks": "REPO_NAME=0x-tools node ./monorepo-scripts/lib/prepublish_checks.js",
         "script:publish": "node ./monorepo-scripts/lib/publish.js --repo tools",
