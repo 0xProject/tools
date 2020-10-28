@@ -48,7 +48,7 @@
             "$ref": "/addressSchema"
         },
         "unfillable": {
-            "$ref": "boolean"
+            "type": "boolean"
         }
     }
 }
