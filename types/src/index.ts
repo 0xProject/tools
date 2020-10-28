@@ -482,6 +482,7 @@ export interface OrdersRequestOpts {
     takerAddress?: string;
     traderAddress?: string;
     feeRecipientAddress?: string;
+    unfillable?: boolean; // default false
 }
 
 export interface OrderbookRequest {

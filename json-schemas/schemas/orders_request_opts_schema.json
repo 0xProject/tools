@@ -46,6 +46,9 @@
         },
         "feeRecipientAddress": {
             "$ref": "/addressSchema"
+        },
+        "unfillable": {
+            "$ref": "boolean"
         }
     }
 }

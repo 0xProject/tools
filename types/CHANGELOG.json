@@ -1,5 +1,14 @@
 [
     {
+        "version": "3.3.0",
+        "changes": [
+            {
+                "note": "Add `unfillable` to OrdersRequestOpts type.",
+                "pr": 1
+            }
+        ]
+    },
+    {
         "timestamp": 1603261008,
         "version": "3.2.4",
         "changes": [
