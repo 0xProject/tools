@@ -14,7 +14,7 @@ import semverSort = require('semver-sort');
 import * as yargs from 'yargs';
 
 import { constants } from './constants';
-import { Package, PackageToNextVersion, VersionChangelog } from './types';
+import { DocGenConfigs, Package, PackageToNextVersion, VersionChangelog } from './types';
 import { changelogUtils } from './utils/changelog_utils';
 import { configs } from './utils/configs';
 import { alertDiscordAsync } from './utils/discord';
@@ -27,6 +27,10 @@ const TODAYS_TIMESTAMP = moment().unix();
 const ARGV = yargs
     .option('repo', {
         required: true,
+        type: 'string',
+    })
+    .option('doc-gen-config', {
+        describe: 'doc generation config file',
         type: 'string',
     })
     .option('yes', { default: false })
@@ -138,7 +142,10 @@ async function generateDocMDAsync(packagesWithDocs: Package[]): Promise<void> {
     for (const pkg of packagesWithDocs) {
         const nameWithoutPrefix = pkg.packageJson.name.replace('@0x/', '');
         const docGenerateAndUploadUtils = new DocGenerateUtils(nameWithoutPrefix);
-        await docGenerateAndUploadUtils.generateAndUploadDocsAsync();
+        const docGenConfig = ARGV.config
+            ? (JSON.parse(fs.readFileSync(ARGV.config, 'utf-8')) as DocGenConfigs)
+            : constants.defaultDocGenConfigs;
+        await docGenerateAndUploadUtils.generateAndUploadDocsAsync(docGenConfig);
     }
 }
 
