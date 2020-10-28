@@ -42,10 +42,10 @@ export interface Package {
 }
 
 export interface DocGenConfigs {
-    DOC_JSON_VERSION: string;
-    EXTERNAL_TYPE_MAP: { [externalType: string]: boolean };
-    IGNORED_EXCESSIVE_TYPES: string[];
-    TYPES_ONLY_LIBRARIES: string[];
+    docJsonVersion: string;
+    externalTypeMap: { [externalType: string]: boolean };
+    ignoredExcessiveTypes: string[];
+    typesOnlyLibraries: string[];
 }
 
 export interface ExportPathToExportedItems {

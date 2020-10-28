@@ -1,5 +1,14 @@
 [
     {
+        "version": "3.0.0",
+        "changes": [
+            {
+                "note": "Make everything configurable",
+                "pr": 2
+            }
+        ]
+    },
+    {
         "timestamp": 1603482649,
         "version": "2.0.4",
         "changes": [

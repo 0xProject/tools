@@ -6,8 +6,7 @@ import { exec as execAsync } from 'promisify-child-process';
 import * as ts from 'typescript';
 
 import { constants } from '../constants';
-import { docGenConfigs } from '../doc_gen_configs';
-import { ExportInfo, ExportNameToTypedocNames, ExportPathToExportedItems } from '../types';
+import { DocGenConfigs, ExportInfo, ExportNameToTypedocNames, ExportPathToExportedItems } from '../types';
 
 import { utils } from './utils';
 
@@ -184,7 +183,7 @@ export class DocGenerateUtils {
         const exportInfo = DocGenerateUtils._getExportPathToExportedItems(indexPath, this._omitExports);
         this._exportPathToExportedItems = exportInfo.exportPathToExportedItems;
     }
-    public async generateAndUploadDocsAsync(): Promise<void> {
+    public async generateAndUploadDocsAsync(docGenConfigs: DocGenConfigs): Promise<void> {
         // For each dep that is another one of our monorepo packages, we fetch it's index.ts
         // and see which specific files we must pass to TypeDoc, in order to generate a Doc JSON
         // the includes everything exported by the public interface.
@@ -224,11 +223,11 @@ export class DocGenerateUtils {
             markdownOutputString,
         );
 
-        if (!_.includes(docGenConfigs.TYPES_ONLY_LIBRARIES, this._packageName)) {
+        if (!_.includes(docGenConfigs.typesOnlyLibraries, this._packageName)) {
             const propertyName = ''; // Root has no property name
             const referenceNames = DocGenerateUtils._getAllReferenceNames(propertyName, modifiedTypedocOutput, []);
-            this._lookForUnusedExportedTypesThrowIfExists(referenceNames, modifiedTypedocOutput);
-            this._lookForMissingReferenceExportsThrowIfExists(referenceNames);
+            this._lookForUnusedExportedTypesThrowIfExists(referenceNames, modifiedTypedocOutput, docGenConfigs);
+            this._lookForMissingReferenceExportsThrowIfExists(referenceNames, docGenConfigs);
         }
 
         const exportPathToTypedocNames: ExportNameToTypedocNames = {};
@@ -250,13 +249,13 @@ export class DocGenerateUtils {
     /**
      *  Look for types that are used by the public interface but are missing from a package's index.ts
      */
-    private _lookForMissingReferenceExportsThrowIfExists(referenceNames: string[]): void {
+    private _lookForMissingReferenceExportsThrowIfExists(referenceNames: string[], docGenConfigs: DocGenConfigs): void {
         const allExportedItems = _.flatten(_.values(this._exportPathToExportedItems));
         const missingReferences: string[] = [];
         _.each(referenceNames, referenceName => {
             if (
                 !_.includes(allExportedItems, referenceName) &&
-                docGenConfigs.EXTERNAL_TYPE_MAP[referenceName] === undefined
+                docGenConfigs.externalTypeMap[referenceName] === undefined
             ) {
                 missingReferences.push(referenceName);
             }
@@ -265,25 +264,26 @@ export class DocGenerateUtils {
             throw new Error(
                 `${this._packageName} package needs to export: \n${missingReferences.join(
                     ',\n',
-                )} \nFrom it\'s index.ts. If any are from external dependencies, then add them to the EXTERNAL_TYPE_MAP.`,
+                )} \nFrom it\'s index.ts. If any are from external dependencies, then add them to the externalTypeMap.`,
             );
         }
     }
     /**
      * Look for exported types that are not used by the package's public interface
      */
-    private _lookForUnusedExportedTypesThrowIfExists(referenceNames: string[], typedocOutput: any): void {
+    private _lookForUnusedExportedTypesThrowIfExists(
+        referenceNames: string[],
+        typedocOutput: any,
+        docGenConfigs: DocGenConfigs,
+    ): void {
         const exportedTypes = DocGenerateUtils._getAllTypeNames(typedocOutput, []);
         const excessiveReferences = _.difference(exportedTypes, referenceNames);
-        const excessiveReferencesExceptIgnored = _.difference(
-            excessiveReferences,
-            docGenConfigs.IGNORED_EXCESSIVE_TYPES,
-        );
+        const excessiveReferencesExceptIgnored = _.difference(excessiveReferences, docGenConfigs.ignoredExcessiveTypes);
         if (!_.isEmpty(excessiveReferencesExceptIgnored)) {
             throw new Error(
                 `${this._packageName} package exports BUT does not need: \n${excessiveReferencesExceptIgnored.join(
                     '\n',
-                )} \nin it\'s index.ts. Remove them then try again OR if we still want them exported (e.g error enum types), then add them to the IGNORED_EXCESSIVE_TYPES array.`,
+                )} \nin it\'s index.ts. Remove them then try again OR if we still want them exported (e.g error enum types), then add them to the ignoredExcessiveTypes array.`,
             );
         }
     }
