@@ -5,6 +5,10 @@ Edit the package's CHANGELOG.json file only.
 
 CHANGELOG
 
+## v3.3.0 - _October 28, 2020_
+
+    * Add `unfillable` to OrdersRequestOpts type. (#1)
+
 ## v3.2.4 - _October 21, 2020_
 
     * Dependencies updated
