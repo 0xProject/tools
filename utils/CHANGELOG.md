@@ -5,6 +5,10 @@ Edit the package's CHANGELOG.json file only.
 
 CHANGELOG
 
+## v6.1.0 - _October 29, 2020_
+
+    * Restore revert error definitions :-( (#4)
+
 ## v6.0.0 - _October 29, 2020_
 
     * Dropped revert error definitions (#3)
