@@ -1,5 +1,14 @@
 [
     {
+        "version": "6.0.0",
+        "changes": [
+            {
+                "note": "Dropped revert error definitions",
+                "pr": 3
+            }
+        ]
+    },
+    {
         "timestamp": 1603924140,
         "version": "5.6.4",
         "changes": [
