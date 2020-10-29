@@ -1,5 +1,14 @@
 [
     {
+        "version": "4.0.0",
+        "changes": [
+            {
+                "note": "Use `@0x/utils` 6.0.0",
+                "pr": 3
+            }
+        ]
+    },
+    {
         "timestamp": 1603932034,
         "version": "3.3.6",
         "changes": [
