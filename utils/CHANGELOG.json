@@ -1,5 +1,14 @@
 [
     {
+        "version": "6.1.0",
+        "changes": [
+            {
+                "note": "Restore revert error definitions :-(",
+                "pr": 4
+            }
+        ]
+    },
+    {
         "version": "6.0.0",
         "changes": [
             {

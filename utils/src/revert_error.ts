@@ -36,9 +36,10 @@ interface RevertErrorRegistryItem {
  * Register a RevertError type so that it can be decoded by
  * `decodeRevertError`.
  * @param revertClass A class that inherits from RevertError.
+ * @param force Allow overwriting registered types.
  */
-export function registerRevertErrorType(revertClass: RevertErrorType): void {
-    RevertError.registerType(revertClass);
+export function registerRevertErrorType(revertClass: RevertErrorType, force: boolean = false): void {
+    RevertError.registerType(revertClass, force);
 }
 
 /**
@@ -139,10 +140,11 @@ export abstract class RevertError extends Error {
      * Register a RevertError type so that it can be decoded by
      * `RevertError.decode`.
      * @param revertClass A class that inherits from RevertError.
+     * @param force Allow overwriting existing registrations.
      */
-    public static registerType(revertClass: RevertErrorType): void {
+    public static registerType(revertClass: RevertErrorType, force: boolean = false): void {
         const instance = new revertClass();
-        if (instance.selector in RevertError._typeRegistry) {
+        if (!force && instance.selector in RevertError._typeRegistry) {
             throw new Error(`RevertError type with signature "${instance.signature}" is already registered`);
         }
         if (_.isNil(instance.abi)) {
