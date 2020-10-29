@@ -5,6 +5,10 @@ Edit the package's CHANGELOG.json file only.
 
 CHANGELOG
 
+## v5.3.2 - _October 29, 2020_
+
+    * Dependencies updated
+
 ## v5.3.1 - _October 29, 2020_
 
     * Fix boolean type in Orders Request Opts Schema (#1)

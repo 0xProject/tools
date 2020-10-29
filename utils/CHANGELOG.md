@@ -5,6 +5,10 @@ Edit the package's CHANGELOG.json file only.
 
 CHANGELOG
 
+## v6.0.0 - _October 29, 2020_
+
+    * Dropped revert error definitions (#3)
+
 ## v5.6.4 - _October 28, 2020_
 
     * Dependencies updated
