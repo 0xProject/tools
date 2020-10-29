@@ -5,6 +5,10 @@ Edit the package's CHANGELOG.json file only.
 
 CHANGELOG
 
+## v5.3.1 - _October 29, 2020_
+
+    * Fix boolean type in Orders Request Opts Schema (#1)
+
 ## v5.3.0 - _October 28, 2020_
 
     * Add `unfillable` query param to Orders Request Opts Schema. (#1)
