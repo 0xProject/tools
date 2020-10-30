@@ -128,7 +128,7 @@ export async function getSolcJSReleasesAsync(isOfflineMode: boolean): Promise<Bi
         return constants.SOLC_BIN_PATHS;
     }
     if (solcJSReleasesCache === undefined) {
-        const versionList = await fetch('https://ethereum.github.io/solc-bin/bin/list.json');
+        const versionList = await fetch('https://solc-bin.ethereum.org/bin/list.json');
         const versionListJSON = await versionList.json();
         solcJSReleasesCache = versionListJSON.releases;
     }
