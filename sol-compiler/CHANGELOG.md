@@ -5,6 +5,10 @@ Edit the package's CHANGELOG.json file only.
 
 CHANGELOG
 
+## v4.3.0 - _October 30, 2020_
+
+    * Point to ethereum.org link for list of solc binaries (#6)
+
 ## v4.2.7 - _October 29, 2020_
 
     * Dependencies updated
