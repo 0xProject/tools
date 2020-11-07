@@ -23,11 +23,11 @@ function getNetwork(networkId: number): string {
         case RINKEBY_ID:
         case KOVAN_ID:
         case GOERLI_ID:
-          return 'testnet';
+            return 'testnet';
         // Mainnet and all custom chainIDs are used to find production Lattices.
         case MAINNET_ID:
         default:
-          return 'mainnet';
+            return 'mainnet';
     }
 }
 
