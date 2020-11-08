@@ -436,6 +436,7 @@ export class Compiler {
                 `${this._artifactsDir}/${contractName}.input.json`,
                 utils.stringifyWithFormatting({
                     ...compilerInput,
+                    sources: _.mapValues(usedSources, ({ id }) => ({ id })),
                     // Insert solcVersion into input.
                     settings: {
                         ...compilerInput.settings,

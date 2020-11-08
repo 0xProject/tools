@@ -1,5 +1,14 @@
 [
     {
+        "version": "4.3.1",
+        "changes": [
+            {
+                "note": "Only write relevant sources to Standard Input JSON artifacts",
+                "pr": "TBD"
+            }
+        ]
+    },
+    {
         "version": "4.3.0",
         "changes": [
             {
