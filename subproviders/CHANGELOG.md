@@ -5,6 +5,10 @@ Edit the package's CHANGELOG.json file only.
 
 CHANGELOG
 
+## v6.2.0 - _November 12, 2020_
+
+    * Added support for Lattice subprovider (#7)
+
 ## v6.1.9 - _October 29, 2020_
 
     * Dependencies updated
