@@ -7,7 +7,6 @@ import {
 } from '@0x/subproviders';
 import { providerUtils } from '@0x/utils';
 import * as fs from 'fs';
-import * as _ from 'lodash';
 
 import { constants } from './constants';
 import { env, EnvVars } from './env';
@@ -26,6 +25,7 @@ export interface Web3Config {
     locked?: boolean;
     unlocked_accounts?: string[];
     hardfork?: string; // default: istanbul
+    gasLimit?: number;
 }
 
 export const web3Factory = {
@@ -72,7 +72,7 @@ export const web3Factory = {
                     vmErrorsOnRPCResponse: shouldThrowErrorsOnGanacheRPCResponse,
                     db_path: config.ganacheDatabasePath,
                     allowUnlimitedContractSize: config.shouldAllowUnlimitedContractSize,
-                    gasLimit: constants.GAS_LIMIT,
+                    gasLimit: config.gasLimit || constants.GAS_LIMIT,
                     logger,
                     verbose: env.parseBoolean(EnvVars.VerboseGanache),
                     port: 8545,
