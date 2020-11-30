@@ -5,6 +5,10 @@ Edit the package's CHANGELOG.json file only.
 
 CHANGELOG
 
+## v4.1.0 - _November 30, 2020_
+
+    * Bump gas limit and allow override
+
 ## v4.0.2 - _November 12, 2020_
 
     * Dependencies updated

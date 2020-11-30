@@ -5,7 +5,8 @@
             {
                 "note": "Bump gas limit and allow override"
             }
-        ]
+        ],
+        "timestamp": 1606774403
     },
     {
         "timestamp": 1605144227,
