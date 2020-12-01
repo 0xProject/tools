@@ -78,6 +78,10 @@ interface ContractData {
     contractName: string;
 }
 
+interface PersistedArtifactCache {
+    [contractPath: string]: number;
+}
+
 // tslint:disable no-non-null-assertion
 /**
  * The Compiler facilitates compiling Solidity smart contracts and saves the results
@@ -342,12 +346,17 @@ export class Compiler {
         );
 
         if (_opts.shouldPersist) {
+            // Many contracts will appear more than once as they are imported as
+            // dependencies. Rather than constantly overwriting the artifacts, we
+            // will only do it if the new artifact has a smaller compilation unit.
+            const artifactCache: PersistedArtifactCache = {};
             await Promise.all(
                 versions.map(async (solcVersion, i) => {
                     const units = compilationUnitsByVersion[solcVersion];
                     await Promise.all(
                         compilationResults[i].map(async (compilationResult, j) => {
                             const contracts = units[j];
+                            const unitSize = Object.keys(contracts).length;
                             await Promise.all(
                                 Object.keys(contracts).map(async contractPath => {
                                     const contractData = contractPathToData[contractPath];
@@ -362,6 +371,14 @@ export class Compiler {
                                             `Contract ${contractName} not found in ${contractPath}. Please make sure your contract has the same name as it's file name`,
                                         );
                                     }
+                                    // Only write the artifact if we haven't already written
+                                    // a simpler version of it.
+                                    if (artifactCache[contractPath] !== undefined) {
+                                        if (artifactCache[contractPath] <= unitSize) {
+                                            return;
+                                        }
+                                    }
+                                    artifactCache[contractPath] = unitSize;
                                     await this._persistCompiledContractAsync(
                                         contractPath,
                                         contractPathToData[contractPath].currentArtifactIfExists,
@@ -494,3 +511,5 @@ export class Compiler {
         }
     }
 }
+
+// tslint:disable: max-file-line-count
