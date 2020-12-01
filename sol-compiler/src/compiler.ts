@@ -350,52 +350,47 @@ export class Compiler {
             // dependencies. Rather than constantly overwriting the artifacts, we
             // will only do it if the new artifact has a smaller compilation unit.
             const artifactCache: PersistedArtifactCache = {};
-            await Promise.all(
-                versions.map(async (solcVersion, i) => {
-                    const units = compilationUnitsByVersion[solcVersion];
-                    await Promise.all(
-                        compilationResults[i].map(async (compilationResult, j) => {
-                            const contracts = units[j];
-                            const unitSize = Object.keys(contracts).length;
-                            await Promise.all(
-                                Object.keys(contracts).map(async contractPath => {
-                                    const contractData = contractPathToData[contractPath];
-                                    if (contractData === undefined) {
-                                        return;
-                                    }
-                                    const { contractName } = contractData;
-                                    const compiledContract =
-                                        compilationResult.output.contracts[contractPath][contractName];
-                                    if (compiledContract === undefined) {
-                                        throw new Error(
-                                            `Contract ${contractName} not found in ${contractPath}. Please make sure your contract has the same name as it's file name`,
-                                        );
-                                    }
-                                    // Only write the artifact if we haven't already written
-                                    // a simpler version of it.
-                                    if (artifactCache[contractPath] !== undefined) {
-                                        if (artifactCache[contractPath] <= unitSize) {
-                                            return;
-                                        }
-                                    }
-                                    artifactCache[contractPath] = unitSize;
-                                    await this._persistCompiledContractAsync(
-                                        contractPath,
-                                        contractPathToData[contractPath].currentArtifactIfExists,
-                                        contractPathToData[contractPath].sourceTreeHashHex,
-                                        contractName,
-                                        solcVersion,
-                                        contracts,
-                                        compilationResult.input,
-                                        compilationResult.output,
-                                        importRemappings,
-                                    );
-                                }),
+            for (let i = 0; i < versions.length; ++i) {
+                const solcVersion = versions[i];
+                const units = compilationUnitsByVersion[solcVersion];
+                for (let j = 0; j < compilationResults[i].length; ++j) {
+                    const compilationResult = compilationResults[i][j];
+                    const contracts = units[j];
+                    const unitSize = Object.keys(contracts).length;
+                    for (const contractPath of Object.keys(contracts)) {
+                        const contractData = contractPathToData[contractPath];
+                        if (contractData === undefined) {
+                            continue;
+                        }
+                        const { contractName } = contractData;
+                        const compiledContract = compilationResult.output.contracts[contractPath][contractName];
+                        if (compiledContract === undefined) {
+                            throw new Error(
+                                `Contract ${contractName} not found in ${contractPath}. Please make sure your contract has the same name as it's file name`,
                             );
-                        }),
-                    );
-                }),
-            );
+                        }
+                        // Only write the artifact if we haven't already written
+                        // a simpler version of it.
+                        if (artifactCache[contractPath] !== undefined) {
+                            if (artifactCache[contractPath] <= unitSize) {
+                                continue;
+                            }
+                        }
+                        artifactCache[contractPath] = unitSize;
+                        await this._persistCompiledContractAsync(
+                            contractPath,
+                            contractPathToData[contractPath].currentArtifactIfExists,
+                            contractPathToData[contractPath].sourceTreeHashHex,
+                            contractName,
+                            solcVersion,
+                            contracts,
+                            compilationResult.input,
+                            compilationResult.output,
+                            importRemappings,
+                        );
+                    }
+                }
+            }
         }
         return compilationResults.map(r => r.map(ur => ur.output));
     }
