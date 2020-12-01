@@ -174,7 +174,7 @@ export class Compiler {
      */
     public async getCompilerOutputsAsync(): Promise<StandardOutput[]> {
         const promisedOutputs = await this._compileContractsAsync(this.getContractNamesToCompile(), {
-            shouldPersist: true,
+            shouldPersist: false,
             shouldCompileIndependently: false,
         });
         // Batching is disabled so only the first unit for each version is used.
