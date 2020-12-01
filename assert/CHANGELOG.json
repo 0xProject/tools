@@ -1,5 +1,13 @@
 [
     {
+        "version": "3.0.18",
+        "changes": [
+            {
+                "note": "Add assert.doesMatchRegex"
+            }
+        ]
+    },
+    {
         "timestamp": 1603947853,
         "version": "3.0.17",
         "changes": [

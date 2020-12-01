@@ -94,6 +94,9 @@ Encountered: ${JSON.stringify(value, null, '\t')}
 Validation errors: ${validationResult.errors.join(', ')}`;
         assert.assert(!hasValidationErrors, msg);
     },
+    doesMatchRegex(variableName: string, value: string, regex: RegExp): void {
+        assert.assert(regex.test(value), assert.typeAssertionMessage(variableName, String(regex), value));
+    },
     isWebUri(variableName: string, value: any): void {
         const isValidUrl = validUrl.isWebUri(value) !== undefined;
         assert.assert(isValidUrl, assert.typeAssertionMessage(variableName, 'web uri', value));

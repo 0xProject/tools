@@ -194,6 +194,21 @@ describe('Assertions', () => {
             );
         });
     });
+    describe('#doesMatchRegex', () => {
+        const DATE_REGEX = /^\d{4}-\d{2}-\d{2}$/;
+        it('should not throw for valid input', () => {
+            const validInputs = ['2020-01-01', '2030-12-12'];
+            validInputs.forEach(input =>
+                expect(assert.doesMatchRegex.bind(assert, variableName, input, DATE_REGEX)).to.not.throw(),
+            );
+        });
+        it('should throw for invalid input', () => {
+            const invalidInputs = [42, { random: 'test' }, undefined, new BigNumber(45), '20-01-01', '20200101'];
+            invalidInputs.forEach(input =>
+                expect(assert.doesMatchRegex.bind(assert, variableName, input, DATE_REGEX)).to.throw(),
+            );
+        });
+    });
     describe('#isWebUri', () => {
         it('should not throw for valid input', () => {
             const validInputs = [
