@@ -55,14 +55,20 @@ const DEFAULT_COMPILER_OPTS: CompilerOptions = {
     useDockerisedSolc: false,
     isOfflineMode: false,
     shouldSaveStandardInput: false,
+    shouldCompileIndependently: false,
 };
 
-interface ContractsByVersion {
-    [solcVersion: string]: ContractContentsByPath;
+interface CompilationUnitsByVersion {
+    [solcVersion: string]: ContractContentsByPath[];
 }
 
 interface ContractPathToData {
     [contractPath: string]: ContractData;
+}
+
+interface CompileContractsOpts {
+    shouldCompileIndependently: boolean;
+    shouldPersist: boolean;
 }
 
 interface ContractData {
@@ -86,6 +92,7 @@ export class Compiler {
     private readonly _specifiedContracts: string[] | TYPE_ALL_FILES_IDENTIFIER;
     private readonly _isOfflineMode: boolean;
     private readonly _shouldSaveStandardInput: boolean;
+    private readonly _shouldCompileIndependently: boolean;
     private readonly _solcWrappersByVersion: { [version: string]: SolcWrapper } = {};
 
     public static async getCompilerOptionsAsync(
@@ -135,6 +142,7 @@ export class Compiler {
         this._specifiedContracts = this._opts.contracts!;
         this._isOfflineMode = this._opts.isOfflineMode!;
         this._shouldSaveStandardInput = this._opts.shouldSaveStandardInput!;
+        this._shouldCompileIndependently = this._opts.shouldCompileIndependently!;
         this._nameResolver = new NameResolver(this._contractsDir);
         this._resolver = Compiler._createDefaultResolver(this._contractsDir, this._nameResolver);
     }
@@ -145,7 +153,10 @@ export class Compiler {
     public async compileAsync(): Promise<void> {
         await createDirIfDoesNotExistAsync(this._artifactsDir);
         await createDirIfDoesNotExistAsync(constants.SOLC_BIN_DIR);
-        await this._compileContractsAsync(this.getContractNamesToCompile(), true);
+        await this._compileContractsAsync(this.getContractNamesToCompile(), {
+            shouldPersist: true,
+            shouldCompileIndependently: this._shouldCompileIndependently,
+        });
     }
 
     /**
@@ -157,8 +168,12 @@ export class Compiler {
      * that version.
      */
     public async getCompilerOutputsAsync(): Promise<StandardOutput[]> {
-        const promisedOutputs = this._compileContractsAsync(this.getContractNamesToCompile(), false);
-        return promisedOutputs;
+        const promisedOutputs = await this._compileContractsAsync(this.getContractNamesToCompile(), {
+            shouldPersist: true,
+            shouldCompileIndependently: false,
+        });
+        // Batching is disabled so only the first unit for each version is used.
+        return promisedOutputs.map(o => o[0]);
     }
 
     /**
@@ -235,9 +250,17 @@ export class Compiler {
      * @param fileName Name of contract with '.sol' extension.
      * @return an array of compiler outputs, where each element corresponds to a different version of solc-js.
      */
-    private async _compileContractsAsync(contractNames: string[], shouldPersist: boolean): Promise<StandardOutput[]> {
+    private async _compileContractsAsync(
+        contractNames: string[],
+        opts: Partial<CompileContractsOpts> = {},
+    ): Promise<StandardOutput[][]> {
+        const _opts = {
+            shouldPersist: false,
+            shouldCompileIndependently: false,
+            ...opts,
+        };
         // batch input contracts together based on the version of the compiler that they require.
-        const contractsByVersion: ContractsByVersion = {};
+        const compilationUnitsByVersion: CompilationUnitsByVersion = {};
         // map contract paths to data about them for later verification and persistence
         const contractPathToData: ContractPathToData = {};
 
@@ -275,65 +298,85 @@ export class Compiler {
                     )}`,
                 );
             }
-            // add input to the right version batch
+            // Each compilation unit is a batch of inputs for a compiler version.
+            const units = (compilationUnitsByVersion[solcVersion] = compilationUnitsByVersion[solcVersion] || []);
+            let unit;
+            if (_opts.shouldCompileIndependently) {
+                // If compiling independently, we always create a new unit for each target contract.
+                units.push((unit = {}));
+            } else {
+                // Otherwise, we keep everything the same unit (first unit).
+                if (units.length === 0) {
+                    units.push({});
+                }
+                unit = units[0];
+            }
             for (const resolvedContractSource of spyResolver.resolvedContractSources) {
-                contractsByVersion[solcVersion] = contractsByVersion[solcVersion] || {};
-                contractsByVersion[solcVersion][resolvedContractSource.absolutePath] = resolvedContractSource.source;
+                unit[resolvedContractSource.absolutePath] = resolvedContractSource.source;
                 resolvedContractSources.push(resolvedContractSource);
             }
         }
 
         const importRemappings = getDependencyNameToPackagePath(resolvedContractSources);
-        const versions = Object.keys(contractsByVersion);
+        const versions = Object.keys(compilationUnitsByVersion);
 
+        // Concurrently compile by version and compilation unit.
         const compilationResults = await Promise.all(
             versions.map(async solcVersion => {
-                const contracts = contractsByVersion[solcVersion];
-                logUtils.warn(
-                    `Compiling ${Object.keys(contracts).length} contracts (${Object.keys(contracts).map(p =>
-                        path.basename(p),
-                    )}) with Solidity ${solcVersion}...`,
-                );
-                return this._getSolcWrapperForVersion(solcVersion).compileAsync(contracts, importRemappings);
+                const units = compilationUnitsByVersion[solcVersion];
+                {
+                    const allContracts = _.flatten(units.map(u => Object.keys(u)));
+                    logUtils.warn(
+                        `Compiling ${allContracts.length} contracts (${allContracts.map(p =>
+                            path.basename(p),
+                        )}) with Solidity ${solcVersion}...`,
+                    );
+                }
+                const compiler = this._getSolcWrapperForVersion(solcVersion);
+                return Promise.all(units.map(async contracts => compiler.compileAsync(contracts, importRemappings)));
             }),
         );
 
-        if (shouldPersist) {
+        if (_opts.shouldPersist) {
             await Promise.all(
                 versions.map(async (solcVersion, i) => {
-                    const compilationResult = compilationResults[i];
-                    const contracts = contractsByVersion[solcVersion];
-                    // tslint:disable-next-line: forin
+                    const units = compilationUnitsByVersion[solcVersion];
                     await Promise.all(
-                        Object.keys(contracts).map(async contractPath => {
-                            const contractData = contractPathToData[contractPath];
-                            if (contractData === undefined) {
-                                return;
-                            }
-                            const { contractName } = contractData;
-                            const compiledContract = compilationResult.output.contracts[contractPath][contractName];
-                            if (compiledContract === undefined) {
-                                throw new Error(
-                                    `Contract ${contractName} not found in ${contractPath}. Please make sure your contract has the same name as it's file name`,
-                                );
-                            }
-                            await this._persistCompiledContractAsync(
-                                contractPath,
-                                contractPathToData[contractPath].currentArtifactIfExists,
-                                contractPathToData[contractPath].sourceTreeHashHex,
-                                contractName,
-                                solcVersion,
-                                contracts,
-                                compilationResult.input,
-                                compilationResult.output,
-                                importRemappings,
+                        compilationResults[i].map(async (compilationResult, j) => {
+                            const contracts = units[j];
+                            await Promise.all(
+                                Object.keys(contracts).map(async contractPath => {
+                                    const contractData = contractPathToData[contractPath];
+                                    if (contractData === undefined) {
+                                        return;
+                                    }
+                                    const { contractName } = contractData;
+                                    const compiledContract =
+                                        compilationResult.output.contracts[contractPath][contractName];
+                                    if (compiledContract === undefined) {
+                                        throw new Error(
+                                            `Contract ${contractName} not found in ${contractPath}. Please make sure your contract has the same name as it's file name`,
+                                        );
+                                    }
+                                    await this._persistCompiledContractAsync(
+                                        contractPath,
+                                        contractPathToData[contractPath].currentArtifactIfExists,
+                                        contractPathToData[contractPath].sourceTreeHashHex,
+                                        contractName,
+                                        solcVersion,
+                                        contracts,
+                                        compilationResult.input,
+                                        compilationResult.output,
+                                        importRemappings,
+                                    );
+                                }),
                             );
                         }),
                     );
                 }),
             );
         }
-        return compilationResults.map(r => r.output);
+        return compilationResults.map(r => r.map(ur => ur.output));
     }
 
     private _shouldCompile(contractData: ContractData): boolean {
