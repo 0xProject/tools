@@ -1,6 +1,6 @@
 {
     "name": "@0x/assert",
-    "version": "3.0.17",
+    "version": "3.0.18",
     "engines": {
         "node": ">=6.12"
     },
