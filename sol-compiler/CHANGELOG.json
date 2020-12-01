@@ -4,7 +4,7 @@
         "changes": [
             {
                 "note": "Support `shouldCompileIndependently` compiler option for non-batched compilation.",
-                "pr": "TODO"
+                "pr": 12
             }
         ]
     },
