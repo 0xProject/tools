@@ -33,6 +33,7 @@ import {
     getSourceTreeHash,
     normalizeSolcVersion,
     parseSolidityVersionRange,
+    preFetchCSolcJSBinariesAsync,
 } from './utils/compiler';
 import { constants } from './utils/constants';
 import { fsWrapper } from './utils/fs_wrapper';
@@ -320,12 +321,15 @@ export class Compiler {
         const importRemappings = getDependencyNameToPackagePath(resolvedContractSources);
         const versions = Object.keys(compilationUnitsByVersion);
 
+        if (!this._opts.useDockerisedSolc && !this._opts.isOfflineMode && versions.length > 0) {
+            await preFetchCSolcJSBinariesAsync(versions);
+        }
         // Concurrently compile by version and compilation unit.
         const compilationResults = await Promise.all(
             versions.map(async solcVersion => {
                 const units = compilationUnitsByVersion[solcVersion];
                 {
-                    const allContracts = _.flatten(units.map(u => Object.keys(u)));
+                    const allContracts = _.uniq(_.flatten(units.map(u => Object.keys(u))));
                     logUtils.warn(
                         `Compiling ${allContracts.length} contracts (${allContracts.map(p =>
                             path.basename(p),

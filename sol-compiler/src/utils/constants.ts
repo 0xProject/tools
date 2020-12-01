@@ -5,6 +5,8 @@ export const constants = {
     BASE_COMPILER_URL: 'https://solc-bin.ethereum.org/bin/',
     LATEST_ARTIFACT_VERSION: '2.0.0',
     SOLC_BIN_DIR: path.join(__dirname, '..', '..', '..', 'solc_bin'),
+    SOLCJS_RELEASES_PATH: path.join(__dirname, '..', '..', '..', 'solc_bin', 'solcjs_releases.json'),
+    SOLCJS_RELEASES_CACHE_EXPIRY: 60e3,
     SOLC_BIN_PATHS: {
         '0.5.12': 'soljson-v0.5.12+commit.7709ece9.js',
         '0.5.11': 'soljson-v0.5.11+commit.c082d0b4.js',
