@@ -6,7 +6,8 @@
                 "note": "Add `shouldCompileIndependently` to `CompilerOptions`",
                 "pr": 12
             }
-        ]
+        ],
+        "timestamp": 1606873582
     },
     {
         "version": "3.3.3",

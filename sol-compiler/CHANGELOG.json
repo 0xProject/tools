@@ -6,7 +6,8 @@
                 "note": "Support `shouldCompileIndependently` compiler option for non-batched compilation.",
                 "pr": 12
             }
-        ]
+        ],
+        "timestamp": 1606873582
     },
     {
         "timestamp": 1606855909,

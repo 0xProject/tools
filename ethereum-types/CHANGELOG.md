@@ -5,6 +5,10 @@ Edit the package's CHANGELOG.json file only.
 
 CHANGELOG
 
+## v3.4.0 - _December 2, 2020_
+
+    * Add `shouldCompileIndependently` to `CompilerOptions` (#12)
+
 ## v3.3.3 - _October 21, 2020_
 
     * Add `touchAccount` to `ethereumjs-vm.StateManager`
