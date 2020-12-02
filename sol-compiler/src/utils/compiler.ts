@@ -128,11 +128,31 @@ export async function getSolcJSReleasesAsync(isOfflineMode: boolean): Promise<Bi
         return constants.SOLC_BIN_PATHS;
     }
     if (solcJSReleasesCache === undefined) {
+        // See if we cached it on-disk first.
+        try {
+            const st = await fsWrapper.statAsync(constants.SOLCJS_RELEASES_PATH);
+            if (Date.now() - st.ctime.getTime() >= constants.SOLCJS_RELEASES_CACHE_EXPIRY) {
+                // Remove the cached file and ignore it if it's too old.
+                await fsWrapper.removeFileAsync(constants.SOLCJS_RELEASES_PATH);
+            } else {
+                // Use the cached file otherwise.
+                return (solcJSReleasesCache = JSON.parse(
+                    await fsWrapper.readFileAsync(constants.SOLCJS_RELEASES_PATH),
+                ));
+            }
+        } catch (err) {
+            if (err.code !== 'ENOENT') {
+                throw err;
+            }
+        }
+        // Fetch from the WWW.
         const versionList = await fetch('https://solc-bin.ethereum.org/bin/list.json');
         const versionListJSON = await versionList.json();
-        solcJSReleasesCache = versionListJSON.releases;
+        solcJSReleasesCache = versionListJSON.releases as BinaryPaths;
+        // Cache the result on disk.
+        await fsWrapper.writeFileAsync(constants.SOLCJS_RELEASES_PATH, JSON.stringify(solcJSReleasesCache, null, '\t'));
     }
-    return solcJSReleasesCache as BinaryPaths;
+    return solcJSReleasesCache;
 }
 
 /**
@@ -370,6 +390,19 @@ function recursivelyGatherDependencySources(
     }
 }
 
+const solcJSCache: { [maxSatisfying: string]: solc.SolcInstance } = {};
+let solcJSReleases: BinaryPaths | undefined;
+
+/**
+ * Calls `getSolcJSAsync()` for every solc version passed in.
+ * @param versions Arrays of solc versions.
+ */
+export async function preFetchCSolcJSBinariesAsync(solcVersions: string[]): Promise<void> {
+    const compilerVersions = solcVersions.map(solcVersion => getSolidityVersionFromSolcVersion(solcVersion));
+    logUtils.log(`Pre-fetching solidity versions: ${compilerVersions.join(', ')}...`);
+    await Promise.all(compilerVersions.map(async v => getSolcJSAsync(v, false)));
+}
+
 /**
  * Gets the solidity compiler instance. If the compiler is already cached - gets it from FS,
  * otherwise - fetches it and caches it.
@@ -377,10 +410,15 @@ function recursivelyGatherDependencySources(
  * @param isOfflineMode Offline mode flag
  */
 export async function getSolcJSAsync(solidityVersion: string, isOfflineMode: boolean): Promise<solc.SolcInstance> {
-    const solcJSReleases = await getSolcJSReleasesAsync(isOfflineMode);
+    if (!solcJSReleases) {
+        solcJSReleases = await getSolcJSReleasesAsync(isOfflineMode);
+    }
     const fullSolcVersion = solcJSReleases[solidityVersion];
     if (fullSolcVersion === undefined) {
         throw new Error(`${solidityVersion} is not a known compiler version`);
+    }
+    if (solcJSCache[fullSolcVersion]) {
+        return solcJSCache[fullSolcVersion];
     }
     const compilerBinFilename = path.join(constants.SOLC_BIN_DIR, fullSolcVersion);
     let solcjs: string;
@@ -401,7 +439,7 @@ export async function getSolcJSAsync(solidityVersion: string, isOfflineMode: boo
         throw new Error('No compiler available');
     }
     const solcInstance = solc.setupMethods(requireFromString(solcjs, compilerBinFilename));
-    return solcInstance;
+    return (solcJSCache[fullSolcVersion] = solcInstance);
 }
 
 /**

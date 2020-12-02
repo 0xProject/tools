@@ -753,6 +753,7 @@ export interface CompilerOptions {
     isOfflineMode?: boolean;
     solcVersion?: string;
     shouldSaveStandardInput?: boolean;
+    shouldCompileIndependently?: boolean;
 }
 
 export interface BlockRange {

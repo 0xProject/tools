@@ -53,6 +53,29 @@ describe('#Compiler', function(): void {
         const exchangeBinaryWithoutMetadata = hexUtils.slice(exchange_binary, 0, -METADATA_SIZE);
         expect(unlinkedBinaryWithoutMetadata).to.equal(exchangeBinaryWithoutMetadata);
     });
+    it('can create an Exchange artifact with independent compilation', async () => {
+        compilerOpts.contracts = ['Exchange'];
+
+        const exchangeArtifactPath = `${artifactsDir}/Exchange.json`;
+        if (fsWrapper.doesPathExistSync(exchangeArtifactPath)) {
+            await fsWrapper.removeFileAsync(exchangeArtifactPath);
+        }
+
+        await new Compiler({ ...compilerOpts, shouldCompileIndependently: true }).compileAsync();
+
+        const opts = {
+            encoding: 'utf8',
+        };
+        const exchangeArtifactString = await fsWrapper.readFileAsync(exchangeArtifactPath, opts);
+        const exchangeArtifact: ContractArtifact = JSON.parse(exchangeArtifactString);
+        const unlinkedBinaryWithoutMetadata = hexUtils.slice(
+            exchangeArtifact.compilerOutput.evm.bytecode.object,
+            0,
+            -METADATA_SIZE,
+        );
+        const exchangeBinaryWithoutMetadata = hexUtils.slice(exchange_binary, 0, -METADATA_SIZE);
+        expect(unlinkedBinaryWithoutMetadata).to.equal(exchangeBinaryWithoutMetadata);
+    });
     it("should throw when Whatever.sol doesn't contain a Whatever contract", async () => {
         const contract = 'BadContractName';
 

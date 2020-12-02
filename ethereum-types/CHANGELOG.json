@@ -1,5 +1,14 @@
 [
     {
+        "version": "3.4.0",
+        "changes": [
+            {
+                "note": "Add `shouldCompileIndependently` to `CompilerOptions`",
+                "pr": 12
+            }
+        ]
+    },
+    {
         "version": "3.3.3",
         "changes": [
             {
