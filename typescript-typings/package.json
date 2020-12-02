@@ -1,6 +1,6 @@
 {
     "name": "@0x/typescript-typings",
-    "version": "5.1.5",
+    "version": "5.1.6",
     "engines": {
         "node": ">=6.12"
     },
@@ -28,7 +28,7 @@
         "@types/node": "12.12.54",
         "@types/react": "*",
         "bignumber.js": "~9.0.0",
-        "ethereum-types": "^3.3.3",
+        "ethereum-types": "^3.4.0",
         "popper.js": "1.14.3"
     },
     "devDependencies": {
