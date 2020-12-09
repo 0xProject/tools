@@ -1,5 +1,14 @@
 [
     {
+        "version": "7.3.0",
+        "changes": [
+            {
+                "note": "Add `Web3Wrapper.signTypedDataV4Async()` (metamask EIP712)",
+                "pr": 13
+            }
+        ]
+    },
+    {
         "timestamp": 1606873582,
         "version": "7.2.10",
         "changes": [

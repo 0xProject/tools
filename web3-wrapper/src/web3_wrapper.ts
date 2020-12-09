@@ -349,6 +349,21 @@ export class Web3Wrapper {
         return signData;
     }
     /**
+     * Sign an EIP712 typed data message with a specific address's private key (MetaMask's `eth_signTypedData_v4`)
+     * @param address Address of signer
+     * @param typedData Typed data message to sign
+     * @returns Signature string (as RSV)
+     */
+    public async signTypedDataV4Async(address: string, typedData: any): Promise<string> {
+        assert.isETHAddressHex('address', address);
+        assert.doesConformToSchema('typedData', typedData, schemas.eip712TypedDataSchema);
+        const signData = await this.sendRawPayloadAsync<string>({
+            method: 'eth_signTypedData_v4',
+            params: [address, JSON.stringify(typedData)],
+        });
+        return signData;
+    }
+    /**
      * Fetches the latest block number
      * @returns Block number
      */
