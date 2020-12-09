@@ -6,7 +6,8 @@
                 "note": "Add `Web3Wrapper.signTypedDataV4Async()` (metamask EIP712)",
                 "pr": 13
             }
-        ]
+        ],
+        "timestamp": 1607481991
     },
     {
         "timestamp": 1606873582,

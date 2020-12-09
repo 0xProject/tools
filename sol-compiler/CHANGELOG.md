@@ -5,6 +5,10 @@ Edit the package's CHANGELOG.json file only.
 
 CHANGELOG
 
+## v4.4.1 - _December 9, 2020_
+
+    * Dependencies updated
+
 ## v4.4.0 - _December 2, 2020_
 
     * Support `shouldCompileIndependently` compiler option for non-batched compilation. (#12)

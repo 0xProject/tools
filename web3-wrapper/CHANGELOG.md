@@ -5,6 +5,10 @@ Edit the package's CHANGELOG.json file only.
 
 CHANGELOG
 
+## v7.3.0 - _December 9, 2020_
+
+    * Add `Web3Wrapper.signTypedDataV4Async()` (metamask EIP712) (#13)
+
 ## v7.2.10 - _December 2, 2020_
 
     * Dependencies updated
