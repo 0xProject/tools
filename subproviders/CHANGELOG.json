@@ -6,7 +6,8 @@
                 "note": "Allow lowercased address params in `PrivateKeyWalletSubprovider` RPC methods",
                 "pr": 15
             }
-        ]
+        ],
+        "timestamp": 1608330235
     },
     {
         "timestamp": 1607481991,
