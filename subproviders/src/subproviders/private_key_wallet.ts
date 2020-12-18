@@ -75,7 +75,7 @@ export class PrivateKeyWalletSubprovider extends BaseWalletSubprovider {
         }
         assert.isHexString('data', data);
         assert.isETHAddressHex('address', address);
-        if (address !== this._address) {
+        if (address.toLowerCase() !== this._address.toLowerCase()) {
             throw new Error(
                 `Requested to sign message with address: ${address}, instantiated with address: ${this._address}`,
             );
@@ -101,7 +101,7 @@ export class PrivateKeyWalletSubprovider extends BaseWalletSubprovider {
             throw new Error(WalletSubproviderErrors.DataMissingForSignTypedData);
         }
         assert.isETHAddressHex('address', address);
-        if (address !== this._address) {
+        if (address.toLowerCase() !== this._address.toLowerCase()) {
             throw new Error(
                 `Requested to sign message with address: ${address}, instantiated with address: ${this._address}`,
             );
