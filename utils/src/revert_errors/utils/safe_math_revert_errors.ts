@@ -14,6 +14,7 @@ export enum DowncastErrorCodes {
     ValueTooLargeToDowncastToUint32,
     ValueTooLargeToDowncastToUint64,
     ValueTooLargeToDowncastToUint96,
+    ValueTooLargeToDowncastToUint128,
 }
 
 export class Uint256BinOpError extends RevertError {

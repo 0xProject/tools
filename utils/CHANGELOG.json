@@ -1,5 +1,14 @@
 [
     {
+        "version": "6.2.0",
+        "changes": [
+            {
+                "note": "Add `DowncastErrorCodes.ValueTooLargeToDowncastToUint128`",
+                "pr": 16
+            }
+        ]
+    },
+    {
         "timestamp": 1606873582,
         "version": "6.1.1",
         "changes": [
