@@ -5,6 +5,10 @@ Edit the package's CHANGELOG.json file only.
 
 CHANGELOG
 
+## v6.3.1 - _January 5, 2021_
+
+    * Dependencies updated
+
 ## v6.3.0 - _December 18, 2020_
 
     * Allow lowercased address params in `PrivateKeyWalletSubprovider` RPC methods (#15)

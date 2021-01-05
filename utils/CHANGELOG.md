@@ -5,6 +5,10 @@ Edit the package's CHANGELOG.json file only.
 
 CHANGELOG
 
+## v6.2.0 - _January 5, 2021_
+
+    * Add `DowncastErrorCodes.ValueTooLargeToDowncastToUint128` (#16)
+
 ## v6.1.1 - _December 2, 2020_
 
     * Dependencies updated
