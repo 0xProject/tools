@@ -41,6 +41,9 @@ import * as signedOrderSchema from '../schemas/signed_order_schema.json';
 import * as signedOrdersSchema from '../schemas/signed_orders_schema.json';
 import * as tokenSchema from '../schemas/token_schema.json';
 import * as txDataSchema from '../schemas/tx_data_schema.json';
+import * as v4RfqOrderSchema from '../schemas/v4_rfq_order_schema.json';
+import * as v4RfqSignedOrderSchema from '../schemas/v4_rfq_signed_order_schema.json';
+import * as v4SignatureSchema from '../schemas/v4_signature_schema.json';
 import * as wholeNumberSchema from '../schemas/whole_number_schema.json';
 import * as zeroExTransactionSchema from '../schemas/zero_ex_transaction_schema.json';
 
@@ -90,4 +93,7 @@ export const schemas = {
     zeroExTransactionSchema,
     exchangeProxyMetaTransactionSchema,
     wholeNumberSchema,
+    v4SignatureSchema,
+    v4RfqOrderSchema,
+    v4RfqSignedOrderSchema,
 };
