@@ -152,7 +152,7 @@ describe('Schema', () => {
         });
     });
     describe('#V4 RFQ Schema', () => {
-        const sampleTransaction = `
+        const sampleV4RfqOrder = `
         {
             "expiry": "1609871472",
             "makerAmount": "123660506086783300",
@@ -172,12 +172,12 @@ describe('Schema', () => {
                 "v": 27,
                 "signatureType": 3
             }
-        } 
-        `
+        }
+        `;
 
         it('correctly deserializes a V4 RFQ order', () => {
-            validateAgainstSchema([JSON.parse(sampleTransaction)], v4RfqSignedOrderSchema);
-        })
+            validateAgainstSchema([JSON.parse(sampleV4RfqOrder)], v4RfqSignedOrderSchema);
+        });
     });
 
     describe('#tokenSchema', () => {
