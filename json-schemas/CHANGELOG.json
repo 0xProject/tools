@@ -1,5 +1,15 @@
 [
     {
+        "timestamp": 1609873818,
+        "version": "5.4.0",
+        "changes": [
+            {
+                "note": "Add v4 RFQ order schema",
+                "pr": 17
+            }
+        ]
+    },
+    {
         "timestamp": 1609871818,
         "version": "5.3.5",
         "changes": [
