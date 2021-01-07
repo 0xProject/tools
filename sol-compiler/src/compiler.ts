@@ -452,15 +452,15 @@ export class Compiler {
         // tslint:disable-next-line: forin
         for (const sourceContractPath in sourcesByPath) {
             const content = sourcesByPath[sourceContractPath];
-            const { id } = compilerOutput.sources[sourceContractPath];
-            allSources[sourceContractPath] = { id, content };
+            const { id, ast } = compilerOutput.sources[sourceContractPath];
+            allSources[sourceContractPath] = { id, content, ast };
         }
         const usedSources = getSourcesWithDependencies(contractPath, allSources, importRemappings);
 
         const contractVersion: ContractVersionData = {
             compilerOutput: compiledContract,
             sourceTreeHashHex,
-            sources: _.mapValues(usedSources, ({ id }) => ({ id })),
+            sources: usedSources,
             sourceCodes: _.mapValues(usedSources, ({ content }) => content),
             compiler: {
                 name: 'solc',
