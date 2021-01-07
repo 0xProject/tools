@@ -6,7 +6,8 @@
                 "note": "Include AST in persisted artifact output",
                 "pr": 18
             }
-        ]
+        ],
+        "timestamp": 1610044030
     },
     {
         "timestamp": 1609871818,

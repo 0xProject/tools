@@ -5,6 +5,10 @@ Edit the package's CHANGELOG.json file only.
 
 CHANGELOG
 
+## v4.5.0 - _January 7, 2021_
+
+    * Include AST in persisted artifact output (#18)
+
 ## v4.4.3 - _January 5, 2021_
 
     * Dependencies updated

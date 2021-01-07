@@ -5,6 +5,14 @@ Edit the package's CHANGELOG.json file only.
 
 CHANGELOG
 
+## v5.4.1 - _January 7, 2021_
+
+    * Dependencies updated
+
+## v5.4.0 - _January 5, 2021_
+
+    * Add v4 RFQ order schema (#17)
+
 ## v5.3.5 - _January 5, 2021_
 
     * Dependencies updated
