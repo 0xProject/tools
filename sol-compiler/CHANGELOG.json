@@ -1,5 +1,14 @@
 [
     {
+        "version": "4.5.0",
+        "changes": [
+            {
+                "note": "Include AST in persisted artifact output",
+                "pr": 18
+            }
+        ]
+    },
+    {
         "timestamp": 1609871818,
         "version": "4.4.3",
         "changes": [

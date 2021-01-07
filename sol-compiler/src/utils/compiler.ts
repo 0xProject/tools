@@ -295,14 +295,14 @@ export function getSourceTreeHash(resolver: Resolver, importPath: string): Buffe
  * Mapping of absolute contract path to compilation ID and source code.
  */
 export interface CompiledSources {
-    [sourcePath: string]: { id: number; content: string };
+    [sourcePath: string]: { id: number; content: string; ast?: object };
 }
 
 /**
  * Contract sources by import path.
  */
 export interface CompiledImports {
-    [importPath: string]: { id: number; content: string };
+    [importPath: string]: { id: number; content: string; ast?: object };
 }
 
 /**
