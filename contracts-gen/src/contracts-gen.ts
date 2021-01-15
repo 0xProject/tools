@@ -94,14 +94,16 @@ function copyOverTestArtifactsAndWrappersToSrc(
 ): void {
     // Copy over artifacts
     srcContracts.forEach(contract => {
-        const srcPath = `${srcArtifactsDir}/${contract}.json`;
+        const contractName = path.basename(contract, SOLIDITY_EXTENSION);
+        const srcPath = `${srcArtifactsDir}/${contractName}.json`;
         mkdirp.sync(srcArtifactsDir);
-        fs.copyFileSync(`${testArtifactsDir}/${contract}.json`, srcPath);
+        fs.copyFileSync(`${testArtifactsDir}/${contractName}.json`, srcPath);
     });
 
     // Copy over wrappers
     srcContracts.forEach(contract => {
-        const wrapperFileName = makeOutputFileName(contract);
+        const contractName = path.basename(contract, SOLIDITY_EXTENSION);
+        const wrapperFileName = makeOutputFileName(contractName);
         const srcPath = `${srcWrappersDir}/${wrapperFileName}.ts`;
         mkdirp.sync(srcWrappersDir);
         fs.copyFileSync(`${testWrappersDir}/${wrapperFileName}.ts`, srcPath);
