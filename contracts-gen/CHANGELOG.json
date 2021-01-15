@@ -1,5 +1,14 @@
 [
     {
+        "version": "2.0.28",
+        "changes": [
+            {
+                "note": "Remove .sol extension when running contracts-gen copy on individual files",
+                "pr": 19
+            }
+        ]
+    },
+    {
         "timestamp": 1610044030,
         "version": "2.0.27",
         "changes": [
