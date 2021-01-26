@@ -1,5 +1,14 @@
 [
     {
+        "version": "6.4.0",
+        "changes": [
+            {
+                "note": "Support `eth_signTypedData_v4` in `MetamaskSubprovider` and use the method name passed in",
+                "pr": 21
+            }
+        ]
+    },
+    {
         "timestamp": 1610044030,
         "version": "6.3.2",
         "changes": [
