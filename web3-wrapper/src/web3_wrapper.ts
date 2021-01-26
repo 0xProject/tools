@@ -357,7 +357,7 @@ export class Web3Wrapper {
                 lastErr = err;
                 // If there are no more methods to try or the error says something other
                 // than the method not existing, throw.
-                if (!/(not handled|does not exist)/.test(err.message)) {
+                if (!/(not handled|does not exist|not supported)/.test(err.message)) {
                     throw err;
                 }
             }
