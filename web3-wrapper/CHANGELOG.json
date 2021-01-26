@@ -6,7 +6,8 @@
                 "note": "Handle missing RPC method error for `web3-provider-engine` geth defaults provider",
                 "pr": 22
             }
-        ]
+        ],
+        "timestamp": 1611645607
     },
     {
         "version": "7.4.0",

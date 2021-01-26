@@ -5,6 +5,10 @@ Edit the package's CHANGELOG.json file only.
 
 CHANGELOG
 
+## v6.4.1 - _January 26, 2021_
+
+    * Dependencies updated
+
 ## v6.4.0 - _January 26, 2021_
 
     * Support `eth_signTypedData_v4` in `MetamaskSubprovider` and use the method name passed in (#21)

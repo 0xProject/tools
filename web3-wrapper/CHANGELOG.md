@@ -5,6 +5,10 @@ Edit the package's CHANGELOG.json file only.
 
 CHANGELOG
 
+## v7.4.1 - _January 26, 2021_
+
+    * Handle missing RPC method error for `web3-provider-engine` geth defaults provider (#22)
+
 ## v7.4.0 - _January 26, 2021_
 
     * Remove `Web3Wrapper.signTypedDataV4Async()` and add backoff support for multiple versions of `eth_signTypedData` to `Web3Wrapper.signTypedDataAsync()`. (#21)
