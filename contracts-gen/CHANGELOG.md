@@ -5,6 +5,10 @@ Edit the package's CHANGELOG.json file only.
 
 CHANGELOG
 
+## v2.0.29 - _January 26, 2021_
+
+    * Dependencies updated
+
 ## v2.0.28 - _January 15, 2021_
 
     * Remove .sol extension when running contracts-gen copy on individual files (#19)

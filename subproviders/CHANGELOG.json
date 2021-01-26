@@ -6,7 +6,8 @@
                 "note": "Support `eth_signTypedData_v4` in `MetamaskSubprovider` and use the method name passed in",
                 "pr": 21
             }
-        ]
+        ],
+        "timestamp": 1611643101
     },
     {
         "timestamp": 1610044030,

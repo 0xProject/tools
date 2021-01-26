@@ -6,7 +6,8 @@
                 "note": "Remove `Web3Wrapper.signTypedDataV4Async()` and add backoff support for multiple versions of `eth_signTypedData` to `Web3Wrapper.signTypedDataAsync()`.",
                 "pr": 21
             }
-        ]
+        ],
+        "timestamp": 1611643101
     },
     {
         "timestamp": 1610044030,

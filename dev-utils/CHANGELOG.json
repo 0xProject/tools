@@ -6,7 +6,8 @@
                 "note": "Add `chainId` option to `Web3Config`",
                 "pr": 20
             }
-        ]
+        ],
+        "timestamp": 1611643101
     },
     {
         "timestamp": 1610044030,
