@@ -84,18 +84,21 @@ export class MetamaskSubprovider extends Subprovider {
                     end(err);
                 }
                 return;
+            // Metamask supports different versions of the `eth_signTypedData` RPC method.
             case 'eth_signTypedData':
             case 'eth_signTypedData_v3':
+            case 'eth_signTypedData_v4':
                 [address, message] = payload.params;
                 try {
-                    // Metamask supports multiple versions and has namespaced signTypedData to v3 for an indeterminate period of time.
-                    // eth_signTypedData is mapped to an older implementation before the spec was finalized.
-                    // Source: https://github.com/MetaMask/metamask-extension/blob/c49d854b55b3efd34c7fd0414b76f7feaa2eec7c/app/scripts/metamask-controller.js#L1262
-                    // and expects message to be serialised as JSON
-                    const messageJSON = JSON.stringify(message);
+                    // We accept either JSON-serialized or object messages.
+                    const messageObject = typeof message === 'object' ? message : JSON.parse(message);
                     const signature = await this._web3Wrapper.sendRawPayloadAsync<string>({
-                        method: 'eth_signTypedData_v3',
-                        params: [address, messageJSON],
+                        method: payload.method,
+                        // `eth_signTypedData` takes a raw object.
+                        params: [
+                            address,
+                            payload.method === 'eth_signTypedData' ? messageObject : JSON.stringify(messageObject),
+                        ],
                     });
                     signature ? end(null, signature) : end(new Error('Error performing eth_signTypedData'), null);
                 } catch (err) {

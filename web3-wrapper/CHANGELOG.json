@@ -1,5 +1,14 @@
 [
     {
+        "version": "7.4.0",
+        "changes": [
+            {
+                "note": "Remove `Web3Wrapper.signTypedDataV4Async()` and add backoff support for multiple versions of `eth_signTypedData` to `Web3Wrapper.signTypedDataAsync()`.",
+                "pr": 21
+            }
+        ]
+    },
+    {
         "timestamp": 1610044030,
         "version": "7.3.2",
         "changes": [
