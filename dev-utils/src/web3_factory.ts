@@ -11,6 +11,8 @@ import * as fs from 'fs';
 import { constants } from './constants';
 import { env, EnvVars } from './env';
 
+// tslint:disable: custom-no-magic-numbers
+
 export interface Web3Config {
     total_accounts?: number; // default: 10
     hasAddresses?: boolean; // default: true
@@ -26,6 +28,7 @@ export interface Web3Config {
     unlocked_accounts?: string[];
     hardfork?: string; // default: istanbul
     gasLimit?: number;
+    chainId?: number; // default: 1337
 }
 
 export const web3Factory = {
@@ -65,7 +68,6 @@ export const web3Factory = {
             const shouldThrowErrorsOnGanacheRPCResponse =
                 config.shouldThrowErrorsOnGanacheRPCResponse === undefined ||
                 config.shouldThrowErrorsOnGanacheRPCResponse;
-
             provider.addProvider(
                 new GanacheSubprovider({
                     total_accounts: config.total_accounts,
@@ -76,7 +78,8 @@ export const web3Factory = {
                     logger,
                     verbose: env.parseBoolean(EnvVars.VerboseGanache),
                     port: 8545,
-                    network_id: 50,
+                    network_id: config.chainId === undefined ? 1337 : config.chainId,
+                    _chainId: config.chainId === undefined ? 1337 : config.chainId,
                     mnemonic: 'concert load couple harbor equip island argue ramp clarify fence smart topic',
                     fork: config.fork,
                     blockTime: config.blockTime,

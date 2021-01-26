@@ -1,5 +1,14 @@
 [
     {
+        "version": "4.2.0",
+        "changes": [
+            {
+                "note": "Add `chainId` option to `Web3Config`",
+                "pr": 20
+            }
+        ]
+    },
+    {
         "timestamp": 1610044030,
         "version": "4.1.6",
         "changes": [
