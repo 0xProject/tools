@@ -1,6 +1,6 @@
 {
     "name": "@0x/subproviders",
-    "version": "6.3.2",
+    "version": "6.4.0",
     "engines": {
         "node": ">=6.12"
     },
@@ -38,7 +38,7 @@
         "@0x/types": "^3.3.1",
         "@0x/typescript-typings": "^5.1.6",
         "@0x/utils": "^6.2.0",
-        "@0x/web3-wrapper": "^7.3.2",
+        "@0x/web3-wrapper": "^7.4.0",
         "@ledgerhq/hw-app-eth": "^4.3.0",
         "@ledgerhq/hw-transport-u2f": "4.24.0",
         "@types/hdkey": "^0.7.0",
