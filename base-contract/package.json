@@ -1,6 +1,6 @@
 {
     "name": "@0x/base-contract",
-    "version": "6.2.17",
+    "version": "6.2.18",
     "engines": {
         "node": ">=6.12"
     },
@@ -49,7 +49,7 @@
         "@0x/assert": "^3.0.21",
         "@0x/json-schemas": "^5.4.1",
         "@0x/utils": "^6.2.0",
-        "@0x/web3-wrapper": "^7.4.0",
+        "@0x/web3-wrapper": "^7.4.1",
         "@types/node": "12.12.54",
         "ethereumjs-account": "^3.0.0",
         "ethereumjs-blockstream": "^7.0.0",
