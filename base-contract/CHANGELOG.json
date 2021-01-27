@@ -1,5 +1,14 @@
 [
     {
+        "version": "6.2.19",
+        "changes": [
+            {
+                "note": "Remove reference to deprecated ethereumjs-vm/PStateManager",
+                "pr": 23
+            }
+        ]
+    },
+    {
         "timestamp": 1611645607,
         "version": "6.2.18",
         "changes": [

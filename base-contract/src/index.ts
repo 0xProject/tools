@@ -28,7 +28,6 @@ import {
 import Account from 'ethereumjs-account';
 import * as util from 'ethereumjs-util';
 import { default as VM } from 'ethereumjs-vm';
-import PStateManager from 'ethereumjs-vm/dist/state/promisified';
 
 export { linkLibrariesInBytecode, methodAbiToFunctionSignature } from './utils';
 
@@ -263,20 +262,19 @@ export class BaseContract {
         // should only run once, the first time it is called
         if (this._evmIfExists === undefined) {
             const vm = new VM({});
-            const psm = new PStateManager(vm.stateManager);
 
             // create an account with 1 ETH
             const accountPk = Buffer.from(ARBITRARY_PRIVATE_KEY, 'hex');
             const accountAddress = util.privateToAddress(accountPk);
             const account = new Account({ balance: 1e18 });
-            await psm.putAccount(accountAddress, account);
+            await vm.stateManager.putAccount(accountAddress, account);
 
             // 'deploy' the contract
             if (this._deployedBytecodeIfExists === undefined) {
                 const contractCode = await this._web3Wrapper.getContractCodeAsync(this.address);
                 this._deployedBytecodeIfExists = Buffer.from(contractCode.substr(2), 'hex');
             }
-            await psm.putContractCode(addressBuf, this._deployedBytecodeIfExists);
+            await vm.stateManager.putContractCode(addressBuf, this._deployedBytecodeIfExists);
 
             // save for later
             this._evmIfExists = vm;
