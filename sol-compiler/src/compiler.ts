@@ -44,6 +44,7 @@ import { SolcWrapperV04 } from './solc_wrapper_v04';
 import { SolcWrapperV05 } from './solc_wrapper_v05';
 import { SolcWrapperV06 } from './solc_wrapper_v06';
 import { SolcWrapperV07 } from './solc_wrapper_v07';
+import { SolcWrapperV08 } from './solc_wrapper_v08';
 
 export type TYPE_ALL_FILES_IDENTIFIER = '*';
 export const ALL_CONTRACTS_IDENTIFIER = '*';
@@ -428,6 +429,9 @@ export class Compiler {
         }
         if (solcVersion.startsWith('0.7')) {
             return new SolcWrapperV07(solcVersion, this._opts);
+        }
+        if (solcVersion.startsWith('0.8')) {
+            return new SolcWrapperV08(solcVersion, this._opts);
         }
         throw new Error(`Missing Solc wrapper implementation for version ${solcVersion}`);
     }
