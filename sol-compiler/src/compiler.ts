@@ -104,7 +104,7 @@ export class Compiler {
         overrides: Partial<CompilerOptions> = {},
         file: string = 'compiler.json',
     ): Promise<CompilerOptions> {
-        const fileConfig: CompilerOptions = (await promisify(fs.stat)(file)).isFile
+        const fileConfig: CompilerOptions = (await promisify(fs.stat)(file)).isFile()
             ? JSON.parse((await promisify(fs.readFile)(file, 'utf8')).toString())
             : {};
         assert.doesConformToSchema('compiler.json', fileConfig, compilerOptionsSchema);
