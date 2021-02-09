@@ -8,6 +8,7 @@ import * as _ from 'lodash';
 import * as path from 'path';
 import * as requireFromString from 'require-from-string';
 import * as solc from 'solc';
+import * as stripComments from 'strip-comments';
 import { promisify } from 'util';
 
 import { constants } from './constants';
@@ -98,10 +99,11 @@ export function getNormalizedErrMsg(errMsg: string): string {
 export function parseDependencies(contractSource: ContractSource): string[] {
     // TODO: Use a proper parser
     const source = contractSource.source;
+    const sourceWithoutComments = stripComments(source);
     const IMPORT_REGEX = /(import\s)/;
     const DEPENDENCY_PATH_REGEX = /"([^"]+)"/; // Source: https://github.com/BlockChainCompany/soljitsu/blob/master/lib/shared.js
     const dependencies: string[] = [];
-    const lines = source.split('\n');
+    const lines = sourceWithoutComments.split('\n');
     _.forEach(lines, line => {
         if (line.match(IMPORT_REGEX) !== null) {
             const dependencyMatch = line.match(DEPENDENCY_PATH_REGEX);
@@ -340,7 +342,8 @@ function recursivelyGatherDependencySources(
         visitedAbsolutePaths[contractPath] = true;
     }
     const contractSource = sourcesByAbsolutePath[contractPath].content;
-    const importStatementMatches = contractSource.match(/\nimport[^;]*;/g);
+    const contractSourceWithoutComments = stripComments(contractSource);
+    const importStatementMatches = contractSourceWithoutComments.match(/\nimport[^;]*;/g);
     if (importStatementMatches === null) {
         return;
     }
