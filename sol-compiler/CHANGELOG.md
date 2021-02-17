@@ -5,6 +5,10 @@ Edit the package's CHANGELOG.json file only.
 
 CHANGELOG
 
+## v4.6.1 - _February 17, 2021_
+
+    * Fix a bug with catching and trying to resolve commented out import statements (#26)
+
 ## v4.6.0 - _February 9, 2021_
 
     * Add solidity 0.8.x support (#24)
