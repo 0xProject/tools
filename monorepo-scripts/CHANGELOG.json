@@ -10,7 +10,8 @@
                 "note": "Add --prerelease option to publish job",
                 "pr": 27
             }
-        ]
+        ],
+        "timestamp": 1614746220
     },
     {
         "timestamp": 1609871818,
