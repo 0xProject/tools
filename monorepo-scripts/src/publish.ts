@@ -288,18 +288,31 @@ async function lernaPublishAsync(packageToNextVersion: { [name: string]: string 
 }
 
 function updateVersionNumberIfNeeded(currentVersion: string, proposedNextVersion: string): string {
+    let normalizedProposedNextVersion = proposedNextVersion;
+    // Add a prerelease ta the proposed next version if this is a prerelease publush.
+    if (ARGV.prerelease) {
+        const sv = semver.parse(normalizedProposedNextVersion);
+        if (!sv) {
+            throw new Error(`Encountered invalid semver: ${normalizedProposedNextVersion}`);
+        }
+        if (sv.prerelease.length === 0 || sv.prerelease[0] !== ARGV.prerelease) {
+            // No prerelease or prerelease ID is different. Replace it with the
+            // one we're working with.
+            normalizedProposedNextVersion = `${sv.major}.${sv.minor}.${sv.patch}-${ARGV.prerelease}`;
+        }
+    }
     const updatedVersionIfValid = tryIncrementPatchVersion(currentVersion);
     if (updatedVersionIfValid === null) {
         throw new Error(`Encountered invalid semver: ${currentVersion}`);
     }
-    if (proposedNextVersion === currentVersion) {
+    if (normalizedProposedNextVersion === currentVersion) {
         return updatedVersionIfValid;
     }
-    const sortedVersions = semverSort.desc([proposedNextVersion, currentVersion]);
-    if (sortedVersions[0] !== proposedNextVersion) {
+    const sortedVersions = semverSort.desc([normalizedProposedNextVersion, currentVersion]);
+    if (sortedVersions[0] !== normalizedProposedNextVersion) {
         return updatedVersionIfValid;
     }
-    return proposedNextVersion;
+    return normalizedProposedNextVersion;
 }
 
 function tryIncrementPatchVersion(version: string): string | null {
