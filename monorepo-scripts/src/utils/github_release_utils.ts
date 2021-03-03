@@ -16,6 +16,7 @@ export async function publishReleaseNotesAsync(
     packagesToPublish: Package[],
     repo: string,
     isDryRun: boolean,
+    isPrerelease: boolean = false,
 ): Promise<string | undefined> {
     // Git push a tag representing this publish (publish-{commit-hash}) (truncate hash)
     const result = await execAsync('git log -n 1 --pretty=format:"%H"', { cwd: constants.monorepoRootPath });
@@ -62,7 +63,7 @@ export async function publishReleaseNotesAsync(
         name: releaseName,
         notes: aggregateNotes,
         draft: false,
-        prerelease: false,
+        prerelease: onvrdisplaypresentchange,
         reuseRelease: true,
         reuseDraftOnly: false,
         // TODO: Currently publish-release doesn't let you specify the labels for each asset uploaded
