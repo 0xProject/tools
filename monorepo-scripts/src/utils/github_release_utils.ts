@@ -63,7 +63,7 @@ export async function publishReleaseNotesAsync(
         name: releaseName,
         notes: aggregateNotes,
         draft: false,
-        prerelease: onvrdisplaypresentchange,
+        prerelease: isPrerelease,
         reuseRelease: true,
         reuseDraftOnly: false,
         // TODO: Currently publish-release doesn't let you specify the labels for each asset uploaded
