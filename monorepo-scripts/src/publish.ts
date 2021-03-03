@@ -33,6 +33,14 @@ const ARGV = yargs
         describe: 'doc generation config file',
         type: 'string',
     })
+    .option('dist-tag', {
+        describe: 'dist tag (defaults to latest)',
+        type: 'string',
+    })
+    .option('prerelease', {
+        describe: 'prerelease ID',
+        type: 'string',
+    })
     .option('yes', { default: false })
     .option('upload-docs', { default: false })
     .option('auto-commit', { default: true }).argv;
@@ -73,7 +81,7 @@ async function confirmAsync(message: string): Promise<void> {
     _.each(updatedPrivatePackages, pkg => {
         const currentVersion = pkg.packageJson.version;
         const packageName = pkg.packageJson.name;
-        const nextPatchVersionIfValid = semver.inc(currentVersion, 'patch');
+        const nextPatchVersionIfValid = tryIncrementPatchVersion(currentVersion);
         if (nextPatchVersionIfValid !== null) {
             packageToNextVersion[packageName] = nextPatchVersionIfValid;
         } else {
@@ -99,12 +107,12 @@ async function confirmAsync(message: string): Promise<void> {
     await lernaPublishAsync(packageToNextVersion);
 
     const isDryRun = configs.IS_LOCAL_PUBLISH;
-    if (!isDryRun && ARGV.uploadDocs) {
+    if (!isDryRun && !ARGV.prerelease && ARGV.uploadDocs) {
         // Upload markdown docs to S3 bucket
         await execAsync(`npm run upload_md_docs`, { cwd: constants.monorepoRootPath });
     }
 
-    const releaseNotes = await publishReleaseNotesAsync(updatedPublicPackages, ARGV.repo, isDryRun);
+    const releaseNotes = await publishReleaseNotesAsync(updatedPublicPackages, ARGV.repo, isDryRun, !!ARGV.prerelease);
     utils.log('Published release notes');
 
     if (!isDryRun && releaseNotes) {
@@ -170,7 +178,7 @@ async function updateChangeLogsAsync(updatedPublicPackages: Package[]): Promise<
         );
         if (shouldAddNewEntry) {
             // Create a new entry for a patch version with generic changelog entry.
-            const nextPatchVersionIfValid = semver.inc(currentVersion, 'patch');
+            const nextPatchVersionIfValid = tryIncrementPatchVersion(currentVersion);
             if (nextPatchVersionIfValid === null) {
                 throw new Error(`Encountered invalid semver version: ${currentVersion} for package: ${packageName}`);
             }
@@ -236,8 +244,14 @@ async function lernaPublishAsync(packageToNextVersion: { [name: string]: string 
         if (process.env.NPM_TOKEN) {
             lernaPublishArgs.push('--no-verify-access');
         }
-        if (configs.DIST_TAG !== '') {
-            lernaPublishArgs.push(`--dist-tag=${configs.DIST_TAG}`);
+        let distTag = ARGV.distTag;
+        if (ARGV.prerelease && !distTag) {
+            // We don't want prereleases getting tagged as 'latest' unless
+            // explicitly told to.
+            distTag = ARGV.prerelease;
+        }
+        if (distTag) {
+            lernaPublishArgs.push(`--dist-tag=${distTag}`);
         }
         utils.log('Lerna is publishing...');
         try {
@@ -274,7 +288,7 @@ async function lernaPublishAsync(packageToNextVersion: { [name: string]: string 
 }
 
 function updateVersionNumberIfNeeded(currentVersion: string, proposedNextVersion: string): string {
-    const updatedVersionIfValid = semver.inc(currentVersion, 'patch');
+    const updatedVersionIfValid = tryIncrementPatchVersion(currentVersion);
     if (updatedVersionIfValid === null) {
         throw new Error(`Encountered invalid semver: ${currentVersion}`);
     }
@@ -286,4 +300,8 @@ function updateVersionNumberIfNeeded(currentVersion: string, proposedNextVersion
         return updatedVersionIfValid;
     }
     return proposedNextVersion;
+}
+
+function tryIncrementPatchVersion(version: string): string | null {
+    return semver.inc(version, ARGV.prerelease ? 'prerelease' : 'patch', false, ARGV.prerelease ? ARGV.prerelease : '');
 }
