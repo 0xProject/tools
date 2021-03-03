@@ -45,7 +45,7 @@ jobs:
                   NPM_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
                   GITHUB_TOKEN: ${{ github.token }}
             - name: 'merge into main branch'
-              if: github.event.inputs.prerelease # unless it's a prerelease
+              if: !github.event.inputs.prerelease # unless it's a prerelease
               run: |
                   git checkout main && \
                   git merge ${{ github.ref }} && \
