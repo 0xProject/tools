@@ -5,6 +5,10 @@ Edit the package's CHANGELOG.json file only.
 
 CHANGELOG
 
+## v3.1.1-test - _March 3, 2021_
+
+    * Fix prerelease publish bugs
+
 ## v3.1.0 - _March 3, 2021_
 
     * Move DIST_TAG env var to --dist-tag option to publish job (#27)
