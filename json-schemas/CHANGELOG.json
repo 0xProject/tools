@@ -1,5 +1,14 @@
 [
     {
+        "version": "5.4.2",
+        "changes": [
+            {
+                "note": "Use ajv instead of jsonschema to improve performance",
+                "pr": 
+            }
+        ]
+    },
+    {
         "timestamp": 1610044030,
         "version": "5.4.1",
         "changes": [

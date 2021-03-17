@@ -46,7 +46,7 @@ describe('Schema', () => {
     const validateAgainstSchema = (testCases: any[], schema: any, shouldFail = false) => {
         forEach(testCases, (testCase: any) => {
             const validationResult = validator.validate(testCase, schema);
-            const hasErrors = validationResult.errors.length !== 0;
+            const hasErrors = validationResult.errors && validationResult.errors.length !== 0;
             if (shouldFail) {
                 if (!hasErrors) {
                     throw new Error(

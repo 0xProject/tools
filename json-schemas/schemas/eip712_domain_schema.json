@@ -5,7 +5,7 @@
             "type": "string"
         },
         "version": {
-            "type": "version"
+            "type": "string"
         },
         "chainId": {
             "type": "number"

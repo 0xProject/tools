@@ -45,7 +45,7 @@
     "dependencies": {
         "@0x/typescript-typings": "^5.1.6",
         "@types/node": "12.12.54",
-        "jsonschema": "^1.2.0",
+        "ajv": "^6.12.5",
         "lodash.values": "^4.3.0"
     },
     "devDependencies": {
