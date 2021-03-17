@@ -4,7 +4,7 @@
         "changes": [
             {
                 "note": "Use ajv instead of jsonschema to improve performance",
-                "pr": 
+                "pr": 28
             }
         ]
     },
