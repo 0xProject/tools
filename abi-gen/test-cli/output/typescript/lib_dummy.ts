@@ -50,11 +50,7 @@ export class LibDummyContract extends BaseContract {
         txDefaults: Partial<TxData>,
         logDecodeDependencies: { [contractName: string]: ContractArtifact | SimpleContractArtifact },
     ): Promise<LibDummyContract> {
-        assert.doesConformToSchema('txDefaults', txDefaults, schemas.txDataSchema, [
-            schemas.addressSchema,
-            schemas.numberSchema,
-            schemas.jsNumber,
-        ]);
+        assert.doesConformToSchema('txDefaults', txDefaults, schemas.txDataSchema);
         if (artifact.compilerOutput === undefined) {
             throw new Error('Compiler output not found in the artifact file');
         }
@@ -77,11 +73,7 @@ export class LibDummyContract extends BaseContract {
         txDefaults: Partial<TxData>,
         logDecodeDependencies: { [contractName: string]: ContractArtifact | SimpleContractArtifact },
     ): Promise<LibDummyContract> {
-        assert.doesConformToSchema('txDefaults', txDefaults, schemas.txDataSchema, [
-            schemas.addressSchema,
-            schemas.numberSchema,
-            schemas.jsNumber,
-        ]);
+        assert.doesConformToSchema('txDefaults', txDefaults, schemas.txDataSchema);
         if (artifact.compilerOutput === undefined) {
             throw new Error('Compiler output not found in the artifact file');
         }
@@ -111,11 +103,7 @@ export class LibDummyContract extends BaseContract {
         logDecodeDependencies: { [contractName: string]: ContractAbi },
     ): Promise<LibDummyContract> {
         assert.isHexString('bytecode', bytecode);
-        assert.doesConformToSchema('txDefaults', txDefaults, schemas.txDataSchema, [
-            schemas.addressSchema,
-            schemas.numberSchema,
-            schemas.jsNumber,
-        ]);
+        assert.doesConformToSchema('txDefaults', txDefaults, schemas.txDataSchema);
         const provider = providerUtils.standardizeOrThrow(supportedProvider);
         const constructorAbi = BaseContract._lookupConstructorAbi(abi);
         [] = BaseContract._formatABIDataItemList(constructorAbi.inputs, [], BaseContract._bigNumberToString);

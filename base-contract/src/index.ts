@@ -205,11 +205,7 @@ export class BaseContract {
         return txDataWithDefaults as TxData;
     }
     protected static _assertCallParams(callData: Partial<CallData>, defaultBlock?: BlockParam): void {
-        assert.doesConformToSchema('callData', callData, schemas.callDataSchema, [
-            schemas.addressSchema,
-            schemas.numberSchema,
-            schemas.jsNumber,
-        ]);
+        assert.doesConformToSchema('callData', callData, schemas.callDataSchema);
         if (defaultBlock !== undefined) {
             assert.isBlockParam('defaultBlock', defaultBlock);
         }
@@ -376,11 +372,7 @@ export class BaseContract {
         }
         const provider = providerUtils.standardizeOrThrow(supportedProvider);
         if (callAndTxnDefaults !== undefined) {
-            assert.doesConformToSchema('callAndTxnDefaults', callAndTxnDefaults, schemas.callDataSchema, [
-                schemas.addressSchema,
-                schemas.numberSchema,
-                schemas.jsNumber,
-            ]);
+            assert.doesConformToSchema('callAndTxnDefaults', callAndTxnDefaults, schemas.callDataSchema);
         }
         this.contractName = contractName;
         this._web3Wrapper = new Web3Wrapper(provider, callAndTxnDefaults);
