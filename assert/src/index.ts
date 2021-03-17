@@ -88,9 +88,11 @@ export const assert = {
         }
         const validationResult = schemaValidator.validate(value, schema);
         const hasValidationErrors = validationResult.errors && validationResult.errors.length > 0;
-        const msg = hasValidationErrors ? `Expected ${variableName} to conform to schema ${(schema as any).id}
+        const msg = hasValidationErrors
+            ? `Expected ${variableName} to conform to schema ${(schema as any).id}
 Encountered: ${JSON.stringify(value, null, '\t')}
-Validation errors: ${validationResult.errors!.join(', ')}` : '';
+Validation errors: ${validationResult.errors!.join(', ')}`
+            : '';
         assert.assert(!hasValidationErrors, msg);
     },
     doesMatchRegex(variableName: string, value: string, regex: RegExp): void {
