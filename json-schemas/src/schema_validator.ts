@@ -1,18 +1,18 @@
-import * as Ajv from 'ajv';
+import * as AJV from 'ajv';
+import { Ajv as IAjv } from 'ajv';
 import values = require('lodash.values');
 
 import { schemas } from './schemas';
-
 /**
  * A validator wrapping (AJV) [https://github.com/ajv-validator/ajv]
  */
 export class SchemaValidator {
-    private readonly _validator: Ajv.Ajv;
+    private readonly _validator: IAjv;
     /**
      * Instantiates a SchemaValidator instance
      */
     constructor(newSchemas: object[] = []) {
-        this._validator = new Ajv({ schemaId: 'auto' });
+        this._validator = new AJV({ schemaId: 'auto' });
         this._validator.addSchema(values(schemas).filter(s => s !== undefined && s.id !== undefined));
         this._validator.addSchema(newSchemas.filter(s => s !== undefined));
     }
@@ -35,7 +35,7 @@ export class SchemaValidator {
      * @param schema Schema to check against
      * @returns The results of the validation
      */
-    public validate(instance: any, schema: object): Ajv.Ajv {
+    public validate(instance: any, schema: object): IAjv {
         this.isValid(instance, schema);
         return this._validator; // errors field is returned here. Will be overwritten on the next validation.
     }
