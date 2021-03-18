@@ -3,6 +3,7 @@
     "compilerOptions": {
         "outDir": "lib",
         "rootDir": ".",
+        "isolatedModules": false,
         "resolveJsonModule": true
     },
     "include": ["./src/**/*", "./test/**/*"],

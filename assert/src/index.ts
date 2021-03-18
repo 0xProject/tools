@@ -1,10 +1,10 @@
-import { Schema, SchemaValidator } from '@0x/json-schemas';
+import { SchemaValidator } from '@0x/json-schemas';
 import { addressUtils, BigNumber, logUtils } from '@0x/utils';
 import * as _ from 'lodash';
 import * as validUrl from 'valid-url';
 
 const HEX_REGEX = /^0x[0-9A-F]*$/i;
-
+const schemaValidator = new SchemaValidator();
 export const assert = {
     isBigNumber(variableName: string, value: BigNumber): void {
         const isBigNumber = BigNumber.isBigNumber(value);
@@ -79,19 +79,20 @@ export const assert = {
         const isWeb3Provider = _.isFunction(value.send) || _.isFunction(value.sendAsync);
         assert.assert(isWeb3Provider, assert.typeAssertionMessage(variableName, 'Provider', value));
     },
-    doesConformToSchema(variableName: string, value: any, schema: Schema, subSchemas?: Schema[]): void {
+    doesConformToSchema(variableName: string, value: any, schema: object, subSchemas?: object[]): void {
         if (value === undefined) {
             throw new Error(`${variableName} can't be undefined`);
         }
-        const schemaValidator = new SchemaValidator();
         if (subSchemas !== undefined) {
-            _.map(subSchemas, schemaValidator.addSchema.bind(schemaValidator));
+            schemaValidator.addSchema(subSchemas);
         }
         const validationResult = schemaValidator.validate(value, schema);
-        const hasValidationErrors = validationResult.errors.length > 0;
-        const msg = `Expected ${variableName} to conform to schema ${schema.id}
+        const hasValidationErrors = validationResult.errors && validationResult.errors.length > 0;
+        const msg = hasValidationErrors
+            ? `Expected ${variableName} to conform to schema ${(schema as any).id}
 Encountered: ${JSON.stringify(value, null, '\t')}
-Validation errors: ${validationResult.errors.join(', ')}`;
+Validation errors: ${validationResult.errors!.join(', ')}`
+            : '';
         assert.assert(!hasValidationErrors, msg);
     },
     doesMatchRegex(variableName: string, value: string, regex: RegExp): void {
