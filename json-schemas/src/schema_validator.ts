@@ -1,5 +1,6 @@
-import * as AJV from 'ajv';
-import { Ajv as IAjv } from 'ajv';
+import * as AJV from 'ajv'; // namespace and constructor
+// tslint:disable:no-duplicate-imports
+import { Ajv } from 'ajv'; // interface
 import values = require('lodash.values');
 
 import { schemas } from './schemas';
@@ -7,7 +8,7 @@ import { schemas } from './schemas';
  * A validator wrapping (AJV) [https://github.com/ajv-validator/ajv]
  */
 export class SchemaValidator {
-    private readonly _validator: IAjv;
+    private readonly _validator: Ajv;
     /**
      * Instantiates a SchemaValidator instance
      */
@@ -35,7 +36,7 @@ export class SchemaValidator {
      * @param schema Schema to check against
      * @returns The results of the validation
      */
-    public validate(instance: any, schema: object): IAjv {
+    public validate(instance: any, schema: object): Ajv {
         this.isValid(instance, schema);
         return this._validator; // errors field is returned here. Will be overwritten on the next validation.
     }
