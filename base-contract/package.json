@@ -60,7 +60,8 @@
         "uuid": "^3.3.2"
     },
     "resolutions": {
-        "merkle-patricia-tree": "^2.3.2"
+        "merkle-patricia-tree": "^2.3.2",
+        "ethereumjs-vm": "^4.2.0"
     },
     "publishConfig": {
         "access": "public"

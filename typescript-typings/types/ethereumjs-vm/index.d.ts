@@ -3,6 +3,7 @@ declare module 'ethereumjs-vm' {
     type Common = any; // from ethereumjs-common
     type Account = any; // from ethereumjs-account
     type Blockchain = any; // from ethereumjs-blockchain
+    type Address = any; // from ethereumjs-util
 
     export default class VM {
         opts: VmOpts;
@@ -98,33 +99,31 @@ declare module 'ethereumjs-vm' {
         _touchedStack: Set<string>[];
         _checkpointCount: number;
         _originalStorageCache: Map<string, Map<string, Buffer>>;
-
         constructor(opts: StateManagerOpts);
         copy(): StateManager;
-        getAccount(address: Buffer, cb: any): void;
-        putAccount(address: Buffer, account: Account, cb: any): void;
-        putContractCode(address: Buffer, value: Buffer, cb: any): void;
-        getContractCode(address: Buffer, cb: any): void;
-        _lookupStorageTrie(address: Buffer, cb: any): void;
-        _getStorageTrie(address: Buffer, cb: any): void;
-        getContractStorage(address: Buffer, key: Buffer, cb: any): void;
-        getOriginalContractStorage(address: Buffer, key: Buffer, cb: any): void;
-        _modifyContractStorage(address: Buffer, modifyTrie: any, cb: any): void;
-        putContractStorage(address: Buffer, key: Buffer, value: Buffer, cb: any): void;
-        clearContractStorage(address: Buffer, cb: any): void;
-        checkpoint(cb: any): void;
-        commit(cb: any): void;
-        revert(cb: any): void;
-        getStateRoot(cb: any): void;
-        setStateRoot(stateRoot: Buffer, cb: any): void;
-        dumpStorage(address: Buffer, cb: any): void;
-        hasGenesisState(cb: any): void;
-        generateCanonicalGenesis(cb: any): void;
-        generateGenesis(initState: any, cb: any): void;
-        accountIsEmpty(address: Buffer, cb: any): void;
-        cleanupTouchedAccounts(cb: any): void;
-        _clearOriginalStorageCache(): void;
-        touchAccount(address: Buffer): void;
+        getAccount(address: Address): Promise<Account>;
+        putAccount(address: Address, account: Account): Promise<void>;
+        deleteAccount(address: Address): Promise<void>;
+        touchAccount(address: Address): void;
+        putContractCode(address: Address, value: Buffer): Promise<void>;
+        getContractCode(address: Address): Promise<Buffer>;
+        getContractStorage(address: Address, key: Buffer): Promise<Buffer>;
+        getOriginalContractStorage(address: Address, key: Buffer): Promise<Buffer>;
+        putContractStorage(address: Address, key: Buffer, value: Buffer): Promise<void>;
+        clearContractStorage(address: Address): Promise<void>;
+        checkpoint(): Promise<void>;
+        commit(): Promise<void>;
+        revert(): Promise<void>;
+        getStateRoot(force?: boolean): Promise<Buffer>;
+        setStateRoot(stateRoot: Buffer): Promise<void>;
+        dumpStorage(address: Address): Promise<StorageDump>;
+        hasGenesisState(): Promise<boolean>;
+        generateCanonicalGenesis(): Promise<void>;
+        generateGenesis(initState: any): Promise<void>;
+        accountIsEmpty(address: Address): Promise<boolean>;
+        accountExists(address: Address): Promise<boolean>;
+        cleanupTouchedAccounts(): Promise<void>;
+        clearOriginalStorageCache(): void;
     }
 
     class Cache {
@@ -155,12 +154,12 @@ declare module 'ethereumjs-vm' {
     class EEI {
         _env: Env;
         _result: RunResult;
-        _state: PStateManager;
+        _state: StateManager;
         _evm: EVM;
         _lastReturned: Buffer;
         _common: Common;
         _gasLeft: BN;
-        constructor(env: Env, state: PStateManager, evm: EVM, common: Common, gasLeft: BN);
+        constructor(env: Env, state: StateManager, evm: EVM, common: Common, gasLeft: BN);
         useGas(amount: BN): void;
         refundGas(amount: BN): void;
         getAddress(): Buffer;
@@ -227,38 +226,13 @@ declare module 'ethereumjs-vm' {
         selfdestruct: { [k: string]: Buffer };
     }
 
-    export class PStateManager {
-        _wrapped: StateManager;
-        constructor(wrapped: StateManager);
-        copy(): PStateManager;
-        getAccount(addr: Buffer): Promise<Account>;
-        putAccount(addr: Buffer, account: Account): Promise<void>;
-        putContractCode(addr: Buffer, code: Buffer): Promise<void>;
-        getContractCode(addr: Buffer): Promise<Buffer>;
-        getContractStorage(addr: Buffer, key: Buffer): Promise<any>;
-        getOriginalContractStorage(addr: Buffer, key: Buffer): Promise<any>;
-        putContractStorage(addr: Buffer, key: Buffer, value: Buffer): Promise<void>;
-        clearContractStorage(addr: Buffer): Promise<void>;
-        checkpoint(): Promise<void>;
-        commit(): Promise<void>;
-        revert(): Promise<void>;
-        getStateRoot(): Promise<Buffer>;
-        setStateRoot(root: Buffer): Promise<void>;
-        dumpStorage(address: Buffer): Promise<StorageDump>;
-        hasGenesisState(): Promise<boolean>;
-        generateCanonicalGenesis(): Promise<void>;
-        generateGenesis(initState: any): Promise<void>;
-        accountIsEmpty(address: Buffer): Promise<boolean>;
-        cleanupTouchedAccounts(): Promise<void>;
-    }
-
     interface StorageDump {
         [key: string]: string;
     }
 
     class EVM {
         _vm: any;
-        _state: PStateManager;
+        _state: StateManager;
         _tx: TxContext;
         _block: any;
         constructor(vm: any, txContext: TxContext, block: any);

@@ -1,5 +1,14 @@
 [
     {
+        "version": "5.1.7",
+        "changes": [
+            {
+                "note": "Update definition for ethereumjs-vm/StateManager",
+                "pr": 23
+            }
+        ]
+    },
+    {
         "timestamp": 1606873582,
         "version": "5.1.6",
         "changes": [
