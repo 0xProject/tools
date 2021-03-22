@@ -1,5 +1,5 @@
-import { promisify } from '@0x/utils';
 import { JSONRPCRequestPayload, JSONRPCResponsePayload } from 'ethereum-types';
+import { promisify } from 'util';
 import Web3ProviderEngine = require('web3-provider-engine');
 
 import { Callback, ErrorCallback, JSONRPCRequestPayloadWithMethod } from '../types';
@@ -39,11 +39,7 @@ export abstract class Subprovider {
      * @param end A callback called once the subprovider is done handling the request
      */
     // tslint:disable-next-line:async-suffix
-    public abstract async handleRequest(
-        payload: JSONRPCRequestPayload,
-        next: Callback,
-        end: ErrorCallback,
-    ): Promise<void>;
+    public abstract handleRequest(payload: JSONRPCRequestPayload, next: Callback, end: ErrorCallback): Promise<void>;
 
     /**
      * Emits a JSON RPC payload that will then be handled by the ProviderEngine instance
@@ -54,9 +50,8 @@ export abstract class Subprovider {
      */
     public async emitPayloadAsync(payload: Partial<JSONRPCRequestPayloadWithMethod>): Promise<JSONRPCResponsePayload> {
         const finalPayload = Subprovider._createFinalPayload(payload);
-        // Promisify does the binding internally and `this` is supplied as a second argument
-        // tslint:disable-next-line:no-unbound-method
-        const response = await promisify<JSONRPCResponsePayload>(this.engine.sendAsync, this.engine)(finalPayload);
+        const sendAsync = promisify(this.engine.sendAsync.bind(this.engine));
+        const response = await sendAsync(finalPayload as JSONRPCRequestPayload);
         return response;
     }
     /**

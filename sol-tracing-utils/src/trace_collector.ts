@@ -1,4 +1,3 @@
-import { promisify } from '@0x/utils';
 import chalk from 'chalk';
 import { stripHexPrefix } from 'ethereumjs-util';
 import * as fs from 'fs';
@@ -6,6 +5,7 @@ import { Collector } from 'istanbul';
 import * as _ from 'lodash';
 import { getLogger, levels, Logger } from 'loglevel';
 import * as mkdirp from 'mkdirp';
+import { promisify } from 'util';
 
 import { AbstractArtifactAdapter } from './artifact_adapters/abstract_artifact_adapter';
 import { constants } from './constants';
@@ -21,7 +21,7 @@ import {
 } from './types';
 import { utils } from './utils';
 
-const mkdirpAsync = promisify<undefined>(mkdirp);
+const mkdirpAsync = promisify(mkdirp);
 
 export type SingleFileSubtraceHandler = (
     contractData: ContractData,
