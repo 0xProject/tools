@@ -9,7 +9,6 @@ import {
     CallData,
     FilterObject,
     JSONRPCRequestPayload,
-    JSONRPCResponsePayload,
     LogEntry,
     RawLogEntry,
     SupportedProvider,
@@ -715,19 +714,27 @@ export class Web3Wrapper {
      * @return The contents nested under the result key of the response body
      */
     public async sendRawPayloadAsync<A>(payload: Partial<JSONRPCRequestPayload>): Promise<A> {
-        const sendAsync = this._provider.sendAsync.bind(this._provider);
+        if (!payload.method) {
+            throw new Error(`Must supply method in JSONRPCRequestPayload, tried: [${payload}]`);
+        }
+        const sendAsync = promisify(this._provider.sendAsync.bind(this._provider));
+        // tslint:disable:no-object-literal-type-assertion
         const payloadWithDefaults = {
             id: this._jsonRpcRequestId++,
             params: [],
             jsonrpc: '2.0',
             ...payload,
-        };
-        const response = await promisify<JSONRPCResponsePayload>(sendAsync)(payloadWithDefaults);
-        if (response.error) {
-            throw new Error(response.error.message);
+        } as JSONRPCRequestPayload;
+        // tslint:enable:no-object-literal-type-assertion
+        try {
+            const response = await sendAsync(payloadWithDefaults);
+            if (!response) {
+                throw new Error(`No response`);
+            }
+            return response.result;
+        } catch (e) {
+            throw new Error(e.message);
         }
-        const result = response.result;
-        return result;
     }
     /**
      * Returns either NodeType.Geth or NodeType.Ganache depending on the type of

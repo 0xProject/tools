@@ -104,9 +104,10 @@ export class SubscriptionManager<ContractEventArgs, ContractEvents extends strin
     private _onLogStateChanged<ArgsType extends ContractEventArgs>(
         isRemoved: boolean,
         blockHash: string,
-        rawLogs: RawLogEntry[],
+        rawLogs: Log[], // actually expected to be RawLogEntry, but the Blockstream's interface demands Log
     ): void {
-        const logs: LogEntry[] = rawLogs.map(rawLog => marshaller.unmarshalLog(rawLog));
+        // tslint:disable-next-line:no-unnecessary-type-assertion
+        const logs: LogEntry[] = (rawLogs as RawLogEntry[]).map(rawLog => marshaller.unmarshalLog(rawLog));
         logs.forEach(log => {
             Object.entries(this._filters).forEach(([filterToken, filter]) => {
                 if (filterUtils.matchesFilter(log, filter)) {
@@ -166,12 +167,12 @@ export class SubscriptionManager<ContractEventArgs, ContractEvents extends strin
         return blockOrNull;
     }
     // This method only exists in order to comply with the expected interface of Blockstream's constructor
-    private async _blockstreamGetLogsAsync(filterOptions: FilterObject): Promise<RawLogEntry[]> {
-        const logs = await this._web3Wrapper.sendRawPayloadAsync<RawLogEntry[]>({
+    private async _blockstreamGetLogsAsync(filterOptions: FilterObject): Promise<Log[]> {
+        const logs = await this._web3Wrapper.sendRawPayloadAsync<Log[]>({
             method: 'eth_getLogs',
             params: [filterOptions],
         });
-        return logs as RawLogEntry[];
+        return logs as Log[];
     }
     private _stopBlockAndLogStream(): void {
         if (this._blockAndLogStreamerIfExists === undefined) {
