@@ -105,7 +105,7 @@ export abstract class TraceCollectionSubprovider extends Subprovider {
                         if (txData.to === null) {
                             txData.to = constants.NEW_CONTRACT;
                         }
-                        next(logAsyncErrors(this._onTransactionSentAsync.bind(this, txData)));
+                        next(logAsyncErrors(this._onTransactionSentAsync.bind(this, txData as any)));
                     }
                     return;
 
@@ -146,11 +146,7 @@ export abstract class TraceCollectionSubprovider extends Subprovider {
         super.setEngine(engine);
         this._web3Wrapper = new Web3Wrapper(engine);
     }
-    protected abstract async _recordTxTraceAsync(
-        address: string,
-        data: string | undefined,
-        txHash: string,
-    ): Promise<void>;
+    protected abstract _recordTxTraceAsync(address: string, data: string | undefined, txHash: string): Promise<void>;
     private async _onTransactionSentAsync(
         txData: MaybeFakeTxData,
         err: Error | null,

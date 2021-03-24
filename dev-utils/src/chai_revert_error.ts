@@ -50,7 +50,7 @@ export function revertErrorHelper(_chai: Chai): void {
             }
             if (!compareRevertErrors.call(this, _chai, rejectValue, expected, true)) {
                 // Wasn't handled by the comparison function so call the previous handler.
-                _super.call(this, expected, ...rest);
+                return _super.call(this, expected, ...rest);
             }
         };
     });
@@ -62,7 +62,7 @@ export function revertErrorHelper(_chai: Chai): void {
             // Wait for the promise to resolve.
             if (!compareRevertErrors.call(this, _chai, await maybePromise, expected)) {
                 // Wasn't handled by the comparison function so call the previous handler.
-                _super.call(this, expected, ...rest);
+                return _super.call(this, expected, ...rest);
             }
         };
     });

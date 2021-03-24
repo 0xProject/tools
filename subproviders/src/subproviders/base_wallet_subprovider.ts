@@ -20,10 +20,10 @@ export abstract class BaseWalletSubprovider extends Subprovider {
         }
     }
 
-    public abstract async getAccountsAsync(): Promise<string[]>;
-    public abstract async signTransactionAsync(txParams: PartialTxParams): Promise<string>;
-    public abstract async signPersonalMessageAsync(data: string, address: string): Promise<string>;
-    public abstract async signTypedDataAsync(address: string, typedData: any): Promise<string>;
+    public abstract getAccountsAsync(): Promise<string[]>;
+    public abstract signTransactionAsync(txParams: PartialTxParams): Promise<string>;
+    public abstract signPersonalMessageAsync(data: string, address: string): Promise<string>;
+    public abstract signTypedDataAsync(address: string, typedData: any): Promise<string>;
 
     /**
      * This method conforms to the web3-provider-engine interface.

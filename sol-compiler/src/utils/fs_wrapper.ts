@@ -1,18 +1,18 @@
-import { promisify } from '@0x/utils';
 import * as fs from 'fs';
 import * as mkdirp from 'mkdirp';
+import { promisify } from 'util';
 
 export const fsWrapper = {
-    readdirAsync: promisify<string[]>(fs.readdir),
-    readFileAsync: promisify<string>(fs.readFile),
-    writeFileAsync: promisify<undefined>(fs.writeFile),
-    mkdirpAsync: promisify<undefined>(mkdirp),
+    readdirAsync: promisify(fs.readdir),
+    readFileAsync: promisify(fs.readFile),
+    writeFileAsync: promisify(fs.writeFile),
+    mkdirpAsync: promisify(mkdirp),
     doesPathExistSync: fs.existsSync,
     rmdirSync: fs.rmdirSync,
-    removeFileAsync: promisify<undefined>(fs.unlink),
-    statAsync: promisify<fs.Stats>(fs.stat),
-    appendFileAsync: promisify<undefined>(fs.appendFile),
-    accessAsync: promisify<boolean>(fs.access),
+    removeFileAsync: promisify(fs.unlink),
+    statAsync: promisify(fs.stat),
+    appendFileAsync: promisify(fs.appendFile),
+    accessAsync: promisify(fs.access),
     doesFileExistAsync: async (filePath: string): Promise<boolean> => {
         try {
             await fsWrapper.accessAsync(

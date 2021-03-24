@@ -82,7 +82,7 @@ export class PromiseWithTransactionHash<T> implements Promise<T> {
     }
     // tslint:enable:promise-function-async
     // tslint:enable:async-suffix
-    get [Symbol.toStringTag](): 'Promise' {
+    get [Symbol.toStringTag](): string {
         return this._promise[Symbol.toStringTag];
     }
 }
