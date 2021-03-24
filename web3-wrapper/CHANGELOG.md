@@ -5,6 +5,10 @@ Edit the package's CHANGELOG.json file only.
 
 CHANGELOG
 
+## v7.4.2 - _March 24, 2021_
+
+    * Dependencies updated
+
 ## v7.4.1 - _January 26, 2021_
 
     * Handle missing RPC method error for `web3-provider-engine` geth defaults provider (#22)

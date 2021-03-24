@@ -6,7 +6,8 @@
                 "note": "Use ajv instead of jsonschema to improve performance",
                 "pr": 28
             }
-        ]
+        ],
+        "timestamp": 1616613438
     },
     {
         "timestamp": 1610044030,

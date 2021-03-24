@@ -5,6 +5,10 @@ Edit the package's CHANGELOG.json file only.
 
 CHANGELOG
 
+## v4.6.2 - _March 24, 2021_
+
+    * Dependencies updated
+
 ## v4.6.1 - _February 17, 2021_
 
     * Fix a bug with catching and trying to resolve commented out import statements (#26)

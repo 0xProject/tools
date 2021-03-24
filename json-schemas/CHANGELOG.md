@@ -5,6 +5,10 @@ Edit the package's CHANGELOG.json file only.
 
 CHANGELOG
 
+## v6.0.0 - _March 24, 2021_
+
+    * Use ajv instead of jsonschema to improve performance (#28)
+
 ## v5.4.1 - _January 7, 2021_
 
     * Dependencies updated

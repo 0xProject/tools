@@ -5,6 +5,10 @@ Edit the package's CHANGELOG.json file only.
 
 CHANGELOG
 
+## v3.4.1 - _March 24, 2021_
+
+    * Dependencies updated
+
 ## v3.4.0 - _December 2, 2020_
 
     * Add `shouldCompileIndependently` to `CompilerOptions` (#12)
