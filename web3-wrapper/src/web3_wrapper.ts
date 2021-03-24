@@ -730,6 +730,9 @@ export class Web3Wrapper {
         if (!response || !response.result) {
             throw new Error(`No response`);
         }
+        if (response.error) {
+            throw new Error(response.error.message);
+        }
         return response.result;
     }
     /**
