@@ -717,7 +717,6 @@ export class Web3Wrapper {
         if (!payload.method) {
             throw new Error(`Must supply method in JSONRPCRequestPayload, tried: [${payload}]`);
         }
-        const sendAsync = promisify(this._provider.sendAsync.bind(this._provider));
         // tslint:disable:no-object-literal-type-assertion
         const payloadWithDefaults = {
             id: this._jsonRpcRequestId++,
@@ -726,15 +725,12 @@ export class Web3Wrapper {
             ...payload,
         } as JSONRPCRequestPayload;
         // tslint:enable:no-object-literal-type-assertion
-        try {
-            const response = await sendAsync(payloadWithDefaults);
-            if (!response) {
-                throw new Error(`No response`);
-            }
-            return response.result;
-        } catch (e) {
-            throw new Error(e.message);
+        const sendAsync = promisify(this._provider.sendAsync.bind(this._provider));
+        const response = await sendAsync(payloadWithDefaults); // will throw if it fails
+        if (!response || !response.result) {
+            throw new Error(`No response`);
         }
+        return response.result;
     }
     /**
      * Returns either NodeType.Geth or NodeType.Ganache depending on the type of
