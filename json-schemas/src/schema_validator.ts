@@ -23,8 +23,18 @@ export class SchemaValidator {
      * instances of that schema.
      * @param schema The schema to add
      */
-    public addSchema(_schemas: object | object[]): void {
-        this._validator.addSchema(_schemas); // AJV validates upon adding
+    public addSchema(schemaObjectOrArray: object | object[]): void {
+        const _schemas = Array.isArray(schemaObjectOrArray) ? schemaObjectOrArray : [schemaObjectOrArray];
+        for (const s of _schemas) {
+            try {
+                this._validator.addSchema(s); // AJV validates upon adding
+            } catch (err) {
+                // Ignore duplicate errors.
+                if (!err.message.endsWith('already exists')) {
+                    throw err;
+                }
+            }
+        }
     }
     // In order to validate a complex JS object using jsonschema, we must replace any complex
     // sub-types (e.g BigNumber) with a simpler string representation. Since BigNumber and other
