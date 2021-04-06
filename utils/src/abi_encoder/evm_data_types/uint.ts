@@ -8,6 +8,7 @@ import { RawCalldata } from '../calldata/raw_calldata';
 import { constants } from '../utils/constants';
 import * as EncoderMath from '../utils/math';
 
+// tslint:disable:custom-no-magic-numbers
 export class UIntDataType extends AbstractBlobDataType {
     private static readonly _MATCHER = RegExp(
         '^uint(8|16|24|32|40|48|56|64|72|80|88|96|104|112|120|128|136|144|152|160|168|176|184|192|200|208|216|224|232|240|248|256){0,1}$',
@@ -17,6 +18,13 @@ export class UIntDataType extends AbstractBlobDataType {
     private static readonly _DEFAULT_WIDTH: number = UIntDataType._MAX_WIDTH;
     private static readonly _MIN_VALUE = new BigNumber(0);
     private static readonly _DEFAULT_VALUE = new BigNumber(0);
+    private static readonly _WIDTH_TO_MAX_VALUE = Object.assign(
+        {},
+        ...[...new Array(32)].map((_x, i) => {
+            const width = (i + 1) * 8;
+            return { [width]: new BigNumber(2).exponentiatedBy(width).minus(1) };
+        }),
+    );
     private readonly _width: number;
     private readonly _maxValue: BigNumber;
 
@@ -39,7 +47,7 @@ export class UIntDataType extends AbstractBlobDataType {
             throw new Error(`Tried to instantiate UInt with bad input: ${dataItem}`);
         }
         this._width = UIntDataType._decodeWidthFromType(dataItem.type);
-        this._maxValue = new BigNumber(2).exponentiatedBy(this._width).minus(1);
+        this._maxValue = UIntDataType._WIDTH_TO_MAX_VALUE[this._width];
     }
 
     public encodeValue(value: BigNumber | string | number): Buffer {

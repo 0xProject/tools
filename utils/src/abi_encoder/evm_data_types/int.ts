@@ -8,6 +8,7 @@ import { RawCalldata } from '../calldata/raw_calldata';
 import { constants } from '../utils/constants';
 import * as EncoderMath from '../utils/math';
 
+// tslint:disable:custom-no-magic-numbers
 export class IntDataType extends AbstractBlobDataType {
     private static readonly _MATCHER = RegExp(
         '^int(8|16|24|32|40|48|56|64|72|80|88|96|104|112|120|128|136|144|152|160|168|176|184|192|200|208|216|224|232|240|248|256){0,1}$',
@@ -16,6 +17,20 @@ export class IntDataType extends AbstractBlobDataType {
     private static readonly _MAX_WIDTH: number = 256;
     private static readonly _DEFAULT_WIDTH: number = IntDataType._MAX_WIDTH;
     private static readonly _DEFAULT_VALUE = new BigNumber(0);
+    private static readonly _WIDTH_TO_MIN_VALUE = Object.assign(
+        {},
+        ...[...new Array(32)].map((_x, i) => {
+            const width = (i + 1) * 8;
+            return { [width]: new BigNumber(2).exponentiatedBy(width - 1).times(-1) };
+        }),
+    );
+    private static readonly _WIDTH_TO_MAX_VALUE = Object.assign(
+        {},
+        ...[...new Array(32)].map((_x, i) => {
+            const width = (i + 1) * 8;
+            return { [width]: new BigNumber(2).exponentiatedBy(width - 1).minus(1) };
+        }),
+    );
     private readonly _width: number;
     private readonly _minValue: BigNumber;
     private readonly _maxValue: BigNumber;
@@ -39,8 +54,8 @@ export class IntDataType extends AbstractBlobDataType {
             throw new Error(`Tried to instantiate Int with bad input: ${dataItem}`);
         }
         this._width = IntDataType._decodeWidthFromType(dataItem.type);
-        this._minValue = new BigNumber(2).exponentiatedBy(this._width - 1).times(-1);
-        this._maxValue = new BigNumber(2).exponentiatedBy(this._width - 1).minus(1);
+        this._minValue = IntDataType._WIDTH_TO_MIN_VALUE[this._width];
+        this._maxValue = IntDataType._WIDTH_TO_MAX_VALUE[this._width];
     }
 
     public encodeValue(value: BigNumber | string | number): Buffer {
