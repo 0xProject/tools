@@ -6,7 +6,8 @@
                 "note": "Swallow duplicate schema definition errors",
                 "pr": 31
             }
-        ]
+        ],
+        "timestamp": 1617740166
     },
     {
         "version": "6.0.0",

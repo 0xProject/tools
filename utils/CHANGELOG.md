@@ -5,6 +5,10 @@ Edit the package's CHANGELOG.json file only.
 
 CHANGELOG
 
+## v6.3.0 - _April 6, 2021_
+
+    * Precompute max uint/int values in AbiEncoder (#30)
+
 ## v6.2.1 - _March 24, 2021_
 
     * Dependencies updated
