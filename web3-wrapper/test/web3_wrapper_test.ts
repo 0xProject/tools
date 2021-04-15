@@ -2,9 +2,9 @@ import { BigNumber } from '@0x/utils';
 import * as chai from 'chai';
 import { BlockParamLiteral, JSONRPCErrorCallback, JSONRPCRequestPayload, TransactionReceipt } from 'ethereum-types';
 import * as Ganache from 'ganache-core';
-import * as _ from 'lodash';
 import 'mocha';
 
+import { isNumber } from '../src/utils';
 import { Web3Wrapper } from '../src/web3_wrapper';
 
 import { chaiSetup } from './utils/chai_setup';
@@ -118,7 +118,7 @@ describe('Web3Wrapper tests', () => {
             }
             expect(blockIfExists.number).to.be.equal(0);
             expect(BigNumber.isBigNumber(blockIfExists.difficulty)).to.equal(true);
-            expect(_.isNumber(blockIfExists.gasLimit)).to.equal(true);
+            expect(isNumber(blockIfExists.gasLimit)).to.equal(true);
         });
         it('gets block when supplied a block number', async () => {
             const blockParamLiteral = 0;
@@ -151,7 +151,7 @@ describe('Web3Wrapper tests', () => {
             const block = await web3Wrapper.getBlockWithTransactionDataAsync(blockParamLiteral);
             expect(block.number).to.be.equal(0);
             expect(BigNumber.isBigNumber(block.difficulty)).to.equal(true);
-            expect(_.isNumber(block.gasLimit)).to.equal(true);
+            expect(isNumber(block.gasLimit)).to.equal(true);
         });
         it('should throw if supplied invalid blockParam value', async () => {
             const invalidBlockParam = 'deadbeef';
@@ -162,7 +162,7 @@ describe('Web3Wrapper tests', () => {
         it('gets block timestamp', async () => {
             const blockParamLiteral = BlockParamLiteral.Earliest;
             const timestamp = await web3Wrapper.getBlockTimestampAsync(blockParamLiteral);
-            expect(_.isNumber(timestamp)).to.be.equal(true);
+            expect(isNumber(timestamp)).to.be.equal(true);
         });
     });
 });

@@ -20,7 +20,6 @@ import {
     TxData,
     ZeroExProvider,
 } from 'ethereum-types';
-import * as _ from 'lodash';
 
 import { marshaller } from './marshaller';
 import {
@@ -31,7 +30,7 @@ import {
     TransactionRPC,
     Web3WrapperErrors,
 } from './types';
-import { utils } from './utils';
+import { isNumber, isString, utils } from './utils';
 
 const BASE_TEN = 10;
 
@@ -109,9 +108,9 @@ export class Web3Wrapper {
         return balanceWei;
     }
     private static _assertBlockParam(blockParam: string | BlockParam): void {
-        if (_.isNumber(blockParam)) {
+        if (isNumber(blockParam)) {
             return;
-        } else if (_.isString(blockParam)) {
+        } else if (isString(blockParam)) {
             assert.doesBelongToStringEnum('blockParam', blockParam, BlockParamLiteral);
         }
     }
@@ -133,7 +132,7 @@ export class Web3Wrapper {
         // null - New clients on old transactions
         // number - Parity
         // hex - Geth
-        if (_.isString(status)) {
+        if (isString(status)) {
             return utils.convertHexToNumber(status) as 0 | 1;
         } else if (status === undefined) {
             return null;
@@ -188,7 +187,7 @@ export class Web3Wrapper {
         assert.isETHAddressHex('senderAddress', senderAddress);
         const addresses = await this.getAvailableAddressesAsync();
         const normalizedAddress = senderAddress.toLowerCase();
-        return _.includes(addresses, normalizedAddress);
+        return addresses.includes(normalizedAddress);
     }
     /**
      * Fetch the backing Ethereum node's version string (e.g `MetaMask/v4.2.0`)
@@ -204,7 +203,7 @@ export class Web3Wrapper {
      */
     public async getNetworkIdAsync(): Promise<number> {
         const networkIdStr = await this.sendRawPayloadAsync<string>({ method: 'net_version' });
-        const networkId = _.parseInt(networkIdStr);
+        const networkId = parseInt(networkIdStr, 10);
         return networkId;
     }
     /**
@@ -213,7 +212,7 @@ export class Web3Wrapper {
      */
     public async getChainIdAsync(): Promise<number> {
         const chainIdStr = await this.sendRawPayloadAsync<string>({ method: 'eth_chainId' });
-        const chainId = _.parseInt(chainIdStr);
+        const chainId = parseInt(chainIdStr, 10);
         return chainId;
     }
     /**
@@ -431,7 +430,7 @@ export class Web3Wrapper {
     public async getBlockWithTransactionDataAsync(blockParam: string | BlockParam): Promise<BlockWithTransactionData> {
         Web3Wrapper._assertBlockParamOrString(blockParam);
         let encodedBlockParam = blockParam;
-        if (_.isNumber(blockParam)) {
+        if (isNumber(blockParam)) {
             encodedBlockParam = utils.numberToHex(blockParam);
         }
         const method = utils.isHexStrict(blockParam) ? 'eth_getBlockByHash' : 'eth_getBlockByNumber';
@@ -463,11 +462,11 @@ export class Web3Wrapper {
      * @returns Available user addresses
      */
     public async getAvailableAddressesAsync(): Promise<string[]> {
-        const addresses = await this.sendRawPayloadAsync<string>({
+        const addresses = await this.sendRawPayloadAsync<string[]>({
             method: 'eth_accounts',
             params: [],
         });
-        const normalizedAddresses = _.map(addresses, address => address.toLowerCase());
+        const normalizedAddresses = addresses.map(address => address.toLowerCase());
         return normalizedAddresses;
     }
     /**
@@ -503,9 +502,9 @@ export class Web3Wrapper {
         assert.isNumber('timeDelta', timeDelta);
         // Detect Geth vs. Ganache and use appropriate endpoint.
         const version = await this.getNodeVersionAsync();
-        if (_.includes(version, uniqueVersionIds.geth)) {
+        if (version.includes(uniqueVersionIds.geth)) {
             return this.sendRawPayloadAsync<number>({ method: 'debug_increaseTime', params: [timeDelta] });
-        } else if (_.includes(version, uniqueVersionIds.ganache)) {
+        } else if (version.includes(uniqueVersionIds.ganache)) {
             return this.sendRawPayloadAsync<number>({ method: 'evm_increaseTime', params: [timeDelta] });
         } else {
             throw new Error(`Unknown client version: ${version}`);
@@ -524,11 +523,11 @@ export class Web3Wrapper {
         }
 
         let fromBlock = filter.fromBlock;
-        if (_.isNumber(fromBlock)) {
+        if (isNumber(fromBlock)) {
             fromBlock = utils.numberToHex(fromBlock);
         }
         let toBlock = filter.toBlock;
-        if (_.isNumber(toBlock)) {
+        if (isNumber(toBlock)) {
             toBlock = utils.numberToHex(toBlock);
         }
         const serializedFilter = {
@@ -541,7 +540,7 @@ export class Web3Wrapper {
             params: [serializedFilter],
         };
         const rawLogs = await this.sendRawPayloadAsync<RawLogEntry[]>(payload);
-        const formattedLogs = _.map(rawLogs, marshaller.unmarshalLog.bind(marshaller));
+        const formattedLogs = rawLogs.map(marshaller.unmarshalLog.bind(marshaller));
         return formattedLogs;
     }
     /**
@@ -611,8 +610,7 @@ export class Web3Wrapper {
         // Immediately check if the transaction has already been mined.
         let transactionReceipt = await this.getTransactionReceiptIfExistsAsync(txHash);
         if (transactionReceipt !== undefined) {
-            const logsWithDecodedArgs = _.map(
-                transactionReceipt.logs,
+            const logsWithDecodedArgs = transactionReceipt.logs.map(
                 this.abiDecoder.tryToDecodeLogOrNoop.bind(this.abiDecoder),
             );
             const transactionReceiptWithDecodedLogArgs: TransactionReceiptWithDecodedLogs = {
@@ -640,8 +638,7 @@ export class Web3Wrapper {
                         transactionReceipt = await this.getTransactionReceiptIfExistsAsync(txHash);
                         if (transactionReceipt !== undefined) {
                             intervalUtils.clearAsyncExcludingInterval(intervalId);
-                            const logsWithDecodedArgs = _.map(
-                                transactionReceipt.logs,
+                            const logsWithDecodedArgs = transactionReceipt.logs.map(
                                 this.abiDecoder.tryToDecodeLogOrNoop.bind(this.abiDecoder),
                             );
                             const transactionReceiptWithDecodedLogArgs: TransactionReceiptWithDecodedLogs = {
@@ -729,9 +726,9 @@ export class Web3Wrapper {
      */
     public async getNodeTypeAsync(): Promise<NodeType> {
         const version = await this.getNodeVersionAsync();
-        if (_.includes(version, uniqueVersionIds.geth)) {
+        if (version.includes(uniqueVersionIds.geth)) {
             return NodeType.Geth;
-        } else if (_.includes(version, uniqueVersionIds.ganache)) {
+        } else if (version.includes(uniqueVersionIds.ganache)) {
             return NodeType.Ganache;
         } else {
             throw new Error(`Unknown client version: ${version}`);

@@ -14,7 +14,6 @@ import {
     TxData,
 } from 'ethereum-types';
 import ethUtil = require('ethereumjs-util');
-import * as _ from 'lodash';
 
 import {
     BlockWithoutTransactionDataRPC,
@@ -26,7 +25,7 @@ import {
     TransactionRPC,
     TxDataRPC,
 } from './types';
-import { utils } from './utils';
+import { isNumber, utils } from './utils';
 
 /**
  * Utils to convert ethereum structures from user-space format to RPC format. (marshall/unmarshall)
@@ -69,7 +68,7 @@ export const marshaller = {
             totalDifficulty: utils.convertAmountToBigNumber(blockWithHexValues.totalDifficulty),
             transactions: [] as Transaction[],
         };
-        block.transactions = _.map(blockWithHexValues.transactions, (tx: TransactionRPC) => {
+        block.transactions = blockWithHexValues.transactions.map((tx: TransactionRPC) => {
             const transaction = marshaller.unmarshalTransaction(tx);
             return transaction;
         });
@@ -104,7 +103,7 @@ export const marshaller = {
             transactionIndex: utils.convertHexToNumber(txReceiptRpc.transactionIndex),
             cumulativeGasUsed: utils.convertHexToNumber(txReceiptRpc.cumulativeGasUsed),
             gasUsed: utils.convertHexToNumber(txReceiptRpc.gasUsed),
-            logs: _.map(txReceiptRpc.logs, marshaller.unmarshalLog.bind(marshaller)),
+            logs: txReceiptRpc.logs.map(marshaller.unmarshalLog.bind(marshaller)),
         };
         return txReceipt;
     },
@@ -145,8 +144,8 @@ export const marshaller = {
             from: marshaller.marshalAddress(txData.from),
         };
         const prunableIfUndefined = ['gasPrice', 'gas', 'value', 'nonce'];
-        _.each(txDataRPC, (value: any, key: string) => {
-            if (value === undefined && _.includes(prunableIfUndefined, key)) {
+        Object.entries(txDataRPC).forEach(([key, value]) => {
+            if (value === undefined && prunableIfUndefined.includes(key)) {
                 delete (txDataRPC as any)[key];
             }
         });
@@ -220,7 +219,7 @@ export const marshaller = {
         if (blockParam === undefined) {
             return BlockParamLiteral.Latest;
         }
-        const encodedBlockParam = _.isNumber(blockParam) ? utils.numberToHex(blockParam) : blockParam;
+        const encodedBlockParam = isNumber(blockParam) ? utils.numberToHex(blockParam) : blockParam;
         return encodedBlockParam;
     },
     /**

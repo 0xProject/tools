@@ -65,8 +65,7 @@
         "@types/node": "12.12.54",
         "ethereum-types": "^3.4.1",
         "ethereumjs-util": "^5.1.1",
-        "ethers": "~4.0.4",
-        "lodash": "^4.17.11"
+        "ethers": "~4.0.4"
     },
     "publishConfig": {
         "access": "public"

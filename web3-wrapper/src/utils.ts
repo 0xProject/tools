@@ -1,5 +1,18 @@
 import { BigNumber } from '@0x/utils';
-import * as _ from 'lodash';
+
+/**
+ * Checks if typeof value is number
+ */
+export function isNumber(value: any): value is number {
+    return typeof value === 'number';
+}
+
+/**
+ * Checks if typeof value is string
+ */
+export function isString(value: any): value is string {
+    return typeof value === 'string';
+}
 
 export const utils = {
     convertHexToNumber(value: string): number {
@@ -21,7 +34,7 @@ export const utils = {
             return num as BigNumber;
         }
 
-        if (_.isString(num) && (num.indexOf('0x') === 0 || num.indexOf('-0x') === 0)) {
+        if (isString(num) && (num.indexOf('0x') === 0 || num.indexOf('-0x') === 0)) {
             return new BigNumber(num.replace('0x', ''), 16);
         }
 
@@ -47,8 +60,6 @@ export const utils = {
         return valueBigNumber.lt(0) ? `-0x${result.substr(1)}` : `0x${result}`;
     },
     isHexStrict(hex: string | number): boolean {
-        return (
-            (_.isString(hex) || _.isNumber(hex)) && /^(-)?0x[0-9a-f]*$/i.test(_.isNumber(hex) ? hex.toString() : hex)
-        );
+        return (isString(hex) || isNumber(hex)) && /^(-)?0x[0-9a-f]*$/i.test(isNumber(hex) ? hex.toString() : hex);
     },
 };
