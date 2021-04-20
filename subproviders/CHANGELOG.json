@@ -1,5 +1,14 @@
 [
     {
+        "version": "6.5.0",
+        "changes": [
+            {
+                "note": "Add access list support to subproviders",
+                "pr": 33
+            }
+        ]
+    },
+    {
         "timestamp": 1617740166,
         "version": "6.4.3",
         "changes": [

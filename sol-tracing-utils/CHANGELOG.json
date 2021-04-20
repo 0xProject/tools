@@ -1,5 +1,14 @@
 [
     {
+        "version": "7.2.0",
+        "changes": [
+            {
+                "note": "Upgrade `ethereumjs-util` dep",
+                "pr": 33
+            }
+        ]
+    },
+    {
         "timestamp": 1617740166,
         "version": "7.1.23",
         "changes": [

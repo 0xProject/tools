@@ -21,6 +21,8 @@ const DEFAULT_ADDRESS_SEARCH_LIMIT = 1000;
  * all requests with accounts derived from the supplied mnemonic.
  */
 export class MnemonicWalletSubprovider extends BaseWalletSubprovider {
+    public readonly chainId: number;
+    public readonly hardfork: string | undefined;
     private readonly _addressSearchLimit: number;
     private _baseDerivationPath: string;
     private _derivedKeyInfo: DerivedHDKeyInfo;
@@ -44,6 +46,8 @@ export class MnemonicWalletSubprovider extends BaseWalletSubprovider {
         this._baseDerivationPath = baseDerivationPath;
         this._addressSearchLimit = addressSearchLimit;
         this._derivedKeyInfo = this._initialDerivedKeyInfo(this._baseDerivationPath);
+        this.chainId = config.chainId || 1;
+        this.hardfork = config.hardfork;
     }
     /**
      * Retrieve the set derivation path
@@ -131,7 +135,7 @@ export class MnemonicWalletSubprovider extends BaseWalletSubprovider {
     private _privateKeyWalletForAddress(address: string): PrivateKeyWalletSubprovider {
         const derivedKeyInfo = this._findDerivedKeyInfoForAddress(address);
         const privateKeyHex = derivedKeyInfo.hdKey.privateKey.toString('hex');
-        const privateKeyWallet = new PrivateKeyWalletSubprovider(privateKeyHex);
+        const privateKeyWallet = new PrivateKeyWalletSubprovider(privateKeyHex, this.chainId, this.hardfork);
         return privateKeyWallet;
     }
     private _findDerivedKeyInfoForAddress(address: string): DerivedHDKeyInfo {

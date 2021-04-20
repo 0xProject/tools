@@ -40,21 +40,21 @@ function random(_size: number = WORD_LENGTH): string {
  * Left-pad a hex number to a number of bytes.
  */
 function leftPad(n: Numberish, _size: number = WORD_LENGTH): string {
-    return ethUtil.bufferToHex(ethUtil.setLengthLeft(hexUtils.toHex(n), _size));
+    return ethUtil.bufferToHex(ethUtil.setLengthLeft(ethUtil.toBuffer(hexUtils.toHex(n)), _size));
 }
 
 /**
  * Right-pad a hex number to a number of bytes.
  */
 function rightPad(n: Numberish, _size: number = WORD_LENGTH): string {
-    return ethUtil.bufferToHex(ethUtil.setLengthRight(hexUtils.toHex(n), _size));
+    return ethUtil.bufferToHex(ethUtil.setLengthRight(ethUtil.toBuffer(hexUtils.toHex(n)), _size));
 }
 
 /**
  * Inverts a hex word.
  */
 function invert(n: Numberish, _size: number = WORD_LENGTH): string {
-    const buf = ethUtil.setLengthLeft(hexUtils.toHex(n), _size);
+    const buf = ethUtil.setLengthLeft(ethUtil.toBuffer(hexUtils.toHex(n)), _size);
     // tslint:disable-next-line: no-bitwise
     return ethUtil.bufferToHex(Buffer.from(buf.map(b => ~b)));
 }
@@ -76,7 +76,7 @@ function slice(n: Numberish, start: number, end?: number): string {
  * Get the keccak hash of some data.
  */
 function hash(n: Numberish): string {
-    return ethUtil.bufferToHex(ethUtil.sha3(ethUtil.toBuffer(hexUtils.toHex(n))));
+    return ethUtil.bufferToHex(ethUtil.keccak256(ethUtil.toBuffer(hexUtils.toHex(n))));
 }
 
 /**

@@ -1,6 +1,6 @@
 import { assert } from '@0x/assert';
 import { addressUtils } from '@0x/utils';
-import EthereumTx = require('ethereumjs-tx');
+import { TransactionFactory } from '@ethereumjs/tx';
 import * as _ from 'lodash';
 
 import { LatticeSubproviderConfig, PartialTxParams, WalletSubproviderErrors } from '../types';
@@ -72,7 +72,7 @@ export class LatticeSubprovider extends BaseWalletSubprovider {
         if (txData.from === undefined || !addressUtils.isAddress(txData.from)) {
             throw new Error(WalletSubproviderErrors.FromAddressMissingOrInvalid);
         }
-        const txReq = new EthereumTx(txData);
+        const txReq = TransactionFactory.fromTxData(txData);
         try {
             const signedTx = await this._latticeConnectClient.signTransaction(txData.from, txReq);
             return `0x${signedTx.serialize().toString('hex')}`;

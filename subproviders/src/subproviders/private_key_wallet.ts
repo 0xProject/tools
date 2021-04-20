@@ -1,7 +1,8 @@
 import { assert } from '@0x/assert';
 import { EIP712TypedData } from '@0x/types';
 import { signTypedDataUtils } from '@0x/utils';
-import EthereumTx = require('ethereumjs-tx');
+import Common from '@ethereumjs/common';
+import { TransactionFactory } from '@ethereumjs/tx';
 import * as ethUtil from 'ethereumjs-util';
 import * as _ from 'lodash';
 
@@ -17,16 +18,20 @@ import { BaseWalletSubprovider } from './base_wallet_subprovider';
 export class PrivateKeyWalletSubprovider extends BaseWalletSubprovider {
     private readonly _address: string;
     private readonly _privateKeyBuffer: Buffer;
+    private readonly _common: Common;
     /**
      * Instantiates a PrivateKeyWalletSubprovider.
      * @param privateKey The corresponding private key to an Ethereum address
+     * @param chainId The chain ID. Defaults to 1 (mainnet).
+     * @param hardfork The active hardfork on the chain. Defaults to 'istanbul'.
      * @return PrivateKeyWalletSubprovider instance
      */
-    constructor(privateKey: string) {
+    constructor(privateKey: string, chainId: number = 1, hardfork?: string) {
         assert.isString('privateKey', privateKey);
         super();
         this._privateKeyBuffer = Buffer.from(privateKey, 'hex');
         this._address = `0x${ethUtil.privateToAddress(this._privateKeyBuffer).toString('hex')}`;
+        this._common = Common.forCustomChain('mainnet', { chainId }, hardfork);
     }
     /**
      * Retrieve the account associated with the supplied private key.
@@ -54,8 +59,24 @@ export class PrivateKeyWalletSubprovider extends BaseWalletSubprovider {
                 }`,
             );
         }
-        const tx = new EthereumTx(txParams);
-        tx.sign(this._privateKeyBuffer);
+        const tx = TransactionFactory.fromTxData(
+            {
+                to: txParams.to,
+                gasPrice: txParams.gasPrice,
+                gasLimit: txParams.gas,
+                value: txParams.value,
+                data: txParams.data,
+                nonce: txParams.nonce,
+                ...(this._common.hardfork() === 'istanbul'
+                    ? {}
+                    : {
+                          type: txParams.type,
+                          accessList: txParams.accessList,
+                          chainId: this._common.chainId(),
+                      }),
+            },
+            { common: this._common },
+        ).sign(this._privateKeyBuffer);
         const rawTx = `0x${tx.serialize().toString('hex')}`;
         return rawTx;
     }

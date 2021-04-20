@@ -25,3 +25,12 @@ async estimateGasAsync(
     );
     return self._web3Wrapper.estimateGasAsync(txDataWithDefaults);
 },
+async createAccessListAsync(
+    txData?: Partial<TxData> | undefined,
+    defaultBlock?: BlockParam,
+): Promise<TxAccessListWithGas> {
+    const txDataWithDefaults = await self._applyDefaultsToTxDataAsync(
+        { data: this.getABIEncodedTransactionData(), ...txData }
+    );
+    return self._web3Wrapper.createAccessListAsync(txDataWithDefaults, defaultBlock);
+},

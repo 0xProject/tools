@@ -1,6 +1,7 @@
 import { assert } from '@0x/assert';
 import { addressUtils } from '@0x/utils';
-import EthereumTx = require('ethereumjs-tx');
+import Common from '@ethereumjs/common';
+import { Transaction } from '@ethereumjs/tx';
 import * as _ from 'lodash';
 
 import HDNode = require('hdkey');
@@ -30,6 +31,7 @@ export class TrezorSubprovider extends BaseWalletSubprovider {
     private readonly _networkId: number;
     private readonly _addressSearchLimit: number;
     private _initialDerivedKeyInfo: DerivedHDKeyInfo | undefined;
+    private readonly _common: Common;
     /**
      * Instantiates a TrezorSubprovider. Defaults to private key path set to `44'/60'/0'/0/`.
      * Must be initialized with trezor-connect API module https://github.com/trezor/connect.
@@ -46,6 +48,7 @@ export class TrezorSubprovider extends BaseWalletSubprovider {
             config.accountFetchingConfigs.addressSearchLimit !== undefined
                 ? config.accountFetchingConfigs.addressSearchLimit
                 : DEFAULT_ADDRESS_SEARCH_LIMIT;
+        this._common = Common.forCustomChain('mainnet', { chainId: this._networkId });
     }
     /**
      * Retrieve a users Trezor account. This method is automatically called
@@ -71,10 +74,15 @@ export class TrezorSubprovider extends BaseWalletSubprovider {
         if (txData.from === undefined || !addressUtils.isAddress(txData.from)) {
             throw new Error(WalletSubproviderErrors.FromAddressMissingOrInvalid);
         }
-        txData.value = txData.value ? txData.value : '0x0';
-        txData.data = txData.data ? txData.data : '0x';
-        txData.gas = txData.gas ? txData.gas : '0x0';
-        txData.gasPrice = txData.gasPrice ? txData.gasPrice : '0x0';
+        // Normalize and omit some fields.
+        const _txData = {
+            to: txData.to,
+            nonce: txData.nonce,
+            value: txData.value ? txData.value : '0x0',
+            data: txData.data ? txData.data : '0x',
+            gasLimit: txData.gas ? txData.gas : '0x0',
+            gasPrice: txData.gasPrice ? txData.gasPrice : '0x0',
+        };
 
         const initialDerivedKeyInfo = await this._initialDerivedKeyInfoAsync();
         const derivedKeyInfo = this._findDerivedKeyInfoForAddress(initialDerivedKeyInfo, txData.from);
@@ -83,34 +91,28 @@ export class TrezorSubprovider extends BaseWalletSubprovider {
         const response: TrezorConnectResponse = await this._trezorConnectClientApi.ethereumSignTransaction({
             path: fullDerivationPath,
             transaction: {
-                to: txData.to,
-                value: txData.value,
-                data: txData.data,
+                to: _txData.to,
+                value: _txData.value,
+                data: _txData.data,
                 chainId: this._networkId,
-                nonce: txData.nonce,
-                gasLimit: txData.gas,
-                gasPrice: txData.gasPrice,
+                nonce: _txData.nonce,
+                gasLimit: _txData.gasLimit,
+                gasPrice: _txData.gasPrice,
             },
         });
 
         if (response.success) {
             const payload: TrezorSignTxResponsePayload = response.payload;
-            const tx = new EthereumTx(txData);
-
-            // Set the EIP155 bits
-            const vIndex = 6;
-            tx.raw[vIndex] = Buffer.from([1]); // v
-            const rIndex = 7;
-            tx.raw[rIndex] = Buffer.from([]); // r
-            const sIndex = 8;
-            tx.raw[sIndex] = Buffer.from([]); // s
-
-            // slice off leading 0x
-            tx.v = Buffer.from(payload.v.slice(2), 'hex');
-            tx.r = Buffer.from(payload.r.slice(2), 'hex');
-            tx.s = Buffer.from(payload.s.slice(2), 'hex');
-
-            return `0x${tx.serialize().toString('hex')}`;
+            const signedTx = Transaction.fromTxData(
+                {
+                    ..._txData,
+                    v: payload.v,
+                    r: payload.r,
+                    s: payload.s,
+                },
+                { common: this._common },
+            );
+            return `0x${signedTx.serialize().toString('hex')}`;
         } else {
             const payload: TrezorResponseErrorPayload = response.payload;
             throw new Error(payload.error);

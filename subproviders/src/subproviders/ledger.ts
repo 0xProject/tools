@@ -1,6 +1,7 @@
 import { assert } from '@0x/assert';
 import { addressUtils } from '@0x/utils';
-import EthereumTx = require('ethereumjs-tx');
+import Common from '@ethereumjs/common';
+import { Transaction } from '@ethereumjs/tx';
 import ethUtil = require('ethereumjs-util');
 import HDNode = require('hdkey');
 import * as _ from 'lodash';
@@ -39,6 +40,7 @@ export class LedgerSubprovider extends BaseWalletSubprovider {
     private _ledgerClientIfExists?: LedgerEthereumClient;
     private readonly _shouldAlwaysAskForConfirmation: boolean;
     private readonly _addressSearchLimit: number;
+    private readonly _common: Common;
     /**
      * Instantiates a LedgerSubprovider. Defaults to derivationPath set to `44'/60'/0'`.
      * TestRPC/Ganache defaults to `m/44'/60'/0'/0`, so set this in the configs if desired.
@@ -60,6 +62,7 @@ export class LedgerSubprovider extends BaseWalletSubprovider {
             config.accountFetchingConfigs.addressSearchLimit !== undefined
                 ? config.accountFetchingConfigs.addressSearchLimit
                 : DEFAULT_ADDRESS_SEARCH_LIMIT;
+        this._common = Common.forCustomChain('mainnet', { chainId: this._networkId });
     }
     /**
      * Retrieve the set derivation path
@@ -103,40 +106,48 @@ export class LedgerSubprovider extends BaseWalletSubprovider {
         if (txParams.from === undefined || !addressUtils.isAddress(txParams.from)) {
             throw new Error(WalletSubproviderErrors.FromAddressMissingOrInvalid);
         }
+        // omit some properties from txParams.
+        const _txParams = {
+            to: txParams.to,
+            gasLimit: txParams.gas,
+            gasPrice: txParams.gasPrice,
+            data: txParams.data,
+            nonce: txParams.nonce,
+            value: txParams.value,
+        };
         const initialDerivedKeyInfo = await this._initialDerivedKeyInfoAsync();
         const derivedKeyInfo = this._findDerivedKeyInfoForAddress(initialDerivedKeyInfo, txParams.from);
 
         this._ledgerClientIfExists = await this._createLedgerClientAsync();
 
-        const tx = new EthereumTx(txParams);
-
-        // Set the EIP155 bits
-        const vIndex = 6;
-        tx.raw[vIndex] = Buffer.from([this._networkId]); // v
-        const rIndex = 7;
-        tx.raw[rIndex] = Buffer.from([]); // r
-        const sIndex = 8;
-        tx.raw[sIndex] = Buffer.from([]); // s
-
-        const txHex = tx.serialize().toString('hex');
+        const ledgerTxHex = (() => {
+            const values = Transaction.fromTxData(_txParams, { common: this._common }).raw();
+            // tslint:disable-next-line: custom-no-magic-numbers
+            values[6] = ethUtil.bnToRlp(new ethUtil.BN(this._networkId));
+            return ethUtil.rlp.encode(values).toString('hex');
+        })();
         try {
             const fullDerivationPath = derivedKeyInfo.derivationPath;
-            const result = await this._ledgerClientIfExists.signTransaction(fullDerivationPath, txHex);
-            // Store signature in transaction
-            tx.r = Buffer.from(result.r, 'hex');
-            tx.s = Buffer.from(result.s, 'hex');
-            tx.v = Buffer.from(result.v, 'hex');
-
+            const result = await this._ledgerClientIfExists.signTransaction(fullDerivationPath, ledgerTxHex);
+            const signedTx = Transaction.fromTxData(
+                {
+                    ..._txParams,
+                    r: `0x${result.r}`,
+                    s: `0x${result.s}`,
+                    v: `0x${result.v}`,
+                },
+                { common: this._common },
+            );
             // EIP155: v should be chain_id * 2 + {35, 36}
             const eip55Constant = 35;
-            const signedChainId = Math.floor((tx.v[0] - eip55Constant) / 2);
+            const signedChainId = Math.floor((ethUtil.toBuffer(signedTx.v)[0] - eip55Constant) / 2);
             if (signedChainId !== this._networkId) {
                 await this._destroyLedgerClientAsync();
                 const err = new Error(LedgerSubproviderErrors.TooOldLedgerFirmware);
                 throw err;
             }
 
-            const signedTxHex = `0x${tx.serialize().toString('hex')}`;
+            const signedTxHex = `0x${signedTx.serialize().toString('hex')}`;
             await this._destroyLedgerClientAsync();
             return signedTxHex;
         } catch (err) {
@@ -231,8 +242,8 @@ export class LedgerSubprovider extends BaseWalletSubprovider {
             await this._destroyLedgerClientAsync();
         }
         const hdKey = new HDNode();
-        hdKey.publicKey = new Buffer(ledgerResponse.publicKey, 'hex');
-        hdKey.chainCode = new Buffer(ledgerResponse.chainCode, 'hex');
+        hdKey.publicKey = Buffer.from(ledgerResponse.publicKey, 'hex');
+        hdKey.chainCode = Buffer.from(ledgerResponse.chainCode, 'hex');
         const address = walletUtils.addressOfHDKey(hdKey);
         const initialDerivedKeyInfo = {
             hdKey,

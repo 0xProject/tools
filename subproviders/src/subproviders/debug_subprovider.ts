@@ -1,6 +1,7 @@
 import { BigNumber } from '@0x/utils';
+import { AccessListEIP2930Transaction, Transaction, TransactionFactory } from '@ethereumjs/tx';
 import { JSONRPCRequestPayload } from 'ethereum-types';
-import EthereumTx = require('ethereumjs-tx');
+import { toBuffer } from 'ethereumjs-util';
 
 import { Callback, ErrorCallback } from '../types';
 
@@ -31,7 +32,9 @@ const defaultDebugCallback = (debugPayload: DebugPayload) => console.debug(JSON.
 export class DebugSubprovider extends Subprovider {
     private readonly _debugCallback: WithDebugPayload;
 
-    private static _generateRawTransactionAttributes(txn: EthereumTx): DebugPayloadRawTransactionAttributes {
+    private static _generateRawTransactionAttributes(
+        txn: Transaction | AccessListEIP2930Transaction,
+    ): DebugPayloadRawTransactionAttributes {
         const hexBufferToString = (value: Buffer): string => new BigNumber(value.toString('hex'), HEX_BASE).toString();
 
         return {
@@ -39,7 +42,8 @@ export class DebugSubprovider extends Subprovider {
             gasPrice: hexBufferToString(txn.gasPrice),
             nonce: hexBufferToString(txn.nonce),
             value: hexBufferToString(txn.value),
-            to: `0x${txn.to.toString('hex')}`,
+            // tslint:disable-next-line: no-unnecessary-type-assertion
+            to: txn.to!.toString(),
         };
     }
 
@@ -60,7 +64,7 @@ export class DebugSubprovider extends Subprovider {
     public async handleRequest(payload: JSONRPCRequestPayload, next: Callback, end: ErrorCallback): Promise<void> {
         const debugPayload: DebugPayload = payload;
         if (payload.method === 'eth_sendRawTransaction' && payload.params[0]) {
-            const txn = new EthereumTx(payload.params[0]);
+            const txn = TransactionFactory.fromSerializedData(toBuffer(payload.params[0]));
             debugPayload.rawTransactionAttributes = DebugSubprovider._generateRawTransactionAttributes(txn);
         }
         this._debugCallback(debugPayload);

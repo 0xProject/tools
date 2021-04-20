@@ -14,8 +14,17 @@ const expect = chai.expect;
 
 describe('PrivateKeyWalletSubprovider', () => {
     let subprovider: PrivateKeyWalletSubprovider;
+    let subprovider2930: PrivateKeyWalletSubprovider;
     before(async () => {
-        subprovider = new PrivateKeyWalletSubprovider(fixtureData.TEST_RPC_ACCOUNT_0_ACCOUNT_PRIVATE_KEY);
+        subprovider = new PrivateKeyWalletSubprovider(
+            fixtureData.TEST_RPC_ACCOUNT_0_ACCOUNT_PRIVATE_KEY,
+            fixtureData.NETWORK_ID,
+        );
+        subprovider2930 = new PrivateKeyWalletSubprovider(
+            fixtureData.TEST_RPC_ACCOUNT_0_ACCOUNT_PRIVATE_KEY,
+            fixtureData.NETWORK_ID,
+            'berlin',
+        );
     });
     describe('direct method calls', () => {
         describe('success cases', () => {
@@ -25,7 +34,7 @@ describe('PrivateKeyWalletSubprovider', () => {
                 expect(accounts.length).to.be.equal(1);
             });
             it('signs a personal message', async () => {
-                const data = ethUtils.bufferToHex(ethUtils.toBuffer(fixtureData.PERSONAL_MESSAGE_STRING));
+                const data = ethUtils.bufferToHex(Buffer.from(fixtureData.PERSONAL_MESSAGE_STRING));
                 const ecSignatureHex = await subprovider.signPersonalMessageAsync(data, fixtureData.TEST_RPC_ACCOUNT_0);
                 expect(ecSignatureHex).to.be.equal(fixtureData.PERSONAL_MESSAGE_SIGNED_RESULT);
             });
@@ -52,12 +61,17 @@ describe('PrivateKeyWalletSubprovider', () => {
     });
     describe('calls through a provider', () => {
         let provider: Web3ProviderEngine;
+        let provider2930: Web3ProviderEngine;
         before(() => {
             provider = new Web3ProviderEngine();
             provider.addProvider(subprovider);
-            const ganacheSubprovider = new GanacheSubprovider({});
-            provider.addProvider(ganacheSubprovider);
+            provider.addProvider(new GanacheSubprovider({}));
             providerUtils.startProviderEngine(provider);
+
+            provider2930 = new Web3ProviderEngine();
+            provider2930.addProvider(subprovider2930);
+            provider2930.addProvider(new GanacheSubprovider({}));
+            providerUtils.startProviderEngine(provider2930);
         });
         describe('success cases', () => {
             it('returns a list of accounts', (done: DoneCallback) => {
@@ -90,7 +104,7 @@ describe('PrivateKeyWalletSubprovider', () => {
                 provider.sendAsync(payload, callback);
             });
             it('signs a personal message with eth_sign', (done: DoneCallback) => {
-                const messageHex = ethUtils.bufferToHex(ethUtils.toBuffer(fixtureData.PERSONAL_MESSAGE_STRING));
+                const messageHex = ethUtils.bufferToHex(Buffer.from(fixtureData.PERSONAL_MESSAGE_STRING));
                 const payload = {
                     jsonrpc: '2.0',
                     method: 'eth_sign',
@@ -105,7 +119,7 @@ describe('PrivateKeyWalletSubprovider', () => {
                 provider.sendAsync(payload, callback);
             });
             it('signs a personal message with personal_sign', (done: DoneCallback) => {
-                const messageHex = ethUtils.bufferToHex(ethUtils.toBuffer(fixtureData.PERSONAL_MESSAGE_STRING));
+                const messageHex = ethUtils.bufferToHex(Buffer.from(fixtureData.PERSONAL_MESSAGE_STRING));
                 const payload = {
                     jsonrpc: '2.0',
                     method: 'personal_sign',
@@ -132,6 +146,20 @@ describe('PrivateKeyWalletSubprovider', () => {
                     done();
                 });
                 provider.sendAsync(payload, callback);
+            });
+            it('signs an EIP2930 transaction', (done: DoneCallback) => {
+                const payload = {
+                    jsonrpc: '2.0',
+                    method: 'eth_signTransaction',
+                    params: [fixtureData.TX_DATA_2930],
+                    id: 1,
+                };
+                const callback = reportCallbackErrors(done)((err: Error, response: JSONRPCResponsePayload) => {
+                    expect(err).to.be.a('null');
+                    expect(response.result.raw).to.be.equal(fixtureData.TX_DATA_SIGNED_RESULT_2930);
+                    done();
+                });
+                provider2930.sendAsync(payload, callback);
             });
         });
         describe('failure cases', () => {
@@ -166,7 +194,7 @@ describe('PrivateKeyWalletSubprovider', () => {
                 provider.sendAsync(payload, callback);
             });
             it('should throw if `address` param is not the address from private key when calling personal_sign', (done: DoneCallback) => {
-                const messageHex = ethUtils.bufferToHex(ethUtils.toBuffer(fixtureData.PERSONAL_MESSAGE_STRING));
+                const messageHex = ethUtils.bufferToHex(Buffer.from(fixtureData.PERSONAL_MESSAGE_STRING));
                 const payload = {
                     jsonrpc: '2.0',
                     method: 'personal_sign',
@@ -222,7 +250,7 @@ describe('PrivateKeyWalletSubprovider', () => {
                 provider.sendAsync(payload, callback);
             });
             it('should throw if `address` param not found when calling personal_sign', (done: DoneCallback) => {
-                const messageHex = ethUtils.bufferToHex(ethUtils.toBuffer(fixtureData.PERSONAL_MESSAGE_STRING));
+                const messageHex = ethUtils.bufferToHex(Buffer.from(fixtureData.PERSONAL_MESSAGE_STRING));
                 const payload = {
                     jsonrpc: '2.0',
                     method: 'personal_sign',

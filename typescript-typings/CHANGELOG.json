@@ -1,5 +1,14 @@
 [
     {
+        "version": "5.2.0",
+        "changes": [
+            {
+                "note": "Remove `ethereumjs-util` types",
+                "pr": 33
+            }
+        ]
+    },
+    {
         "timestamp": 1616613438,
         "version": "5.1.7",
         "changes": [

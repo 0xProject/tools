@@ -1,5 +1,14 @@
 [
     {
+        "version": "6.4.0",
+        "changes": [
+            {
+                "note": "Upgrade ethereumjs-util dep",
+                "pr": 33
+            }
+        ]
+    },
+    {
         "version": "6.3.0",
         "changes": [
             {

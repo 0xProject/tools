@@ -574,7 +574,7 @@ function toSignature(abi: RevertErrorAbi): string {
 function toSelector(abi: RevertErrorAbi): string {
     return (
         ethUtil
-            .sha3(Buffer.from(toSignature(abi)))
+            .keccak256(Buffer.from(toSignature(abi)))
             // tslint:disable-next-line: custom-no-magic-numbers
             .slice(0, 4)
             .toString('hex')

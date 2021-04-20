@@ -19,6 +19,16 @@
         "nonce": {
             "type": "number",
             "minimum": 0
+        },
+        "accessList": {
+            "type": "object",
+            "additionalProperties": {
+                "type": "array",
+                "items": {
+                    "type": "string",
+                    "pattern": "^0x[0-9a-fA-F]{64}$"
+                }
+            }
         }
     },
     "required": ["from"],

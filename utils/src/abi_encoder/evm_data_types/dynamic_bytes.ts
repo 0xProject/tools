@@ -38,13 +38,13 @@ export class DynamicBytesDataType extends AbstractBlobDataType {
     public encodeValue(value: string | Buffer): Buffer {
         // Encoded value is of the form: <length><value>, with each field padded to be word-aligned.
         // 1/3 Construct the length
+        DynamicBytesDataType._sanityCheckValue(value);
         const valueBuf = ethUtil.toBuffer(value);
         const wordsToStoreValuePadded = Math.ceil(valueBuf.byteLength / constants.EVM_WORD_WIDTH_IN_BYTES);
         const bytesToStoreValuePadded = wordsToStoreValuePadded * constants.EVM_WORD_WIDTH_IN_BYTES;
         const lengthBuf = ethUtil.toBuffer(valueBuf.byteLength);
         const lengthBufPadded = ethUtil.setLengthLeft(lengthBuf, constants.EVM_WORD_WIDTH_IN_BYTES);
         // 2/3 Construct the value
-        DynamicBytesDataType._sanityCheckValue(value);
         const valueBufPadded = ethUtil.setLengthRight(valueBuf, bytesToStoreValuePadded);
         // 3/3 Combine length and value
         const encodedValue = Buffer.concat([lengthBufPadded, valueBufPadded]);

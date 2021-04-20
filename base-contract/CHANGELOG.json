@@ -4,6 +4,10 @@
         "changes": [
             {
                 "note": "Provide ABI Encoding Rules as constructor arg"
+            },
+            {
+                "note": "Add `createAccessListAsync()` method",
+                "pr": 33
             }
         ]
     },

@@ -3,7 +3,7 @@ import { promisify } from 'util';
 import FixtureSubprovider = require('web3-provider-engine/subproviders/fixture');
 
 import { providerUtils } from '@0x/utils';
-import EthereumTx = require('ethereumjs-tx');
+import { TransactionFactory } from '@ethereumjs/tx';
 
 import { NonceTrackerSubprovider, Web3ProviderEngine } from '../../src';
 import { chaiSetup } from '../chai_setup';
@@ -25,17 +25,17 @@ describe('NonceTrackerSubprovider', () => {
         params: [],
         id: 1,
     };
-    const txParams = [
-        '0x',
-        '0x09184e72a000',
-        '0x2710',
-        '0x0000000000000000000000000000000000000000',
-        '0x',
-        '0x7f7465737432000000000000000000000000000000000000000000000000000000600057',
-        '0x1c',
-        '0x5e1d3a76fbf824220eafc8c79ad578ad2b67d01b0c2425eb1f1347e8f50882ab',
-        '0x5bd428537f05f9830e93792f90ea6a3e2d1ee84952dd96edbae9f658f831ab13',
-    ];
+    const txParams = {
+        nonce: '0x',
+        gasPrice: '0x09184e72a000',
+        gasLimit: '0x2710',
+        to: '0x0000000000000000000000000000000000000000',
+        value: '0x',
+        data: '0x7f7465737432000000000000000000000000000000000000000000000000000000600057',
+        v: '0x1c',
+        r: '0x5e1d3a76fbf824220eafc8c79ad578ad2b67d01b0c2425eb1f1347e8f50882ab',
+        s: '0x5bd428537f05f9830e93792f90ea6a3e2d1ee84952dd96edbae9f658f831ab13',
+    };
     function createFixtureSubprovider(): FixtureSubprovider {
         let isFirstGetTransactionCount = true;
         const fixedBlockNumberAndTransactionCountProvider = new FixtureSubprovider({
@@ -100,7 +100,7 @@ describe('NonceTrackerSubprovider', () => {
             ...getTransactionCountPayload,
             params: ['0x1f36f546477cda21bf2296c50976f2740247906f', 'pending'],
         };
-        const transaction = new EthereumTx(txParams);
+        const transaction = TransactionFactory.fromTxData(txParams);
         const txPayload = {
             ...sendTransactionPayload,
             params: [transaction.serialize()],
@@ -136,7 +136,7 @@ describe('NonceTrackerSubprovider', () => {
             ...getTransactionCountPayload,
             params: ['0x1f36f546477cda21bf2296c50976f2740247906f', 'pending'],
         };
-        const transaction = new EthereumTx(txParams);
+        const transaction = TransactionFactory.fromTxData(txParams);
         const txPayload = {
             ...sendTransactionPayload,
             params: [transaction.serialize()],

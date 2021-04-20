@@ -61,4 +61,6 @@ export {
     TupleDataItem,
     JSONRPCResponseError,
     StateMutability,
+    TxAccessList,
+    TxAccessListWithGas,
 } from 'ethereum-types';
