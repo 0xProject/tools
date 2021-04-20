@@ -9,6 +9,7 @@ export { AbiDecoder } from './abi_decoder';
 export { logUtils } from './log_utils';
 export { abiUtils } from './abi_utils';
 export { NULL_BYTES, NULL_ADDRESS } from './constants';
+export { constants as AbiEncoderConstants } from './abi_encoder/utils/constants';
 export { errorUtils } from './error_utils';
 export { fetchAsync } from './fetch_async';
 export { signTypedDataUtils } from './sign_typed_data_utils';
