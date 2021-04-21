@@ -2,6 +2,7 @@ import { assert } from '@0x/assert';
 import { schemas } from '@0x/json-schemas';
 import {
     AbiEncoder,
+    AbiEncoderConstants,
     abiUtils,
     BigNumber,
     decodeBytesAsRevertError,
@@ -90,6 +91,7 @@ export class PromiseWithTransactionHash<T> implements Promise<T> {
 export class BaseContract {
     protected _abiEncoderByFunctionSignature: AbiEncoderByFunctionSignature;
     protected _web3Wrapper: Web3Wrapper;
+    protected _encodingRules: AbiEncoder.EncodingRules;
     public abi: ContractAbi;
     public address: string;
     public contractName: string;
@@ -334,7 +336,7 @@ export class BaseContract {
         if (inputAbi === undefined) {
             throw new Error(`Undefined Method Input ABI`);
         }
-        const abiEncodedArguments = abiEncoder.encode(functionArguments);
+        const abiEncodedArguments = abiEncoder.encode(functionArguments, this._encodingRules);
         return abiEncodedArguments;
     }
     /// @dev Constructs a contract wrapper.
@@ -354,6 +356,7 @@ export class BaseContract {
         callAndTxnDefaults?: Partial<CallData>,
         logDecodeDependencies?: { [contractName: string]: ContractAbi },
         deployedBytecode?: string,
+        encodingRules?: AbiEncoder.EncodingRules,
     ) {
         assert.isString('contractName', contractName);
         assert.isETHAddressHex('address', address);
@@ -376,6 +379,7 @@ export class BaseContract {
         }
         this.contractName = contractName;
         this._web3Wrapper = new Web3Wrapper(provider, callAndTxnDefaults);
+        this._encodingRules = encodingRules || AbiEncoderConstants.DEFAULT_ENCODING_RULES;
         this.abi = abi;
         this.address = address;
         const methodAbis = this.abi.filter(

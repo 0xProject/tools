@@ -1,5 +1,13 @@
 [
     {
+        "version": "6.3.0",
+        "changes": [
+            {
+                "note": "Provide ABI Encoding Rules as constructor arg"
+            }
+        ]
+    },
+    {
         "timestamp": 1617740166,
         "version": "6.2.20",
         "changes": [
