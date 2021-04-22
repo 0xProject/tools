@@ -5,6 +5,10 @@
             {
                 "note": "Upgrade ethereumjs-util dep",
                 "pr": 33
+            },
+            {
+                "note": "Speed up BigNumber -> Buffer conversion",
+                "pr": 33
             }
         ]
     },
