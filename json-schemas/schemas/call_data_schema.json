@@ -27,7 +27,7 @@
                 "properties": {
                     "code": {
                         "type": "string",
-                        "pattern": "^0x[0-9a-fA-F]{64}$"
+                        "pattern": "^0x[0-9a-fA-F]*$"
                     },
                     "nonce": {
                         "oneOf": [{ "$ref": "/wholeNumberSchema" }]
