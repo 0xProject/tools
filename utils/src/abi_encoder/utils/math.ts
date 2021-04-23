@@ -19,10 +19,7 @@ function sanityCheckBigNumberRange(
     }
 }
 function bigNumberToPaddedBuffer(value: BigNumber): Buffer {
-    const valueHex = `0x${value.toString(constants.HEX_BASE)}`;
-    const valueBuf = ethUtil.toBuffer(valueHex);
-    const valueBufPadded = ethUtil.setLengthLeft(valueBuf, constants.EVM_WORD_WIDTH_IN_BYTES);
-    return valueBufPadded;
+    return ethUtil.setLengthLeft(ethUtil.toBuffer(new ethUtil.BN(value.toFixed(0))), constants.EVM_WORD_WIDTH_IN_BYTES);
 }
 /**
  * Takes a numeric value and returns its ABI-encoded value

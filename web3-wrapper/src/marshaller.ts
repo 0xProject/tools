@@ -118,7 +118,9 @@ export const marshaller = {
             throw new Error(`txData must include valid 'from' value.`);
         }
         const txData = {
-            ...txDataRpc,
+            to: txDataRpc.to,
+            from: txDataRpc.from,
+            data: txDataRpc.data,
             value: txDataRpc.value !== undefined ? utils.convertAmountToBigNumber(txDataRpc.value) : undefined,
             gas: txDataRpc.gas !== undefined ? utils.convertHexToNumber(txDataRpc.gas) : undefined,
             gasPrice: txDataRpc.gasPrice !== undefined ? utils.convertAmountToBigNumber(txDataRpc.gasPrice) : undefined,
@@ -238,8 +240,15 @@ export const marshaller = {
         return formattedLog;
     },
     _marshalCallTxDataBase(callTxDataBase: Partial<CallTxDataBase>): Partial<CallTxDataBaseRPC> {
+        let accessList;
+        if (callTxDataBase.accessList && Object.keys(callTxDataBase.accessList).length) {
+            accessList = Object.entries(callTxDataBase.accessList).map(([address, storageKeys]) => ({
+                address,
+                storageKeys,
+            }));
+        }
         const callTxDataBaseRPC = {
-            ...callTxDataBase,
+            data: callTxDataBase.data,
             to: callTxDataBase.to === undefined ? undefined : marshaller.marshalAddress(callTxDataBase.to),
             gasPrice:
                 callTxDataBase.gasPrice === undefined
@@ -248,8 +257,8 @@ export const marshaller = {
             gas: callTxDataBase.gas === undefined ? undefined : utils.encodeAmountAsHexString(callTxDataBase.gas),
             value: callTxDataBase.value === undefined ? undefined : utils.encodeAmountAsHexString(callTxDataBase.value),
             nonce: callTxDataBase.nonce === undefined ? undefined : utils.encodeAmountAsHexString(callTxDataBase.nonce),
+            ...(accessList ? { type: 0x1, accessList } : {}),
         };
-
         return callTxDataBaseRPC;
     },
 };

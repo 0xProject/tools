@@ -1,5 +1,14 @@
 [
     {
+        "version": "6.1.0",
+        "changes": [
+            {
+                "note": "Add `accessList` to `callDataSchema` and `txDataSchema`",
+                "pr": 33
+            }
+        ]
+    },
+    {
         "version": "6.0.1",
         "changes": [
             {

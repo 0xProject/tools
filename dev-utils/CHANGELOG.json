@@ -1,5 +1,14 @@
 [
     {
+        "version": "4.2.4",
+        "changes": [
+            {
+                "note": "Update exports",
+                "pr": 33
+            }
+        ]
+    },
+    {
         "timestamp": 1617740166,
         "version": "4.2.3",
         "changes": [

@@ -75,6 +75,8 @@ export interface CallTxDataBaseRPC {
     gasPrice?: string;
     data?: string;
     nonce?: string;
+    type?: number;
+    accessList?: Array<{ address: string; storageKeys: string[] }>;
 }
 
 export interface TxDataRPC extends CallTxDataBaseRPC {
@@ -91,6 +93,15 @@ export interface GethCallOverridesRPC {
         nonce?: string;
         balance?: string;
     };
+}
+
+export interface CreateAccessListResponseRPC {
+    accessList: Array<{
+        address: string;
+        storageKeys: string[] | null;
+    }>;
+    gasUsed: string;
+    error?: string;
 }
 
 // NodeType represents the type of the backing Ethereum node.

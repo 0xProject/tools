@@ -1,7 +1,7 @@
 import * as _ from 'lodash';
 
+import { AccessListEIP2930Transaction, Transaction, TransactionFactory } from '@ethereumjs/tx';
 import { BlockParamLiteral, JSONRPCRequestPayload } from 'ethereum-types';
-import EthereumTx = require('ethereumjs-tx');
 import ethUtil = require('ethereumjs-util');
 import providerEngineUtils = require('web3-provider-engine/util/rpc-cache-utils');
 
@@ -18,14 +18,13 @@ const NONCE_TOO_LOW_ERROR_MESSAGE = 'Transaction nonce is too low';
  */
 export class NonceTrackerSubprovider extends Subprovider {
     private readonly _nonceCache: { [address: string]: string } = {};
-    private static _reconstructTransaction(payload: JSONRPCRequestPayload): EthereumTx {
+    private static _reconstructTransaction(payload: JSONRPCRequestPayload): Transaction | AccessListEIP2930Transaction {
         const raw = payload.params[0];
         if (raw === undefined) {
             throw new Error(NonceSubproviderErrors.EmptyParametersFound);
         }
         const rawData = ethUtil.toBuffer(raw);
-        const transaction = new EthereumTx(rawData);
-        return transaction;
+        return TransactionFactory.fromSerializedData(rawData);
     }
     private static _determineAddress(payload: JSONRPCRequestPayload): string {
         let address: string;
@@ -35,12 +34,10 @@ export class NonceTrackerSubprovider extends Subprovider {
                 return address;
             case 'eth_sendRawTransaction':
                 const transaction = NonceTrackerSubprovider._reconstructTransaction(payload);
-                const addressRaw = transaction
+                return transaction
                     .getSenderAddress()
-                    .toString('hex')
+                    .toString()
                     .toLowerCase();
-                address = `0x${addressRaw}`;
-                return address;
             default:
                 throw new Error(NonceSubproviderErrors.CannotDetermineAddressFromPayload);
         }

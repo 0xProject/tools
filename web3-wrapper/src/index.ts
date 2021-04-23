@@ -56,6 +56,8 @@ export {
     Web3JsV2Provider,
     Web3JsV3Provider,
     RevertErrorAbi,
+    TxAccessList,
+    TxAccessListWithGas,
 } from 'ethereum-types';
 export {
     Web3WrapperErrors,

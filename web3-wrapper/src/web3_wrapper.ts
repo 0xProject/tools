@@ -17,6 +17,8 @@ import {
     TransactionReceipt,
     TransactionReceiptWithDecodedLogs,
     TransactionTrace,
+    TxAccessList,
+    TxAccessListWithGas,
     TxData,
     ZeroExProvider,
 } from 'ethereum-types';
@@ -26,6 +28,7 @@ import { marshaller } from './marshaller';
 import {
     BlockWithoutTransactionDataRPC,
     BlockWithTransactionDataRPC,
+    CreateAccessListResponseRPC,
     NodeType,
     TransactionReceiptRPC,
     TransactionRPC,
@@ -557,6 +560,39 @@ export class Web3Wrapper {
         return gas;
     }
     /**
+     * Generate an access list for an ethereum call and also compute the gas used.
+     * @param callData Call data
+     * @param defaultBlock Block height at which to make the call. Defaults to 'latest'.
+     * @returns The access list and gas used.
+     */
+    public async createAccessListAsync(callData: CallData, defaultBlock?: BlockParam): Promise<TxAccessListWithGas> {
+        assert.doesConformToSchema('callData', callData, schemas.callDataSchema, [
+            schemas.addressSchema,
+            schemas.numberSchema,
+            schemas.jsNumber,
+        ]);
+        const rawResult = await this.sendRawPayloadAsync<CreateAccessListResponseRPC>({
+            method: 'eth_createAccessList',
+            params: [marshaller.marshalCallData(callData), marshaller.marshalBlockParam(defaultBlock)],
+        });
+        if (rawResult.error) {
+            throw new Error(rawResult.error);
+        }
+        return {
+            accessList: rawResult.accessList.reduce(
+                (o, v) => {
+                    o[v.address] = o[v.address] || [];
+                    o[v.address].push(...(v.storageKeys || []));
+                    return o;
+                },
+                // tslint:disable-next-line: no-object-literal-type-assertion
+                {} as TxAccessList,
+            ),
+            // tslint:disable-next-line: custom-no-magic-numbers
+            gasUsed: parseInt(rawResult.gasUsed.slice(2), 16),
+        };
+    }
+    /**
      * Call a smart contract method at a given block height
      * @param callData Call data
      * @param defaultBlock Block height at which to make the call. Defaults to `latest`
@@ -715,11 +751,15 @@ export class Web3Wrapper {
         // tslint:enable:no-object-literal-type-assertion
         const sendAsync = promisify(this._provider.sendAsync.bind(this._provider));
         const response = await sendAsync(payloadWithDefaults); // will throw if it fails
-        if (!response || !response.result) {
+        if (!response) {
             throw new Error(`No response`);
         }
-        if (response.error) {
-            throw new Error(response.error.message);
+        const errorMessage = response.error ? response.error.message || response.error : undefined;
+        if (errorMessage) {
+            throw new Error(errorMessage as string);
+        }
+        if (response.result === undefined) {
+            throw new Error(`JSON RPC response has no result`);
         }
         return response.result;
     }

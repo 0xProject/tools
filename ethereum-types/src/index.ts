@@ -393,10 +393,20 @@ export interface CallTxDataBase {
     gasPrice?: number | string | BigNumber;
     data?: string;
     nonce?: number;
+    accessList?: TxAccessList;
 }
 
 export interface TxData extends CallTxDataBase {
     from: string;
+}
+
+export interface TxAccessList {
+    [address: string]: string[];
+}
+
+export interface TxAccessListWithGas {
+    accessList: TxAccessList;
+    gasUsed: number;
 }
 
 export interface GethCallOverrides {

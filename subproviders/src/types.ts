@@ -61,11 +61,15 @@ export interface AccountFetchingConfigs {
  * mnemonic: The string mnemonic seed
  * addressSearchLimit: The maximum number of addresses to search through, defaults to 1000
  * baseDerivationPath: The base derivation path (e.g 44'/60'/0'/0)
+ * chainId: The chain ID. Defaults to 1 (mainnet).
+ * hardfork: The chain's active hardfork. Defaults to istanbul.
  */
 export interface MnemonicWalletSubproviderConfigs {
     mnemonic: string;
     addressSearchLimit?: number;
     baseDerivationPath?: string;
+    chainId?: number;
+    hardfork?: string;
 }
 
 export interface SignatureData {
@@ -90,6 +94,8 @@ export interface PartialTxParams {
     value?: string;
     data?: string;
     chainId: number; // EIP 155 chainId - mainnet: 1, ropsten: 3
+    type?: number;
+    accessList?: Array<{ address: string; storageKeys: string[] }>;
 }
 
 export type DoneCallback = (err?: Error) => void;

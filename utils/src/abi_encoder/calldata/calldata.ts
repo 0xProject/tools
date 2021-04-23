@@ -140,7 +140,7 @@ export class Calldata {
             throw new Error('expected root');
         }
         // Construct an array of buffers (one buffer for each block).
-        const selectorBuffer = ethUtil.toBuffer(this._selector);
+        const selectorBuffer = ethUtil.toBuffer(this._selector || '0x');
         const valueBufs: Buffer[] = [selectorBuffer];
         const iterator = new CalldataIterator(this._root);
         for (const block of iterator) {

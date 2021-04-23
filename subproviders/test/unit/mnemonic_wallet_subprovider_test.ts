@@ -20,6 +20,7 @@ describe('MnemonicWalletSubprovider', () => {
         subprovider = new MnemonicWalletSubprovider({
             mnemonic: fixtureData.TEST_RPC_MNEMONIC,
             baseDerivationPath: fixtureData.TEST_RPC_MNEMONIC_BASE_DERIVATION_PATH,
+            chainId: fixtureData.NETWORK_ID,
         });
     });
     describe('direct method calls', () => {
@@ -31,12 +32,12 @@ describe('MnemonicWalletSubprovider', () => {
                 expect(accounts.length).to.be.equal(DEFAULT_NUM_ACCOUNTS);
             });
             it('signs a personal message', async () => {
-                const data = ethUtils.bufferToHex(ethUtils.toBuffer(fixtureData.PERSONAL_MESSAGE_STRING));
+                const data = ethUtils.bufferToHex(Buffer.from(fixtureData.PERSONAL_MESSAGE_STRING));
                 const ecSignatureHex = await subprovider.signPersonalMessageAsync(data, fixtureData.TEST_RPC_ACCOUNT_0);
                 expect(ecSignatureHex).to.be.equal(fixtureData.PERSONAL_MESSAGE_SIGNED_RESULT);
             });
             it('signs a personal message with second address', async () => {
-                const data = ethUtils.bufferToHex(ethUtils.toBuffer(fixtureData.PERSONAL_MESSAGE_STRING));
+                const data = ethUtils.bufferToHex(Buffer.from(fixtureData.PERSONAL_MESSAGE_STRING));
                 const ecSignatureHex = await subprovider.signPersonalMessageAsync(data, fixtureData.TEST_RPC_ACCOUNT_1);
                 expect(ecSignatureHex).to.be.equal(fixtureData.PERSONAL_MESSAGE_ACCOUNT_1_SIGNED_RESULT);
             });
@@ -98,7 +99,7 @@ describe('MnemonicWalletSubprovider', () => {
                 provider.sendAsync(payload, callback);
             });
             it('signs a personal message with eth_sign', (done: DoneCallback) => {
-                const messageHex = ethUtils.bufferToHex(ethUtils.toBuffer(fixtureData.PERSONAL_MESSAGE_STRING));
+                const messageHex = ethUtils.bufferToHex(Buffer.from(fixtureData.PERSONAL_MESSAGE_STRING));
                 const payload = {
                     jsonrpc: '2.0',
                     method: 'eth_sign',
@@ -113,7 +114,7 @@ describe('MnemonicWalletSubprovider', () => {
                 provider.sendAsync(payload, callback);
             });
             it('signs a personal message with personal_sign', (done: DoneCallback) => {
-                const messageHex = ethUtils.bufferToHex(ethUtils.toBuffer(fixtureData.PERSONAL_MESSAGE_STRING));
+                const messageHex = ethUtils.bufferToHex(Buffer.from(fixtureData.PERSONAL_MESSAGE_STRING));
                 const payload = {
                     jsonrpc: '2.0',
                     method: 'personal_sign',
@@ -174,7 +175,7 @@ describe('MnemonicWalletSubprovider', () => {
                 provider.sendAsync(payload, callback);
             });
             it('should throw if `address` param not found when calling personal_sign', (done: DoneCallback) => {
-                const messageHex = ethUtils.bufferToHex(ethUtils.toBuffer(fixtureData.PERSONAL_MESSAGE_STRING));
+                const messageHex = ethUtils.bufferToHex(Buffer.from(fixtureData.PERSONAL_MESSAGE_STRING));
                 const payload = {
                     jsonrpc: '2.0',
                     method: 'personal_sign',

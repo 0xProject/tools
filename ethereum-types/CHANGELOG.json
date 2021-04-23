@@ -1,5 +1,18 @@
 [
     {
+        "version": "3.5.0",
+        "changes": [
+            {
+                "note": "Add `TxAccessList` and `TxAccessListWithGas` types",
+                "pr": 33
+            },
+            {
+                "note": "Add `accessList` and `type` to `CallTxDataBase`",
+                "pr": 33
+            }
+        ]
+    },
+    {
         "timestamp": 1616613438,
         "version": "3.4.1",
         "changes": [

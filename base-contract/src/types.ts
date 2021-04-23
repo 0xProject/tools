@@ -1,4 +1,11 @@
-import { BlockParam, CallData, LogEntryEvent, TransactionReceiptWithDecodedLogs, TxData } from 'ethereum-types';
+import {
+    BlockParam,
+    CallData,
+    LogEntryEvent,
+    TransactionReceiptWithDecodedLogs,
+    TxAccessListWithGas,
+    TxData,
+} from 'ethereum-types';
 
 import { PromiseWithTransactionHash } from './index';
 
@@ -52,4 +59,9 @@ export interface ContractTxFunctionObj<T> extends ContractFunctionObj<T> {
         opts?: AwaitTransactionSuccessOpts,
     ): PromiseWithTransactionHash<TransactionReceiptWithDecodedLogs>;
     estimateGasAsync(txData?: Partial<TxData>): Promise<number>;
+    createAccessListAsync(
+        txData?: Partial<TxData>,
+        defaultBlock?: BlockParam,
+        shouldOptimize?: boolean,
+    ): Promise<TxAccessListWithGas>;
 }
