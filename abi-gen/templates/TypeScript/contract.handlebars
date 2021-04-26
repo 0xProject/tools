@@ -3,6 +3,7 @@
 // tslint:disable:no-unused-variable
 import {
     AwaitTransactionSuccessOpts,
+    EncoderOverrides,
     ContractFunctionObj,
     ContractTxFunctionObj,
     SendTransactionOpts,
@@ -260,6 +261,9 @@ export class {{contractName}}Contract extends BaseContract {
     }
 
     public getABIDecodedReturnData<T>(methodName: string, callData: string): T {
+        if (this._isEncoderOverrides(this._encodingOpts) && this._encodingOpts.decodeOutput) {
+            return this._encodingOpts.decodeOutput(methodName, callData);
+        }
         const functionSignature = this.getFunctionSignature(methodName);
         const self = (this as any) as {{contractName}}Contract;
         const abiEncoder = self._lookupAbiEncoder(functionSignature);
@@ -381,9 +385,9 @@ export class {{contractName}}Contract extends BaseContract {
         txDefaults?: Partial<TxData>,
         logDecodeDependencies?: { [contractName: string]: ContractAbi },
         deployedBytecode: string | undefined = {{contractName}}Contract.deployedBytecode,
-        encodingRules?: EncodingRules,
+        encodingOpts?: EncodingRules | Partial<EncoderOverrides>,
     ) {
-        super('{{contractName}}', {{contractName}}Contract.ABI(), address, supportedProvider, txDefaults, logDecodeDependencies, deployedBytecode, encodingRules);
+        super('{{contractName}}', {{contractName}}Contract.ABI(), address, supportedProvider, txDefaults, logDecodeDependencies, deployedBytecode, encodingOpts);
         classUtils.bindAll(this, ['_abiEncoderByFunctionSignature', 'address', '_web3Wrapper']);
         {{#if events~}}
         this._subscriptionManager = new SubscriptionManager<{{contractName}}EventArgs, {{contractName}}Events>(

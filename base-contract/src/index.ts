@@ -11,6 +11,7 @@ import {
     RevertError,
     StringRevertError,
 } from '@0x/utils';
+import { EncodingRules } from '@0x/utils/lib/src/abi_encoder';
 import { Web3Wrapper } from '@0x/web3-wrapper';
 import {
     AbiDefinition,
@@ -88,10 +89,15 @@ export class PromiseWithTransactionHash<T> implements Promise<T> {
     }
 }
 
+export interface EncoderOverrides {
+    encodeInput: (functionName: string, values: any) => string;
+    decodeOutput: (functionName: string, data: string) => any;
+}
+
 export class BaseContract {
     protected _abiEncoderByFunctionSignature: AbiEncoderByFunctionSignature;
     protected _web3Wrapper: Web3Wrapper;
-    protected _encodingRules: AbiEncoder.EncodingRules;
+    protected _encodingOpts: AbiEncoder.EncodingRules | Partial<EncoderOverrides>;
     public abi: ContractAbi;
     public address: string;
     public contractName: string;
@@ -99,6 +105,7 @@ export class BaseContract {
     public _deployedBytecodeIfExists?: Buffer;
     private _evmIfExists?: VM;
     private _evmAccountIfExists?: Buffer;
+
     protected static _formatABIDataItemList(
         abis: DataItem[],
         values: any[],
@@ -233,6 +240,16 @@ export class BaseContract {
             })(),
         );
     }
+    protected _isEncoderOverrides(arg: any): arg is EncoderOverrides {
+        return arg && (arg.encodeInput || arg.decodeOutput);
+    }
+    protected _isEncoderRules(arg: any): arg is EncodingRules {
+        return arg && (arg as EncodingRules).shouldOptimize && arg;
+    }
+    protected _getEncoderRulesIfExists(): EncodingRules | undefined {
+        const encoderRules = this._isEncoderRules(this._encodingOpts) ? this._encodingOpts : undefined;
+        return encoderRules;
+    }
     protected async _applyDefaultsToTxDataAsync<T extends Partial<TxData | TxDataPayable>>(
         txData: T,
         estimateGasAsync?: (txData: T) => Promise<number>,
@@ -331,12 +348,15 @@ export class BaseContract {
         return methodAbi;
     }
     protected _strictEncodeArguments(functionSignature: string, functionArguments: any): string {
+        if (this._isEncoderOverrides(this._encodingOpts) && this._encodingOpts.encodeInput) {
+            return this._encodingOpts.encodeInput(functionSignature.split('(')[0], functionArguments);
+        }
         const abiEncoder = this._lookupAbiEncoder(functionSignature);
         const inputAbi = abiEncoder.getDataItem().components;
         if (inputAbi === undefined) {
             throw new Error(`Undefined Method Input ABI`);
         }
-        const abiEncodedArguments = abiEncoder.encode(functionArguments, this._encodingRules);
+        const abiEncodedArguments = abiEncoder.encode(functionArguments, this._getEncoderRulesIfExists());
         return abiEncodedArguments;
     }
     /// @dev Constructs a contract wrapper.
@@ -356,7 +376,7 @@ export class BaseContract {
         callAndTxnDefaults?: Partial<CallData>,
         logDecodeDependencies?: { [contractName: string]: ContractAbi },
         deployedBytecode?: string,
-        encodingRules?: AbiEncoder.EncodingRules,
+        encodingOpts?: AbiEncoder.EncodingRules | Partial<EncoderOverrides>,
     ) {
         assert.isString('contractName', contractName);
         assert.isETHAddressHex('address', address);
@@ -379,7 +399,7 @@ export class BaseContract {
         }
         this.contractName = contractName;
         this._web3Wrapper = new Web3Wrapper(provider, callAndTxnDefaults);
-        this._encodingRules = encodingRules || AbiEncoderConstants.DEFAULT_ENCODING_RULES;
+        this._encodingOpts = encodingOpts || AbiEncoderConstants.DEFAULT_ENCODING_RULES;
         this.abi = abi;
         this.address = address;
         const methodAbis = this.abi.filter(

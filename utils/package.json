@@ -11,6 +11,7 @@
         "build": "tsc -b",
         "build:ci": "yarn build",
         "clean": "shx rm -rf lib",
+        "watch": "tsc -b -w",
         "lint": "tslint --format stylish --project .",
         "fix": "tslint --fix --format stylish --project .",
         "test": "yarn run_mocha",
@@ -31,6 +32,7 @@
     "devDependencies": {
         "@0x/tslint-config": "^4.1.4",
         "@types/detect-node": "2.0.0",
+        "@types/ethereumjs-util": "^6.1.0",
         "@types/lodash": "4.14.104",
         "chai": "^4.0.1",
         "chai-as-promised": "^7.1.0",
