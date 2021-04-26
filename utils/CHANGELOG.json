@@ -1,5 +1,14 @@
 [
     {
+        "version": "6.4.1",
+        "changes": [
+            {
+                "note": "Fix `addressUtils.generatePseudoRandomAddress()`",
+                "pr": 35
+            }
+        ]
+    },
+    {
         "version": "6.4.0",
         "changes": [
             {

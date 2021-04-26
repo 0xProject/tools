@@ -1,7 +1,6 @@
-import { addHexPrefix, isValidChecksumAddress, keccak256, stripHexPrefix, toBuffer } from 'ethereumjs-util';
+import { addHexPrefix, isValidChecksumAddress, stripHexPrefix } from 'ethereumjs-util';
+import { hexUtils } from './hex_utils';
 import * as _ from 'lodash';
-
-import { generatePseudoRandom256BitNumber } from './random';
 
 const BASIC_ADDRESS_REGEX = /^(0x)?[0-9a-f]{40}$/i;
 const SAME_CASE_ADDRESS_REGEX = /^(0x)?([0-9a-f]{40}|[0-9A-F]{40})$/;
@@ -28,10 +27,6 @@ export const addressUtils = {
         return addHexPrefix(_.padStart(stripHexPrefix(address), ADDRESS_LENGTH, '0'));
     },
     generatePseudoRandomAddress(): string {
-        const randomBigNum = generatePseudoRandom256BitNumber();
-        const randomBuff = keccak256(toBuffer(randomBigNum));
-        const addressLengthInBytes = 20;
-        const randomAddress = `0x${randomBuff.slice(0, addressLengthInBytes).toString('hex')}`;
-        return randomAddress;
+        return hexUtils.random(20);
     },
 };
