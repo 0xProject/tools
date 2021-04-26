@@ -6,7 +6,8 @@
                 "note": "Upgrade `ethereumjs-util` dep",
                 "pr": 33
             }
-        ]
+        ],
+        "timestamp": 1619408602
     },
     {
         "timestamp": 1617740166,

@@ -10,7 +10,8 @@
                 "note": "Speed up BigNumber -> Buffer conversion",
                 "pr": 33
             }
-        ]
+        ],
+        "timestamp": 1619408602
     },
     {
         "version": "6.3.0",

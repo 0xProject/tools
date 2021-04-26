@@ -5,6 +5,11 @@ Edit the package's CHANGELOG.json file only.
 
 CHANGELOG
 
+## v6.4.0 - _April 26, 2021_
+
+    * Upgrade ethereumjs-util dep (#33)
+    * Speed up BigNumber -> Buffer conversion (#33)
+
 ## v6.3.0 - _April 6, 2021_
 
     * Precompute max uint/int values in AbiEncoder (#30)

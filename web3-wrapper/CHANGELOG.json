@@ -10,7 +10,8 @@
                 "note": "Fix null JSONRPC results from being considered errors",
                 "pr": 33
             }
-        ]
+        ],
+        "timestamp": 1619408602
     },
     {
         "timestamp": 1617740166,

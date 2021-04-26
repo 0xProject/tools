@@ -5,6 +5,11 @@ Edit the package's CHANGELOG.json file only.
 
 CHANGELOG
 
+## v6.3.0 - _April 26, 2021_
+
+    * Provide ABI Encoding Rules as constructor arg
+    * Add `createAccessListAsync()` method (#33)
+
 ## v6.2.20 - _April 6, 2021_
 
     * Dependencies updated

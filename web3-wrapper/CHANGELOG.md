@@ -5,6 +5,11 @@ Edit the package's CHANGELOG.json file only.
 
 CHANGELOG
 
+## v7.5.0 - _April 26, 2021_
+
+    * Add `Web3Wrapper.createAccessListAsync()` (#33)
+    * Fix null JSONRPC results from being considered errors (#33)
+
 ## v7.4.3 - _April 6, 2021_
 
     * Dependencies updated

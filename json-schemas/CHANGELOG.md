@@ -5,6 +5,10 @@ Edit the package's CHANGELOG.json file only.
 
 CHANGELOG
 
+## v6.1.0 - _April 26, 2021_
+
+    * Add `accessList` to `callDataSchema` and `txDataSchema` (#33)
+
 ## v6.0.1 - _April 6, 2021_
 
     * Swallow duplicate schema definition errors (#31)

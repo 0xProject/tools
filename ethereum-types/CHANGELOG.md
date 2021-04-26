@@ -5,6 +5,11 @@ Edit the package's CHANGELOG.json file only.
 
 CHANGELOG
 
+## v3.5.0 - _April 26, 2021_
+
+    * Add `TxAccessList` and `TxAccessListWithGas` types (#33)
+    * Add `accessList` and `type` to `CallTxDataBase` (#33)
+
 ## v3.4.1 - _March 24, 2021_
 
     * Dependencies updated

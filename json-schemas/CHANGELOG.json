@@ -6,7 +6,8 @@
                 "note": "Add `accessList` to `callDataSchema` and `txDataSchema`",
                 "pr": 33
             }
-        ]
+        ],
+        "timestamp": 1619408602
     },
     {
         "version": "6.0.1",
