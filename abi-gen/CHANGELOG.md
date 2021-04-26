@@ -5,6 +5,10 @@ Edit the package's CHANGELOG.json file only.
 
 CHANGELOG
 
+## v5.5.1 - _April 26, 2021_
+
+    * Dependencies updated
+
 ## v5.5.0 - _April 26, 2021_
 
     * Provide ABI Encoding Rules as constructor arg

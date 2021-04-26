@@ -5,6 +5,10 @@ Edit the package's CHANGELOG.json file only.
 
 CHANGELOG
 
+## v4.7.1 - _April 26, 2021_
+
+    * Dependencies updated
+
 ## v4.7.0 - _April 26, 2021_
 
     * Upgrade `ethereumjs-util` dep (#33)

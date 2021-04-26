@@ -6,7 +6,8 @@
                 "note": "Fix `addressUtils.generatePseudoRandomAddress()`",
                 "pr": 35
             }
-        ]
+        ],
+        "timestamp": 1619466964
     },
     {
         "version": "6.4.0",

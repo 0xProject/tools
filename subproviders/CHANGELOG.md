@@ -5,6 +5,10 @@ Edit the package's CHANGELOG.json file only.
 
 CHANGELOG
 
+## v6.5.1 - _April 26, 2021_
+
+    * Dependencies updated
+
 ## v6.5.0 - _April 26, 2021_
 
     * Add access list support to subproviders (#33)

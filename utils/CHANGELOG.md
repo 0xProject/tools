@@ -5,6 +5,10 @@ Edit the package's CHANGELOG.json file only.
 
 CHANGELOG
 
+## v6.4.1 - _April 26, 2021_
+
+    * Fix `addressUtils.generatePseudoRandomAddress()` (#35)
+
 ## v6.4.0 - _April 26, 2021_
 
     * Upgrade ethereumjs-util dep (#33)

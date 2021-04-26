@@ -5,6 +5,10 @@ Edit the package's CHANGELOG.json file only.
 
 CHANGELOG
 
+## v6.1.1 - _April 26, 2021_
+
+    * Dependencies updated
+
 ## v6.1.0 - _April 26, 2021_
 
     * Add `accessList` to `callDataSchema` and `txDataSchema` (#33)
