@@ -1,5 +1,14 @@
 [
     {
+        "version": "5.5.2",
+        "changes": [
+            {
+                "note": "Use `EncodingRules` instead of `AbiEncoder.EncodingRules` in templates",
+                "pr": 37
+            }
+        ]
+    },
+    {
         "timestamp": 1619466964,
         "version": "5.5.1",
         "changes": [

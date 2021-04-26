@@ -1,5 +1,14 @@
 [
     {
+        "version": "6.4.2",
+        "changes": [
+            {
+                "note": "Export `EncodingRules` and `DecodingRules` at the root level",
+                "pr": 37
+            }
+        ]
+    },
+    {
         "version": "6.4.1",
         "changes": [
             {
