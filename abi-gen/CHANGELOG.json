@@ -6,7 +6,8 @@
                 "note": "Use `EncodingRules` instead of `AbiEncoder.EncodingRules` in templates",
                 "pr": 37
             }
-        ]
+        ],
+        "timestamp": 1619481141
     },
     {
         "timestamp": 1619466964,

@@ -5,6 +5,10 @@ Edit the package's CHANGELOG.json file only.
 
 CHANGELOG
 
+## v5.5.2 - _April 26, 2021_
+
+    * Use `EncodingRules` instead of `AbiEncoder.EncodingRules` in templates (#37)
+
 ## v5.5.1 - _April 26, 2021_
 
     * Dependencies updated

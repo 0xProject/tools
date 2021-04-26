@@ -6,7 +6,8 @@
                 "note": "Export `EncodingRules` and `DecodingRules` at the root level",
                 "pr": 37
             }
-        ]
+        ],
+        "timestamp": 1619481141
     },
     {
         "version": "6.4.1",

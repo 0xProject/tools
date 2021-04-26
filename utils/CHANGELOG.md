@@ -5,6 +5,10 @@ Edit the package's CHANGELOG.json file only.
 
 CHANGELOG
 
+## v6.4.2 - _April 26, 2021_
+
+    * Export `EncodingRules` and `DecodingRules` at the root level (#37)
+
 ## v6.4.1 - _April 26, 2021_
 
     * Fix `addressUtils.generatePseudoRandomAddress()` (#35)

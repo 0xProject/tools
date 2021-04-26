@@ -5,6 +5,10 @@ Edit the package's CHANGELOG.json file only.
 
 CHANGELOG
 
+## v7.5.2 - _April 26, 2021_
+
+    * Dependencies updated
+
 ## v7.5.1 - _April 26, 2021_
 
     * Dependencies updated
