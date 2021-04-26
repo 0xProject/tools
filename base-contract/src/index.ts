@@ -240,9 +240,11 @@ export class BaseContract {
             })(),
         );
     }
+    // tslint:disable prefer-function-over-method
     protected _isEncoderOverrides(arg: any): arg is EncoderOverrides {
         return arg && (arg.encodeInput || arg.decodeOutput);
     }
+    // tslint:disable prefer-function-over-method
     protected _isEncoderRules(arg: any): arg is EncodingRules {
         return arg && (arg as EncodingRules).shouldOptimize && arg;
     }
