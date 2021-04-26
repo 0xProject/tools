@@ -29,7 +29,7 @@ import {
     TxAccessListWithGas,
     SupportedProvider,
 } from 'ethereum-types';
-import { BigNumber, classUtils, hexUtils, logUtils, providerUtils } from '@0x/utils';
+import { AbiEncoder, BigNumber, classUtils, EncodingRules, hexUtils, logUtils, providerUtils } from '@0x/utils';
 import { EventCallback, IndexedFilterValues, SimpleContractArtifact } from '@0x/types';
 import { Web3Wrapper } from '@0x/web3-wrapper';
 import { assert } from '@0x/assert';
@@ -2140,6 +2140,7 @@ export class AbiGenDummyContract extends BaseContract {
         txDefaults?: Partial<TxData>,
         logDecodeDependencies?: { [contractName: string]: ContractAbi },
         deployedBytecode: string | undefined = AbiGenDummyContract.deployedBytecode,
+        encodingRules?: EncodingRules,
     ) {
         super(
             'AbiGenDummy',
@@ -2149,6 +2150,7 @@ export class AbiGenDummyContract extends BaseContract {
             txDefaults,
             logDecodeDependencies,
             deployedBytecode,
+            encodingRules,
         );
         classUtils.bindAll(this, ['_abiEncoderByFunctionSignature', 'address', '_web3Wrapper']);
         this._subscriptionManager = new SubscriptionManager<AbiGenDummyEventArgs, AbiGenDummyEvents>(
