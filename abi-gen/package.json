@@ -43,6 +43,7 @@
         "coverage:report:text": "istanbul report text",
         "coverage:report:html": "istanbul report html && open coverage/index.html",
         "profiler:report:html": "istanbul report html && open coverage/index.html",
+        "publish:private": "yarn build && gitpkg publish",
         "contracts:gen": "contracts-gen generate"
     },
     "config": {
@@ -107,7 +108,8 @@
         "sinon": "^4.0.0",
         "solhint": "^1.4.1",
         "tslint": "5.11.0",
-        "typescript": "4.2.2"
+        "typescript": "4.2.2",
+        "gitpkg": "https://github.com/0xProject/gitpkg.git"
     },
     "publishConfig": {
         "access": "public"
@@ -119,5 +121,8 @@
         "*.ts",
         "*.map"
     ],
+    "gitpkg": {
+        "registry": "git@github.com:0xProject/gitpkg-registry.git"
+    },
     "gitHead": "4f91bfd907996b2f4dd383778b50c479c2602b56"
 }
