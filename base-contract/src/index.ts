@@ -378,7 +378,7 @@ export class BaseContract {
         callAndTxnDefaults?: Partial<CallData>,
         logDecodeDependencies?: { [contractName: string]: ContractAbi },
         deployedBytecode?: string,
-        encodingOpts?: AbiEncoder.EncodingRules | Partial<EncoderOverrides>,
+        encodingOpts?: EncodingRules | Partial<EncoderOverrides>,
     ) {
         assert.isString('contractName', contractName);
         assert.isETHAddressHex('address', address);
