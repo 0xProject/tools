@@ -1,6 +1,6 @@
 {
     "name": "@0x/assert",
-    "version": "3.0.26",
+    "version": "3.0.27",
     "engines": {
         "node": ">=6.12"
     },
@@ -45,9 +45,9 @@
         "typescript": "4.2.2"
     },
     "dependencies": {
-        "@0x/json-schemas": "^6.1.2",
+        "@0x/json-schemas": "^6.1.3",
         "@0x/typescript-typings": "^5.2.0",
-        "@0x/utils": "^6.4.2",
+        "@0x/utils": "^6.4.3",
         "@types/node": "12.12.54",
         "lodash": "^4.17.11",
         "valid-url": "^1.0.9"
