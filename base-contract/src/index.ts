@@ -2,7 +2,6 @@ import { assert } from '@0x/assert';
 import { schemas } from '@0x/json-schemas';
 import {
     AbiEncoder,
-    AbiEncoderConstants,
     abiUtils,
     BigNumber,
     decodeBytesAsRevertError,
@@ -11,7 +10,6 @@ import {
     RevertError,
     StringRevertError,
 } from '@0x/utils';
-import { EncodingRules } from '@0x/utils/lib/src/abi_encoder';
 import { Web3Wrapper } from '@0x/web3-wrapper';
 import {
     AbiDefinition,
