@@ -36,14 +36,13 @@
         "compile:sol": "sol-compiler",
         "watch:sol": "sol-compiler -w",
         "prettier_contract_wrappers": "prettier --write ./test-cli/output/typescript/* --config ../.prettierrc",
-        "generate_contract_wrappers": "run-p gen_typescript",
+        "generate_contract_wrappers": "run-p gen_typescript gen_python",
         "gen_typescript": "abi-gen --abis ${npm_package_config_abis} --debug --output ./test-cli/output/typescript --backend ethers",
         "gen_python": "pip install regex==2019.11.1 && pip install black && abi-gen --abis  ${npm_package_config_abis} --output ./test-cli/output/python --language Python",
         "diff_contract_wrappers": "git diff --exit-code ./test-cli/output",
         "coverage:report:text": "istanbul report text",
         "coverage:report:html": "istanbul report html && open coverage/index.html",
         "profiler:report:html": "istanbul report html && open coverage/index.html",
-        "publish:private": "yarn build && gitpkg publish",
         "contracts:gen": "contracts-gen generate"
     },
     "config": {
@@ -108,8 +107,7 @@
         "sinon": "^4.0.0",
         "solhint": "^1.4.1",
         "tslint": "5.11.0",
-        "typescript": "4.2.2",
-        "gitpkg": "https://github.com/0xProject/gitpkg.git"
+        "typescript": "4.2.2"
     },
     "publishConfig": {
         "access": "public"
@@ -121,8 +119,5 @@
         "*.ts",
         "*.map"
     ],
-    "gitpkg": {
-        "registry": "git@github.com:0xProject/gitpkg-registry.git"
-    },
     "gitHead": "4f91bfd907996b2f4dd383778b50c479c2602b56"
 }
