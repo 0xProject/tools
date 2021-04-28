@@ -243,8 +243,8 @@ export class TestLibDummyContract extends BaseContract {
     }
 
     public getABIDecodedReturnData<T>(methodName: string, callData: string): T {
-        if (this._isEncoderOverrides(this._encodingOpts) && this._encodingOpts.decodeOutput) {
-            return this._encodingOpts.decodeOutput(methodName, callData);
+        if (this._encoderOverrides.decodeOutput) {
+            return this._encoderOverrides.decodeOutput(methodName, callData);
         }
         const functionSignature = this.getFunctionSignature(methodName);
         const self = (this as any) as TestLibDummyContract;
@@ -319,7 +319,7 @@ export class TestLibDummyContract extends BaseContract {
         txDefaults?: Partial<TxData>,
         logDecodeDependencies?: { [contractName: string]: ContractAbi },
         deployedBytecode: string | undefined = TestLibDummyContract.deployedBytecode,
-        encodingOpts?: EncodingRules | Partial<EncoderOverrides>,
+        encoderOverrides?: Partial<EncoderOverrides>,
     ) {
         super(
             'TestLibDummy',
@@ -329,7 +329,7 @@ export class TestLibDummyContract extends BaseContract {
             txDefaults,
             logDecodeDependencies,
             deployedBytecode,
-            encodingOpts,
+            encoderOverrides,
         );
         classUtils.bindAll(this, ['_abiEncoderByFunctionSignature', 'address', '_web3Wrapper']);
         TestLibDummyContract.ABI().forEach((item, index) => {

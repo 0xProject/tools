@@ -3,7 +3,8 @@
         "version": "5.6.0",
         "changes": [
             {
-                "note": "Support overriding encodeInput and decodeOutput"
+                "note": "Support overriding encodeInput and decodeOutput",
+                "pr": 36
             }
         ]
     },
