@@ -5,6 +5,10 @@ Edit the package's CHANGELOG.json file only.
 
 CHANGELOG
 
+## v5.6.0 - _April 28, 2021_
+
+    * Support overriding encodeInput and decodeOutput (#36)
+
 ## v5.5.2 - _April 26, 2021_
 
     * Use `EncodingRules` instead of `AbiEncoder.EncodingRules` in templates (#37)

@@ -6,7 +6,8 @@
                 "note": "Support overriding encodeInput and decodeOutput",
                 "pr": 36
             }
-        ]
+        ],
+        "timestamp": 1619585664
     },
     {
         "version": "5.5.2",

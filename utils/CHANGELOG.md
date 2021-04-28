@@ -5,6 +5,10 @@ Edit the package's CHANGELOG.json file only.
 
 CHANGELOG
 
+## v6.4.3 - _April 28, 2021_
+
+    * Dependencies updated
+
 ## v6.4.2 - _April 26, 2021_
 
     * Export `EncodingRules` and `DecodingRules` at the root level (#37)
