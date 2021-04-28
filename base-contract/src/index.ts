@@ -2,7 +2,6 @@ import { assert } from '@0x/assert';
 import { schemas } from '@0x/json-schemas';
 import {
     AbiEncoder,
-    AbiEncoderConstants,
     abiUtils,
     BigNumber,
     decodeBytesAsRevertError,
@@ -88,10 +87,15 @@ export class PromiseWithTransactionHash<T> implements Promise<T> {
     }
 }
 
+export interface EncoderOverrides {
+    encodeInput: (functionName: string, values: any) => string;
+    decodeOutput: (functionName: string, data: string) => any;
+}
+
 export class BaseContract {
     protected _abiEncoderByFunctionSignature: AbiEncoderByFunctionSignature;
     protected _web3Wrapper: Web3Wrapper;
-    protected _encodingRules: AbiEncoder.EncodingRules;
+    protected _encoderOverrides: Partial<EncoderOverrides>;
     public abi: ContractAbi;
     public address: string;
     public contractName: string;
@@ -99,6 +103,7 @@ export class BaseContract {
     public _deployedBytecodeIfExists?: Buffer;
     private _evmIfExists?: VM;
     private _evmAccountIfExists?: Buffer;
+
     protected static _formatABIDataItemList(
         abis: DataItem[],
         values: any[],
@@ -331,12 +336,15 @@ export class BaseContract {
         return methodAbi;
     }
     protected _strictEncodeArguments(functionSignature: string, functionArguments: any): string {
+        if (this._encoderOverrides.encodeInput) {
+            return this._encoderOverrides.encodeInput(functionSignature.split('(')[0], functionArguments);
+        }
         const abiEncoder = this._lookupAbiEncoder(functionSignature);
         const inputAbi = abiEncoder.getDataItem().components;
         if (inputAbi === undefined) {
             throw new Error(`Undefined Method Input ABI`);
         }
-        const abiEncodedArguments = abiEncoder.encode(functionArguments, this._encodingRules);
+        const abiEncodedArguments = abiEncoder.encode(functionArguments);
         return abiEncodedArguments;
     }
     /// @dev Constructs a contract wrapper.
@@ -356,7 +364,7 @@ export class BaseContract {
         callAndTxnDefaults?: Partial<CallData>,
         logDecodeDependencies?: { [contractName: string]: ContractAbi },
         deployedBytecode?: string,
-        encodingRules?: AbiEncoder.EncodingRules,
+        encoderOverrides?: Partial<EncoderOverrides>,
     ) {
         assert.isString('contractName', contractName);
         assert.isETHAddressHex('address', address);
@@ -379,7 +387,7 @@ export class BaseContract {
         }
         this.contractName = contractName;
         this._web3Wrapper = new Web3Wrapper(provider, callAndTxnDefaults);
-        this._encodingRules = encodingRules || AbiEncoderConstants.DEFAULT_ENCODING_RULES;
+        this._encoderOverrides = encoderOverrides || {};
         this.abi = abi;
         this.address = address;
         const methodAbis = this.abi.filter(

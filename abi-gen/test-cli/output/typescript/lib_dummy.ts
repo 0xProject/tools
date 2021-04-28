@@ -3,6 +3,7 @@
 // tslint:disable:no-unused-variable
 import {
     AwaitTransactionSuccessOpts,
+    EncoderOverrides,
     ContractFunctionObj,
     ContractTxFunctionObj,
     SendTransactionOpts,
@@ -202,6 +203,9 @@ export class LibDummyContract extends BaseContract {
     }
 
     public getABIDecodedReturnData<T>(methodName: string, callData: string): T {
+        if (this._encoderOverrides.decodeOutput) {
+            return this._encoderOverrides.decodeOutput(methodName, callData);
+        }
         const functionSignature = this.getFunctionSignature(methodName);
         const self = (this as any) as LibDummyContract;
         const abiEncoder = self._lookupAbiEncoder(functionSignature);
@@ -222,7 +226,7 @@ export class LibDummyContract extends BaseContract {
         txDefaults?: Partial<TxData>,
         logDecodeDependencies?: { [contractName: string]: ContractAbi },
         deployedBytecode: string | undefined = LibDummyContract.deployedBytecode,
-        encodingRules?: EncodingRules,
+        encoderOverrides?: Partial<EncoderOverrides>,
     ) {
         super(
             'LibDummy',
@@ -232,7 +236,7 @@ export class LibDummyContract extends BaseContract {
             txDefaults,
             logDecodeDependencies,
             deployedBytecode,
-            encodingRules,
+            encoderOverrides,
         );
         classUtils.bindAll(this, ['_abiEncoderByFunctionSignature', 'address', '_web3Wrapper']);
         LibDummyContract.ABI().forEach((item, index) => {
