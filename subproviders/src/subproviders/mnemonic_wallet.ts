@@ -150,7 +150,7 @@ export class MnemonicWalletSubprovider extends BaseWalletSubprovider {
         return matchedDerivedKeyInfo;
     }
     private _initialDerivedKeyInfo(baseDerivationPath: string): DerivedHDKeyInfo {
-        const seed = bip39.mnemonicToSeed(this._mnemonic);
+        const seed = bip39.mnemonicToSeedSync(this._mnemonic);
         const hdKey = HDNode.fromMasterSeed(seed);
         // Walk down to base derivation level (i.e m/44'/60'/0') and create an initial key at that level
         // all children will then be walked relative (i.e m/0)
