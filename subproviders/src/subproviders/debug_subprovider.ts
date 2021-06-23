@@ -38,9 +38,9 @@ export class DebugSubprovider extends Subprovider {
         const hexBufferToString = (value: Buffer): string => new BigNumber(value.toString('hex'), HEX_BASE).toString();
         let gasPrice;
         if (txn instanceof FeeMarketEIP1559Transaction) {
-            gasPrice = "0x";
+            gasPrice = "0";
         } else {
-            gasPrice = txn.gasPrice;
+            gasPrice = hexBufferToString(txn.gasPrice);
         }
 
         return {
