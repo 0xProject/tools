@@ -2,7 +2,8 @@ import { assert } from '@0x/assert';
 import { StatusCodes } from '@0x/types';
 import { fetchAsync } from '@0x/utils';
 import { JSONRPCRequestPayload } from 'ethereum-types';
-import JsonRpcError = require('json-rpc-error');
+// @ts-ignore: json-rpc-error doesn't have types
+import JsonRpcError from 'json-rpc-error';
 
 import { Callback, ErrorCallback } from '../types';
 

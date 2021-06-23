@@ -1,5 +1,5 @@
 import { BigNumber } from '@0x/utils';
-import { AccessListEIP2930Transaction, Transaction, TransactionFactory } from '@ethereumjs/tx';
+import { TransactionFactory, TypedTransaction } from '@ethereumjs/tx';
 import { JSONRPCRequestPayload } from 'ethereum-types';
 import { toBuffer } from 'ethereumjs-util';
 
@@ -33,13 +33,13 @@ export class DebugSubprovider extends Subprovider {
     private readonly _debugCallback: WithDebugPayload;
 
     private static _generateRawTransactionAttributes(
-        txn: Transaction | AccessListEIP2930Transaction,
+        txn: TypedTransaction,
     ): DebugPayloadRawTransactionAttributes {
         const hexBufferToString = (value: Buffer): string => new BigNumber(value.toString('hex'), HEX_BASE).toString();
 
         return {
             gasLimit: hexBufferToString(txn.gasLimit),
-            gasPrice: hexBufferToString(txn.gasPrice),
+            gasPrice: txn?.gasPrice ? hexBufferToString(txn.gasPrice) : "0x",
             nonce: hexBufferToString(txn.nonce),
             value: hexBufferToString(txn.value),
             // tslint:disable-next-line: no-unnecessary-type-assertion

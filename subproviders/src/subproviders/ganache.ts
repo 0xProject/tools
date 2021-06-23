@@ -1,5 +1,5 @@
 import { GanacheProvider, JSONRPCRequestPayload } from 'ethereum-types';
-import * as Ganache from 'ganache-core';
+import Ganache from 'ganache-core';
 
 import { Callback, ErrorCallback } from '../types';
 
@@ -15,9 +15,10 @@ export class GanacheSubprovider extends Subprovider {
      * Instantiates a GanacheSubprovider
      * @param opts The desired opts with which to instantiate the Ganache provider
      */
-    constructor(opts: Ganache.GanacheOpts) {
+    constructor(opts: Ganache.IProviderOptions) {
         super();
-        this._ganacheProvider = Ganache.provider(opts);
+        // @ts-ignore: Ganace.Provider has sendAsync, it's just missing from the type
+        this._ganacheProvider = Ganache.provider(opts) as GanacheProvider;
     }
     /**
      * This method conforms to the web3-provider-engine interface.
