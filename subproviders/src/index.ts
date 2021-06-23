@@ -1,5 +1,6 @@
 import Eth from '@ledgerhq/hw-app-eth';
-import TransportU2F from '@ledgerhq/hw-transport-u2f';
+import TransportWebHID from "@ledgerhq/hw-transport-webhid";
+import TransportWebUSB from "@ledgerhq/hw-transport-webusb";
 export import Web3ProviderEngine = require('web3-provider-engine');
 
 import { LedgerEthereumClient } from './types';
@@ -7,9 +8,22 @@ import { LedgerEthereumClient } from './types';
 /**
  * A factory method for creating a LedgerEthereumClient usable in a browser context.
  * @return LedgerEthereumClient A browser client for the LedgerSubprovider
+ * @throws Error no transport available
  */
 export async function ledgerEthereumBrowserClientFactoryAsync(): Promise<LedgerEthereumClient> {
-    const ledgerConnection = await TransportU2F.create();
+    let transport;
+        
+    if (await TransportWebHID.isSupported()) {
+        transport = TransportWebHID;
+    } else if (await TransportWebUSB.isSupported()) {
+        transport = TransportWebUSB;
+    } 
+        
+    if (!transport) {
+        throw new Error("No transport available")
+    }
+        
+    const ledgerConnection = await transport.create();
     const ledgerEthClient = new Eth(ledgerConnection);
     return ledgerEthClient;
 }

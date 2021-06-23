@@ -82,7 +82,7 @@ export interface SignatureData {
 export interface LedgerGetAddressResult {
     address: string;
     publicKey: string;
-    chainCode: string;
+    chainCode?: string;
 }
 
 export interface PartialTxParams {

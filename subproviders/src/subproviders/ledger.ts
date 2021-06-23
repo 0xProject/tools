@@ -243,7 +243,7 @@ export class LedgerSubprovider extends BaseWalletSubprovider {
         }
         const hdKey = new HDNode();
         hdKey.publicKey = Buffer.from(ledgerResponse.publicKey, 'hex');
-        hdKey.chainCode = Buffer.from(ledgerResponse.chainCode, 'hex');
+        hdKey.chainCode = Buffer.from(ledgerResponse?.chainCode ?? "", 'hex');
         const address = walletUtils.addressOfHDKey(hdKey);
         const initialDerivedKeyInfo = {
             hdKey,
