@@ -1,6 +1,6 @@
 import * as _ from 'lodash';
 
-import { AccessListEIP2930Transaction, Transaction, TransactionFactory } from '@ethereumjs/tx';
+import { TransactionFactory, TypedTransaction } from '@ethereumjs/tx';
 import { BlockParamLiteral, JSONRPCRequestPayload } from 'ethereum-types';
 import ethUtil = require('ethereumjs-util');
 import providerEngineUtils = require('web3-provider-engine/util/rpc-cache-utils');
@@ -18,7 +18,7 @@ const NONCE_TOO_LOW_ERROR_MESSAGE = 'Transaction nonce is too low';
  */
 export class NonceTrackerSubprovider extends Subprovider {
     private readonly _nonceCache: { [address: string]: string } = {};
-    private static _reconstructTransaction(payload: JSONRPCRequestPayload): Transaction | AccessListEIP2930Transaction {
+    private static _reconstructTransaction(payload: JSONRPCRequestPayload): TypedTransaction {
         const raw = payload.params[0];
         if (raw === undefined) {
             throw new Error(NonceSubproviderErrors.EmptyParametersFound);
