@@ -1,5 +1,5 @@
 import { BigNumber } from '@0x/utils';
-import { TransactionFactory, TypedTransaction } from '@ethereumjs/tx';
+import { FeeMarketEIP1559Transaction, TransactionFactory, TypedTransaction } from '@ethereumjs/tx';
 import { JSONRPCRequestPayload } from 'ethereum-types';
 import { toBuffer } from 'ethereumjs-util';
 
@@ -36,10 +36,16 @@ export class DebugSubprovider extends Subprovider {
         txn: TypedTransaction,
     ): DebugPayloadRawTransactionAttributes {
         const hexBufferToString = (value: Buffer): string => new BigNumber(value.toString('hex'), HEX_BASE).toString();
+        let gasPrice;
+        if (txn instanceof FeeMarketEIP1559Transaction) {
+            gasPrice = "0x";
+        } else {
+            gasPrice = txn.gasPrice;
+        }
 
         return {
             gasLimit: hexBufferToString(txn.gasLimit),
-            gasPrice: txn?.gasPrice ? hexBufferToString(txn.gasPrice) : "0x",
+            gasPrice: gasPrice,
             nonce: hexBufferToString(txn.nonce),
             value: hexBufferToString(txn.value),
             // tslint:disable-next-line: no-unnecessary-type-assertion
