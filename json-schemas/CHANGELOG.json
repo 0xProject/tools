@@ -3,7 +3,7 @@
         "version": "6.2.0",
         "changes": [
             {
-                "note": "Return all schema validation errors and expose Ajv types",
+                "note": "Return all schema validation errors and expose Ajv types, remove outdated relayer api schemas",
                 "pr": 38
             }
         ]
