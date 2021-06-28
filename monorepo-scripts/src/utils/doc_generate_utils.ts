@@ -104,7 +104,13 @@ export class DocGenerateUtils {
                     if (exportClause === undefined) {
                         return;
                     }
-                    const exportPath = exportClause.parent.moduleSpecifier.text;
+                    const exportPath =
+                        exportClause.parent &&
+                        exportClause.parent.moduleSpecifier &&
+                        exportClause.parent.moduleSpecifier.text;
+                    if (!exportPath) {
+                        return;
+                    }
                     _.each(exportClause.elements, element => {
                         const exportItem = element.name.escapedText;
                         if (!_.includes(exportsToOmit, exportItem)) {

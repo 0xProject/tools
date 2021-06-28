@@ -1,5 +1,14 @@
 [
     {
+        "version": "3.1.8",
+        "changes": [
+            {
+                "note": "Fix doc generate TS parsing potentially undefined export token",
+                "pr": 38
+            }
+        ]
+    },
+    {
         "timestamp": 1619585664,
         "version": "3.1.7",
         "changes": [

@@ -19,7 +19,8 @@
         "TFillData": true,
         "IterableIterator": true,
         "Set": true,
-        "Exclude": true
+        "Exclude": true,
+        "Ajv": true
     },
     "ignoredExcessiveTypes": [
         "NonceSubproviderErrors",
