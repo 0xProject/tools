@@ -6,7 +6,8 @@
                 "note": "Fix doc generate TS parsing potentially undefined export token",
                 "pr": 38
             }
-        ]
+        ],
+        "timestamp": 1624871999
     },
     {
         "timestamp": 1619585664,

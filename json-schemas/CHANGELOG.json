@@ -6,7 +6,8 @@
                 "note": "Return all schema validation errors and expose Ajv types, remove outdated relayer api schemas",
                 "pr": 38
             }
-        ]
+        ],
+        "timestamp": 1624871999
     },
     {
         "timestamp": 1619585664,

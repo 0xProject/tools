@@ -5,6 +5,10 @@ Edit the package's CHANGELOG.json file only.
 
 CHANGELOG
 
+## v3.1.8 - _June 28, 2021_
+
+    * Fix doc generate TS parsing potentially undefined export token (#38)
+
 ## v3.1.7 - _April 28, 2021_
 
     * Dependencies updated
