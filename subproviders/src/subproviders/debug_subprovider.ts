@@ -1,5 +1,5 @@
 import { BigNumber } from '@0x/utils';
-import { FeeMarketEIP1559Transaction, TransactionFactory, TypedTransaction } from '@ethereumjs/tx';
+import { TransactionFactory, TypedTransaction, FeeMarketEIP1559Transaction } from '@ethereumjs/tx';
 import { JSONRPCRequestPayload } from 'ethereum-types';
 import { toBuffer } from 'ethereumjs-util';
 
@@ -36,11 +36,12 @@ export class DebugSubprovider extends Subprovider {
         txn: TypedTransaction,
     ): DebugPayloadRawTransactionAttributes {
         const hexBufferToString = (value: Buffer): string => new BigNumber(value.toString('hex'), HEX_BASE).toString();
-        let gasPrice;
+
+        let gasPrice
         if (txn instanceof FeeMarketEIP1559Transaction) {
-            gasPrice = "0";
+            gasPrice = "0"
         } else {
-            gasPrice = hexBufferToString(txn.gasPrice);
+            gasPrice = hexBufferToString(txn.gasPrice)
         }
 
         return {
