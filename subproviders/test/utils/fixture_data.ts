@@ -12,6 +12,7 @@ export const fixtureData = {
     TEST_RPC_MNEMONIC: 'concert load couple harbor equip island argue ramp clarify fence smart topic',
     TEST_RPC_MNEMONIC_BASE_DERIVATION_PATH: `44'/60'/0'/0`,
     PERSONAL_MESSAGE_STRING: 'hello world',
+    PERSONAL_MESSAGE_STRING_UTF8: 'hello 🦀!',
     PERSONAL_MESSAGE_SIGNED_RESULT:
         '0x1b0ec5e2908e993d0c8ab6b46da46be2688fdf03c7ea6686075de37392e50a7d7fcc531446699132fbda915bd989882e0064d417018773a315fb8d43ed063c9b1b',
     PERSONAL_MESSAGE_ACCOUNT_1_SIGNED_RESULT:
