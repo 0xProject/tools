@@ -88,9 +88,13 @@ export class LedgerSubprovider extends BaseWalletSubprovider {
      * @return An array of accounts
      */
     public async getAccountsAsync(numberOfAccounts: number = DEFAULT_NUM_ADDRESSES_TO_FETCH): Promise<string[]> {
+        console.log("getAccountsAsync");
         const initialDerivedKeyInfo = await this._initialDerivedKeyInfoAsync();
+        console.log(initialDerivedKeyInfo);
         const derivedKeyInfos = walletUtils.calculateDerivedHDKeyInfos(initialDerivedKeyInfo, numberOfAccounts);
+        console.log(derivedKeyInfos);
         const accounts = _.map(derivedKeyInfos, k => k.address);
+        console.log(accounts);
         return accounts;
     }
     /**
@@ -228,6 +232,7 @@ export class LedgerSubprovider extends BaseWalletSubprovider {
         this._connectionLock.release();
     }
     private async _initialDerivedKeyInfoAsync(): Promise<DerivedHDKeyInfo> {
+        console.log("_initialDerivedKeyInfoAsync");
         this._ledgerClientIfExists = await this._createLedgerClientAsync();
 
         const parentKeyDerivationPath = `m/${this._baseDerivationPath}`;

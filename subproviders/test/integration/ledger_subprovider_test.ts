@@ -38,11 +38,14 @@ describe('LedgerSubprovider', () => {
     describe('direct method calls', () => {
         it('returns default number of accounts', async () => {
             const accounts = await ledgerSubprovider.getAccountsAsync();
+            console.log(accounts);
             expect(accounts[0]).to.not.be.an('undefined');
             expect(accounts.length).to.be.equal(DEFAULT_NUM_ACCOUNTS);
         });
         it('returns the expected accounts from a ledger set up with the test mnemonic', async () => {
+            console.log(ledgerSubprovider)
             const accounts = await ledgerSubprovider.getAccountsAsync();
+            console.log(accounts);
             expect(accounts[0]).to.be.equal(fixtureData.TEST_RPC_ACCOUNT_0);
             expect(accounts[1]).to.be.equal(fixtureData.TEST_RPC_ACCOUNT_1);
         });
