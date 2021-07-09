@@ -3,7 +3,7 @@ import { promisify, providerUtils } from '@0x/utils';
 import Eth from '@ledgerhq/hw-app-eth';
 // HACK: This dependency is optional and tslint skips optional dependencies
 // tslint:disable-next-line:no-implicit-dependencies
-import TransportNodeHid from '@ledgerhq/hw-transport-node-hid';
+import TransportNodeHid from '@ledgerhq/hw-transport-node-hid-singleton';
 import * as chai from 'chai';
 import { JSONRPCResponsePayload } from 'ethereum-types';
 import * as ethUtils from 'ethereumjs-util';
@@ -38,14 +38,11 @@ describe('LedgerSubprovider', () => {
     describe('direct method calls', () => {
         it('returns default number of accounts', async () => {
             const accounts = await ledgerSubprovider.getAccountsAsync();
-            console.log(accounts);
             expect(accounts[0]).to.not.be.an('undefined');
             expect(accounts.length).to.be.equal(DEFAULT_NUM_ACCOUNTS);
         });
         it('returns the expected accounts from a ledger set up with the test mnemonic', async () => {
-            console.log(ledgerSubprovider)
-            const accounts = await ledgerSubprovider.getAccountsAsync();
-            console.log(accounts);
+            const accounts = await ledgerSubprovider.getAccountsAsync(2);
             expect(accounts[0]).to.be.equal(fixtureData.TEST_RPC_ACCOUNT_0);
             expect(accounts[1]).to.be.equal(fixtureData.TEST_RPC_ACCOUNT_1);
         });
