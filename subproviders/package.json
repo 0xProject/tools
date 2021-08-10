@@ -13,8 +13,8 @@
         "clean": "shx rm -rf lib generated_docs",
         "lint": "tslint --format stylish --project .",
         "fix": "tslint --fix --format stylish --project .",
-        "run_mocha_unit": "mocha --require source-map-support/register --require make-promises-safe lib/test/unit/**/*_test.js --timeout 10000 --bail --exit",
-        "run_mocha_integration": "mocha --require source-map-support/register --require make-promises-safe lib/test/integration/**/*_test.js --timeout 10000 --bail --exit",
+        "run_mocha_unit": "mocha --require source-map-support/register --require make-promises-safe lib/test/unit/**/*_test.js --timeout 60000 --bail --exit",
+        "run_mocha_integration": "mocha --require source-map-support/register --require make-promises-safe lib/test/integration/**/*_test.js --timeout 60000 --bail --exit",
         "test": "npm run test:unit",
         "test:unit:coverage": "nyc npm run test:unit --all && yarn coverage:report:lcov",
         "coverage:report:lcov": "nyc report --reporter=text-lcov > coverage/lcov.info",
@@ -41,12 +41,12 @@
         "@0x/web3-wrapper": "^7.5.4",
         "@ethereumjs/common": "^2.4.0",
         "@ethereumjs/tx": "^3.3.0",
-        "@ledgerhq/hw-app-eth": "^6.1.0",
+        "@ledgerhq/hw-app-eth": "^6.4.0",
         "@ledgerhq/hw-transport-u2f": "4.24.0",
-        "@ledgerhq/hw-transport-webhid": "^6.1.0",
-        "@ledgerhq/hw-transport-webusb": "^6.1.0",
+        "@ledgerhq/hw-transport-webhid": "^6.3.0",
+        "@ledgerhq/hw-transport-webusb": "^6.3.0",
         "@types/hdkey": "^2.0.0",
-        "@types/node": "16.3.0",
+        "@types/node": "16.4.13",
         "@types/web3-provider-engine": "^14.0.1",
         "bip39": "^3.0.4",
         "bn.js": "^5.2.0",
@@ -57,7 +57,7 @@
         "json-rpc-error": "2.0.0",
         "lodash": "^4.17.21",
         "semaphore-async-await": "^1.5.1",
-        "web3-provider-engine": "16.0.1"
+        "web3-provider-engine": "16.0.3"
     },
     "devDependencies": {
         "@0x/ts-doc-gen": "^0.0.28",
@@ -66,25 +66,25 @@
         "@types/bn.js": "^5.1.0",
         "@types/ethereumjs-tx": "^1.0.1",
         "@types/hdkey": "^2.0.0",
-        "@types/lodash": "4.14.171",
-        "@types/mocha": "^8.2.3",
+        "@types/lodash": "4.14.172",
+        "@types/mocha": "^9.0.0",
         "@types/sinon": "^10.0.2",
         "chai": "^4.3.4",
         "chai-as-promised": "^7.1.1",
         "dirty-chai": "^2.0.1",
         "make-promises-safe": "^5.1.0",
-        "mocha": "^9.0.2",
+        "mocha": "^9.0.3",
         "npm-run-all": "^4.1.5",
         "nyc": "^15.1.0",
         "shx": "^0.3.3",
-        "sinon": "^11.1.1",
+        "sinon": "^11.1.2",
         "tslint": "5.20.1",
-        "typedoc": "~0.21.2",
+        "typedoc": "~0.21.5",
         "typescript": "4.3.5",
-        "webpack": "^5.44.0"
+        "webpack": "^5.49.0"
     },
     "optionalDependencies": {
-        "@ledgerhq/hw-transport-node-hid-singleton": "^6.1.0"
+        "@ledgerhq/hw-transport-node-hid-singleton": "^6.3.0"
     },
     "publishConfig": {
         "access": "public"
