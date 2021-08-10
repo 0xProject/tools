@@ -5,6 +5,10 @@ Edit the package's CHANGELOG.json file only.
 
 CHANGELOG
 
+## v6.2.0 - _June 28, 2021_
+
+    * Return all schema validation errors and expose Ajv types, remove outdated relayer api schemas (#38)
+
 ## v6.1.3 - _April 28, 2021_
 
     * Dependencies updated

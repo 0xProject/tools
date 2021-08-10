@@ -5,6 +5,10 @@ Edit the package's CHANGELOG.json file only.
 
 CHANGELOG
 
+## v6.4.1 - _June 28, 2021_
+
+    * Dependencies updated
+
 ## v6.4.0 - _April 28, 2021_
 
     * Support overriding encodeInput and decodeOutput (#36)

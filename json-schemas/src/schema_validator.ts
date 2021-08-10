@@ -13,7 +13,7 @@ export class SchemaValidator {
      * Instantiates a SchemaValidator instance
      */
     constructor(newSchemas: object[] = []) {
-        this._validator = new AJV({ schemaId: 'auto' });
+        this._validator = new AJV({ schemaId: 'auto', allErrors: true });
         this._validator.addSchema(values(schemas).filter(s => s !== undefined && s.id !== undefined));
         this._validator.addSchema(newSchemas.filter(s => s !== undefined));
     }
