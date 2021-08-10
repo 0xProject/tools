@@ -58,7 +58,7 @@ describe('LedgerSubprovider', () => {
                 data,
                 fixtureData.TEST_RPC_ACCOUNT_0,
             );
-            expect(ecSignatureHex).to.be.equal(fixtureData.PERSONAL_MESSAGE_LEDGER_SIGNED_RESULT);
+            expect(ecSignatureHex).to.be.equal(fixtureData.PERSONAL_MESSAGE_SIGNED_RESULT);
         });
         it('signs a personal utf8 message', async () => {
             const data = ethUtils.bufferToHex(Buffer.from(fixtureData.PERSONAL_MESSAGE_STRING_UTF8));
@@ -117,7 +117,7 @@ describe('LedgerSubprovider', () => {
         });
         it('signs a personal message with eth_sign', (done: DoneCallback) => {
             (async () => {
-                const messageHex = ethUtils.bufferToHex(ethUtils.toBuffer('hello world'));
+                const messageHex = ethUtils.bufferToHex(Buffer.from(fixtureData.PERSONAL_MESSAGE_STRING));
                 const accounts = await ledgerSubprovider.getAccountsAsync();
                 const signer = accounts[0];
                 const payload = {
@@ -137,7 +137,7 @@ describe('LedgerSubprovider', () => {
         });
         it('signs a personal message with personal_sign', (done: DoneCallback) => {
             (async () => {
-                const messageHex = ethUtils.bufferToHex(ethUtils.toBuffer('hello world'));
+                const messageHex = ethUtils.bufferToHex(Buffer.from(fixtureData.PERSONAL_MESSAGE_STRING));
                 const accounts = await ledgerSubprovider.getAccountsAsync();
                 const signer = accounts[0];
                 const payload = {

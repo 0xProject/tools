@@ -85,7 +85,7 @@ describe('LedgerSubprovider', () => {
                 const ecSignatureHex = await ledgerSubprovider.signPersonalMessageAsync(data, FAKE_ADDRESS);
                 
                 expect(ecSignatureHex).to.be.equal(
-                    fixtureData.PERSONAL_MESSAGE_LEDGER_SIGNED_RESULT,
+                    fixtureData.PERSONAL_MESSAGE_SIGNED_RESULT,
                 );
             });
         });
@@ -136,7 +136,7 @@ describe('LedgerSubprovider', () => {
                 const callback = reportCallbackErrors(done)((err: Error, response: JSONRPCResponsePayload) => {
                     expect(err).to.be.a('null');
                     expect(response.result).to.be.equal(
-                        fixtureData.PERSONAL_MESSAGE_LEDGER_SIGNED_RESULT,
+                        fixtureData.PERSONAL_MESSAGE_SIGNED_RESULT,
                     );
                     done();
                 });
@@ -153,7 +153,7 @@ describe('LedgerSubprovider', () => {
                 const callback = reportCallbackErrors(done)((err: Error, response: JSONRPCResponsePayload) => {
                     expect(err).to.be.a('null');
                     expect(response.result).to.be.equal(
-                        fixtureData.PERSONAL_MESSAGE_LEDGER_SIGNED_RESULT,
+                        fixtureData.PERSONAL_MESSAGE_SIGNED_RESULT,
                     );
                     done();
                 });

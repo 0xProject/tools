@@ -182,13 +182,10 @@ export class LedgerSubprovider extends BaseWalletSubprovider {
                 fullDerivationPath,
                 ethUtil.stripHexPrefix(data),
             );
-            console.log({ ...result });
-            const lowestValidV = 27;
-            let v = result.v - lowestValidV;
             const hexBase = 16;
-            let vHex = v.toString(hexBase);
+            let vHex = result.v.toString(hexBase);
             if (vHex.length < 2) {
-                vHex = `0${v}`;
+                vHex = `0${vHex}`;
             }
             const signature = `0x${result.r}${result.s}${vHex}`;
             await this._destroyLedgerClientAsync();
