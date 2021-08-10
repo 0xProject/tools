@@ -182,8 +182,9 @@ export class LedgerSubprovider extends BaseWalletSubprovider {
                 fullDerivationPath,
                 ethUtil.stripHexPrefix(data),
             );
+            console.log({ ...result });
             const lowestValidV = 27;
-            const v = result.v - lowestValidV;
+            let v = result.v - lowestValidV;
             const hexBase = 16;
             let vHex = v.toString(hexBase);
             if (vHex.length < 2) {

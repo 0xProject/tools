@@ -41,9 +41,9 @@ describe('LedgerSubprovider', () => {
                 },
                 signPersonalMessage: async () => {
                     const ecSignature = {
-                        v: 28,
-                        r: 'a6cc284bff14b42bdf5e9286730c152be91719d478605ec46b3bebcd0ae49148',
-                        s: '0652a1a7b742ceb0213d1e744316e285f41f878d8af0b8e632cbca4c279132d0',
+                        v: 27,
+                        r: '1b0ec5e2908e993d0c8ab6b46da46be2688fdf03c7ea6686075de37392e50a7d',
+                        s: '7fcc531446699132fbda915bd989882e0064d417018773a315fb8d43ed063c9b'
                     };
                     return ecSignature;
                 },
@@ -83,8 +83,9 @@ describe('LedgerSubprovider', () => {
             it('signs a personal message', async () => {
                 const data = ethUtils.bufferToHex(Buffer.from(fixtureData.PERSONAL_MESSAGE_STRING));
                 const ecSignatureHex = await ledgerSubprovider.signPersonalMessageAsync(data, FAKE_ADDRESS);
+                
                 expect(ecSignatureHex).to.be.equal(
-                    '0xa6cc284bff14b42bdf5e9286730c152be91719d478605ec46b3bebcd0ae491480652a1a7b742ceb0213d1e744316e285f41f878d8af0b8e632cbca4c279132d001',
+                    fixtureData.PERSONAL_MESSAGE_LEDGER_SIGNED_RESULT,
                 );
             });
         });
@@ -135,7 +136,7 @@ describe('LedgerSubprovider', () => {
                 const callback = reportCallbackErrors(done)((err: Error, response: JSONRPCResponsePayload) => {
                     expect(err).to.be.a('null');
                     expect(response.result).to.be.equal(
-                        '0xa6cc284bff14b42bdf5e9286730c152be91719d478605ec46b3bebcd0ae491480652a1a7b742ceb0213d1e744316e285f41f878d8af0b8e632cbca4c279132d001',
+                        fixtureData.PERSONAL_MESSAGE_LEDGER_SIGNED_RESULT,
                     );
                     done();
                 });
@@ -152,7 +153,7 @@ describe('LedgerSubprovider', () => {
                 const callback = reportCallbackErrors(done)((err: Error, response: JSONRPCResponsePayload) => {
                     expect(err).to.be.a('null');
                     expect(response.result).to.be.equal(
-                        '0xa6cc284bff14b42bdf5e9286730c152be91719d478605ec46b3bebcd0ae491480652a1a7b742ceb0213d1e744316e285f41f878d8af0b8e632cbca4c279132d001',
+                        fixtureData.PERSONAL_MESSAGE_LEDGER_SIGNED_RESULT,
                     );
                     done();
                 });
