@@ -107,7 +107,7 @@ describe('generateMarkdownFromDocs()', () => {
     it('prefixes all URLs with the prefix', () => {
         const urls = getMarkdownLinks();
         for (const url of urls) {
-            expect(url.startsWith(URL_PREFIX)).to.be.true();
+            expect(url.startsWith(URL_PREFIX)).to.be.true;
         }
     });
 });
