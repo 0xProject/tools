@@ -24,12 +24,12 @@ describe('Web3Wrapper tests', () => {
     });
     describe('#isAddress', () => {
         it('correctly checks if a string is a valid ethereum address', () => {
-            expect(Web3Wrapper.isAddress('0x0')).to.be.false();
-            expect(Web3Wrapper.isAddress('0xdeadbeef')).to.be.false();
-            expect(Web3Wrapper.isAddress('42')).to.be.false();
-            expect(Web3Wrapper.isAddress('weth.thetoken.eth')).to.be.false();
-            expect(Web3Wrapper.isAddress('0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2')).to.be.true();
-            expect(Web3Wrapper.isAddress('0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2')).to.be.true();
+            expect(Web3Wrapper.isAddress('0x0')).to.be.false;
+            expect(Web3Wrapper.isAddress('0xdeadbeef')).to.be.false;
+            expect(Web3Wrapper.isAddress('42')).to.be.false;
+            expect(Web3Wrapper.isAddress('weth.thetoken.eth')).to.be.false;
+            expect(Web3Wrapper.isAddress('0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2')).to.be.true;
+            expect(Web3Wrapper.isAddress('0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2')).to.be.true;
         });
     });
     describe('#getNodeVersionAsync', () => {
@@ -103,7 +103,7 @@ describe('Web3Wrapper tests', () => {
             const txHash = await web3Wrapper.sendTransactionAsync(payload);
             await web3Wrapper.awaitTransactionSuccessAsync(txHash);
             const receiptIfExists = await web3Wrapper.getTransactionReceiptIfExistsAsync(txHash);
-            expect(receiptIfExists).to.not.be.undefined();
+            expect(receiptIfExists).to.not.be.undefined;
             const receipt = receiptIfExists as TransactionReceipt;
             expect(receipt.transactionIndex).to.be.a('number');
             expect(receipt.transactionHash).to.be.equal(txHash);
