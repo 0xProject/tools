@@ -20,7 +20,7 @@ import { walletUtils } from '../utils/wallet_utils';
 
 import { BaseWalletSubprovider } from './base_wallet_subprovider';
 
-const LEDGER_LEGACY_DERIVATION_PATH = `m/44'/60'/0'/x`
+const LEDGER_LEGACY_DERIVATION_PATH = `m/44'/60'/0'/0/x`
 const LEDGER_LIVE_DERIVATION_PATH = `m/44'/60'/x'/0/0`
 
 const DEFAULT_BASE_DERIVATION_PATH = LEDGER_LEGACY_DERIVATION_PATH;
