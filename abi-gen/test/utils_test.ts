@@ -55,7 +55,7 @@ describe('isOutputFileUpToDate()', () => {
 
         describe('without an existing output file', () => {
             it('should return false', () => {
-                expect(utils.isOutputFileUpToDate('nonexistant_file', [abiFile])).to.be.false();
+                expect(utils.isOutputFileUpToDate('nonexistant_file', [abiFile])).to.be.false;
             });
         });
 
@@ -71,7 +71,7 @@ describe('isOutputFileUpToDate()', () => {
             });
 
             it('should return true when output file is newer than abi file', async () => {
-                expect(utils.isOutputFileUpToDate(outputFile, [abiFile])).to.be.true();
+                expect(utils.isOutputFileUpToDate(outputFile, [abiFile])).to.be.true;
             });
 
             it('should return false when output file exists but is older than abi file', () => {
@@ -79,7 +79,7 @@ describe('isOutputFileUpToDate()', () => {
                 const abiFileModTimeMs = outFileModTimeMs + 1;
                 fs.utimesSync(abiFile, abiFileModTimeMs, abiFileModTimeMs);
 
-                expect(utils.isOutputFileUpToDate(outputFile, [abiFile])).to.be.false();
+                expect(utils.isOutputFileUpToDate(outputFile, [abiFile])).to.be.false;
             });
             it('should return false when any source file is newer than output file', () => {
                 const templateFile = tmp.fileSync(
@@ -91,7 +91,7 @@ describe('isOutputFileUpToDate()', () => {
                 fs.utimesSync(templateFile, templateFileModTimeMs, templateFileModTimeMs);
                 fs.utimesSync(abiFile, abiFileModTimeMs, abiFileModTimeMs);
 
-                expect(utils.isOutputFileUpToDate(outputFile, [abiFile, templateFile])).to.be.false();
+                expect(utils.isOutputFileUpToDate(outputFile, [abiFile, templateFile])).to.be.false;
             });
         });
     });
