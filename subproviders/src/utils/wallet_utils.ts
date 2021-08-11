@@ -17,15 +17,9 @@ class DerivedHDKeyInfoIterator implements IterableIterator<DerivedHDKeyInfo> {
     }
 
     public next(): IteratorResult<DerivedHDKeyInfo> {
-        console.log("DerivedHDKeyInfoIterator");
-
         const baseDerivationPath = this._parentDerivedKeyInfo.baseDerivationPath;
 
-        console.log({baseDerivationPath});
-
         const derivationIndex = this._index;
-
-        console.log({derivationIndex});
 
         let fullDerivationPath;
         if (baseDerivationPath.includes("x")) {
@@ -33,19 +27,12 @@ class DerivedHDKeyInfoIterator implements IterableIterator<DerivedHDKeyInfo> {
         } else {
             fullDerivationPath = `m/${baseDerivationPath}/${derivationIndex}`;
         }
-        console.log({fullDerivationPath});
 
         const path = `m/${derivationIndex}`;
 
-        console.log({path});
-
         const hdKey = this._parentDerivedKeyInfo.hdKey.derive(path);
 
-        console.log({hdKey});
-
         const address = walletUtils.addressOfHDKey(hdKey);
-
-        console.log({address});
 
         const derivedKey = {
             address,

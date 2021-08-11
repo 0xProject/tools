@@ -124,15 +124,9 @@ export class LedgerSubprovider extends BaseWalletSubprovider {
      * @return An array of accounts
      */
     public async getAccountsAsync(numberOfAccounts: number = DEFAULT_NUM_ADDRESSES_TO_FETCH): Promise<string[]> {
-        console.log("getAccountsAsync");
-
         const initialDerivedKeyInfo = await this._initialDerivedKeyInfoAsync();
 
-        console.log(initialDerivedKeyInfo);
-
         const derivedKeyInfos = walletUtils.calculateDerivedHDKeyInfos(initialDerivedKeyInfo, numberOfAccounts);
-
-        console.log(derivedKeyInfos);
 
         const accounts = [];
         
@@ -141,7 +135,6 @@ export class LedgerSubprovider extends BaseWalletSubprovider {
                 const account = await this._getDerivedHDKeyInfo(this._baseDerivationPath.replace("x", index.toString(10)))
                 accounts.push(account);
             }
-            console.log({accounts});
         } catch (error) {
             console.error(error);
         }
@@ -323,9 +316,6 @@ export class LedgerSubprovider extends BaseWalletSubprovider {
     }
 
     private async _findDerivedKeyInfoForAddress(initalHDKey: DerivedHDKeyInfo, address: string): Promise<DerivedHDKeyInfo> {
-        console.log("_findDerivedKeyInfoForAddress");
-        console.log({address});
-        
         let found = false;
         let index = 0;
         let matchedDerivedKeyInfo;
@@ -339,7 +329,6 @@ export class LedgerSubprovider extends BaseWalletSubprovider {
                 parentKeyDerivationPath = `m/${baseDerivationPath}`;
             }
             const derivedHDKeyInfo = await this._getDerivedHDKeyInfo(parentKeyDerivationPath);
-            console.log({derivedHDKeyInfo});
             
             if (derivedHDKeyInfo.address.toLowerCase() === address.toLowerCase()) {
                 found = true;

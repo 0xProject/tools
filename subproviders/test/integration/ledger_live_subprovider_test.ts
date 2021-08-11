@@ -70,7 +70,6 @@ describe('LedgerSubprovider', () => {
         });
         it('signs a personal message with second address', async () => {
             const data = ethUtils.bufferToHex(Buffer.from(fixtureData.PERSONAL_MESSAGE_STRING));
-            console.log(data);
             const ecSignatureHex = await ledgerSubprovider.signPersonalMessageAsync(
                 data,
                 fixtureData.TEST_RPC_LEDGER_LIVE_ACCOUNT_1,
