@@ -41,13 +41,10 @@
         "@0x/web3-wrapper": "^7.5.4",
         "@ethereumjs/common": "^2.4.0",
         "@ethereumjs/tx": "^3.3.0",
-        "@ledgerhq/hw-app-eth": "^6.4.0",
+        "@ledgerhq/hw-app-eth": "^6.4.1",
         "@ledgerhq/hw-transport-u2f": "4.24.0",
-        "@ledgerhq/hw-transport-webhid": "^6.3.0",
+        "@ledgerhq/hw-transport-webhid": "^6.4.1",
         "@ledgerhq/hw-transport-webusb": "^6.3.0",
-        "@types/hdkey": "^2.0.0",
-        "@types/node": "16.4.13",
-        "@types/web3-provider-engine": "^14.0.1",
         "bip39": "^3.0.4",
         "bn.js": "^5.2.0",
         "ethereum-types": "^3.5.0",
@@ -62,13 +59,14 @@
     "devDependencies": {
         "@0x/ts-doc-gen": "^0.0.28",
         "@0x/tslint-config": "^4.1.4",
-        "@types/bip39": "^2.4.2",
         "@types/bn.js": "^5.1.0",
         "@types/ethereumjs-tx": "^1.0.1",
-        "@types/hdkey": "^2.0.0",
         "@types/lodash": "4.14.172",
         "@types/mocha": "^9.0.0",
         "@types/sinon": "^10.0.2",
+        "@types/hdkey": "^2.0.0",
+        "@types/node": "16.4.13",
+        "@types/web3-provider-engine": "^14.0.1",
         "chai": "^4.3.4",
         "chai-as-promised": "^7.1.1",
         "dirty-chai": "^2.0.1",
@@ -81,7 +79,7 @@
         "tslint": "5.20.1",
         "typedoc": "~0.21.5",
         "typescript": "4.3.5",
-        "webpack": "^5.49.0"
+        "webpack": "^5.50.0"
     },
     "optionalDependencies": {
         "@ledgerhq/hw-transport-node-hid-singleton": "^6.3.0"
