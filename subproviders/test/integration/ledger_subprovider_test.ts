@@ -32,7 +32,7 @@ describe('LedgerSubprovider', () => {
         ledgerSubprovider = new LedgerSubprovider({
             networkId,
             ledgerEthereumClientFactoryAsync: ledgerEthereumNodeJsClientFactoryAsync,
-            // baseDerivationPath: fixtureData.TEST_RPC_LEDGER_LIVE_DERIVATION_PATH,
+            baseDerivationPath: `m/44'/60'/x'/0/0`,
         });
     });
     describe('direct method calls', () => {

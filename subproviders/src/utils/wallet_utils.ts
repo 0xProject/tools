@@ -39,7 +39,7 @@ class DerivedHDKeyInfoIterator implements IterableIterator<DerivedHDKeyInfo> {
 
         console.log({path});
 
-        const hdKey = this._parentDerivedKeyInfo.hdKey.deriveChild(path);
+        const hdKey = this._parentDerivedKeyInfo.hdKey.derive(path);
 
         console.log({hdKey});
 

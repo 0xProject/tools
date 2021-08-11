@@ -75,7 +75,7 @@ describe('LedgerSubprovider', () => {
                 data,
                 fixtureData.TEST_RPC_LEDGER_LIVE_ACCOUNT_1,
             );
-            expect(ecSignatureHex).to.be.equal(fixtureData.PERSONAL_MESSAGE_ACCOUNT_1_SIGNED_RESULT);
+            expect(ecSignatureHex).to.be.equal(fixtureData.PERSONAL_MESSAGE_LEDGER_LIVE_ACCOUNT_1_SIGNED_RESULT);
         });
         it('signs a transaction', async () => {
             const txHex = await ledgerSubprovider.signTransactionAsync(fixtureData.TX_DATA);
@@ -84,7 +84,7 @@ describe('LedgerSubprovider', () => {
         it('signs a transaction with the second address', async () => {
             const txData = { ...fixtureData.TX_DATA, from: fixtureData.TEST_RPC_LEDGER_LIVE_ACCOUNT_1 };
             const txHex = await ledgerSubprovider.signTransactionAsync(txData);
-            expect(txHex).to.be.equal(fixtureData.TX_DATA_ACCOUNT_1_SIGNED_RESULT);
+            expect(txHex).to.be.equal(fixtureData.TX_DATA_LEDGER_LIVE_ACCOUNT_1_SIGNED_RESULT);
         });
     });
     describe('calls through a provider', () => {

@@ -29,6 +29,39 @@ const SHOULD_GET_CHAIN_CODE = true;
 const DEFAULT_NUM_ADDRESSES_TO_FETCH = 10;
 const DEFAULT_ADDRESS_SEARCH_LIMIT = 1000;
 
+/*
+class LedgerDerivedHDKeyInfoIterator implements AsyncIterableIterator<DerivedHDKeyInfo> {
+    constructor(
+        private readonly initialDerivedKey: DerivedHDKeyInfo, 
+        private readonly ledgerClient: LedgerEthereumClient,
+        private readonly searchLimit: number = DEFAULT_ADDRESS_SEARCH_LIMIT,
+        private index = 0,
+    ) {}
+
+    public async next(): Promise<IteratorResult<DerivedHDKeyInfo, any>> {
+        const path = `m/${this.index}`;
+
+        const hdKey = this.initialDerivedKey.hdKey.derive(path);
+
+        const derivedKey = {
+            address,
+            hdKey,
+            baseDerivationPath,
+            derivationPath: fullDerivationPath,
+        };
+
+        const isDone = this.index === this.searchLimit;
+
+        this.index++;
+
+        return {
+            done: isDone,
+            value: derivedKey,
+        };
+    }
+}
+*/
+
 /**
  * Subprovider for interfacing with a user's [Ledger Nano S](https://www.ledgerwallet.com/products/ledger-nano-s).
  * This subprovider intercepts all account related RPC requests (e.g message/transaction signing, etc...) and
@@ -140,7 +173,7 @@ export class LedgerSubprovider extends BaseWalletSubprovider {
             value: txParams.value,
         };
         const initialDerivedKeyInfo = await this._initialDerivedKeyInfoAsync();
-        const derivedKeyInfo = this._findDerivedKeyInfoForAddress(initialDerivedKeyInfo, txParams.from);
+        const derivedKeyInfo = await this._findDerivedKeyInfoForAddress(initialDerivedKeyInfo, txParams.from);
 
         this._ledgerClientIfExists = await this._createLedgerClientAsync();
 
@@ -197,7 +230,7 @@ export class LedgerSubprovider extends BaseWalletSubprovider {
         assert.isHexString('data', data);
         assert.isETHAddressHex('address', address);
         const initialDerivedKeyInfo = await this._initialDerivedKeyInfoAsync();
-        const derivedKeyInfo = this._findDerivedKeyInfoForAddress(initialDerivedKeyInfo, address);
+        const derivedKeyInfo = await this._findDerivedKeyInfoForAddress(initialDerivedKeyInfo, address);
 
         this._ledgerClientIfExists = await this._createLedgerClientAsync();
         try {
@@ -289,15 +322,42 @@ export class LedgerSubprovider extends BaseWalletSubprovider {
         return await this._getDerivedHDKeyInfo(parentKeyDerivationPath);
     }
 
-    private _findDerivedKeyInfoForAddress(initalHDKey: DerivedHDKeyInfo, address: string): DerivedHDKeyInfo {
-        const matchedDerivedKeyInfo = walletUtils.findDerivedKeyInfoForAddressIfExists(
-            address,
-            initalHDKey,
-            this._addressSearchLimit,
-        );
+    private async _findDerivedKeyInfoForAddress(initalHDKey: DerivedHDKeyInfo, address: string): Promise<DerivedHDKeyInfo> {
+        console.log("_findDerivedKeyInfoForAddress");
+        console.log({address});
+        
+        let found = false;
+        let index = 0;
+        let matchedDerivedKeyInfo;
+        const { baseDerivationPath } = initalHDKey;
+
+        while (!found && index < this._addressSearchLimit) {
+            let parentKeyDerivationPath;
+            if (baseDerivationPath.includes("x")) {
+                parentKeyDerivationPath = baseDerivationPath.replace("x", index.toString(10));
+            } else {
+                parentKeyDerivationPath = `m/${baseDerivationPath}`;
+            }
+            const derivedHDKeyInfo = await this._getDerivedHDKeyInfo(parentKeyDerivationPath);
+            console.log({derivedHDKeyInfo});
+            
+            if (derivedHDKeyInfo.address.toLowerCase() === address.toLowerCase()) {
+                found = true;
+                matchedDerivedKeyInfo = derivedHDKeyInfo;
+            }
+            index++;
+        }
+
+        // const matchedDerivedKeyInfo = walletUtils.findDerivedKeyInfoForAddressIfExists(
+        //     address,
+        //     initalHDKey,
+        //     10 || this._addressSearchLimit,
+        // );
+
         if (matchedDerivedKeyInfo === undefined) {
             throw new Error(`${WalletSubproviderErrors.AddressNotFound}: ${address}`);
         }
+
         return matchedDerivedKeyInfo;
     }
 }
