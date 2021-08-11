@@ -32,7 +32,7 @@ describe('LedgerSubprovider', () => {
         ledgerSubprovider = new LedgerSubprovider({
             networkId,
             ledgerEthereumClientFactoryAsync: ledgerEthereumNodeJsClientFactoryAsync,
-            // baseDerivationPath: fixtureData.TEST_RPC_LEDGER_LIVE_DERIVATION_PATH,
+            baseDerivationPath: fixtureData.TEST_RPC_LEDGER_LIVE_DERIVATION_PATH,
         });
     });
     describe('direct method calls', () => {
@@ -43,8 +43,8 @@ describe('LedgerSubprovider', () => {
         });
         it('returns the expected accounts from a ledger set up with the test mnemonic', async () => {
             const accounts = await ledgerSubprovider.getAccountsAsync(2);
-            expect(accounts[0]).to.be.equal(fixtureData.TEST_RPC_ACCOUNT_0);
-            expect(accounts[1]).to.be.equal(fixtureData.TEST_RPC_ACCOUNT_1);
+            expect(accounts[0]).to.be.equal(fixtureData.TEST_RPC_LEDGER_LIVE_ACCOUNT_0);
+            expect(accounts[1]).to.be.equal(fixtureData.TEST_RPC_LEDGER_LIVE_ACCOUNT_1);
         });
         it('returns requested number of accounts', async () => {
             const numberOfAccounts = 20;
@@ -56,7 +56,7 @@ describe('LedgerSubprovider', () => {
             const data = ethUtils.bufferToHex(Buffer.from(fixtureData.PERSONAL_MESSAGE_STRING));
             const ecSignatureHex = await ledgerSubprovider.signPersonalMessageAsync(
                 data,
-                fixtureData.TEST_RPC_ACCOUNT_0,
+                fixtureData.TEST_RPC_LEDGER_LIVE_ACCOUNT_0,
             );
             expect(ecSignatureHex).to.be.equal(fixtureData.PERSONAL_MESSAGE_SIGNED_RESULT);
         });
@@ -64,7 +64,7 @@ describe('LedgerSubprovider', () => {
             const data = ethUtils.bufferToHex(Buffer.from(fixtureData.PERSONAL_MESSAGE_STRING_UTF8));
             const ecSignatureHex = await ledgerSubprovider.signPersonalMessageAsync(
                 data,
-                fixtureData.TEST_RPC_ACCOUNT_0,
+                fixtureData.TEST_RPC_LEDGER_LIVE_ACCOUNT_0,
             );
             expect(ecSignatureHex).to.be.equal(fixtureData.PERSONAL_MESSAGE_UTF8_LEDGER_SIGNED_RESULT);
         });
@@ -73,7 +73,7 @@ describe('LedgerSubprovider', () => {
             console.log(data);
             const ecSignatureHex = await ledgerSubprovider.signPersonalMessageAsync(
                 data,
-                fixtureData.TEST_RPC_ACCOUNT_1,
+                fixtureData.TEST_RPC_LEDGER_LIVE_ACCOUNT_1,
             );
             expect(ecSignatureHex).to.be.equal(fixtureData.PERSONAL_MESSAGE_ACCOUNT_1_SIGNED_RESULT);
         });
@@ -82,7 +82,7 @@ describe('LedgerSubprovider', () => {
             expect(txHex).to.be.equal(fixtureData.TX_DATA_SIGNED_RESULT);
         });
         it('signs a transaction with the second address', async () => {
-            const txData = { ...fixtureData.TX_DATA, from: fixtureData.TEST_RPC_ACCOUNT_1 };
+            const txData = { ...fixtureData.TX_DATA, from: fixtureData.TEST_RPC_LEDGER_LIVE_ACCOUNT_1 };
             const txHex = await ledgerSubprovider.signTransactionAsync(txData);
             expect(txHex).to.be.equal(fixtureData.TX_DATA_ACCOUNT_1_SIGNED_RESULT);
         });

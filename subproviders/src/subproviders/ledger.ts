@@ -20,7 +20,10 @@ import { walletUtils } from '../utils/wallet_utils';
 
 import { BaseWalletSubprovider } from './base_wallet_subprovider';
 
-const DEFAULT_BASE_DERIVATION_PATH = `44'/60'/0'`;
+const LEDGER_LEGACY_DERIVATION_PATH = `m/44'/60'/0'/x`
+const LEDGER_LIVE_DERIVATION_PATH = `m/44'/60'/x'/0/0`
+
+const DEFAULT_BASE_DERIVATION_PATH = LEDGER_LEGACY_DERIVATION_PATH;
 const ASK_FOR_ON_DEVICE_CONFIRMATION = false;
 const SHOULD_GET_CHAIN_CODE = true;
 const DEFAULT_NUM_ADDRESSES_TO_FETCH = 10;
@@ -88,10 +91,31 @@ export class LedgerSubprovider extends BaseWalletSubprovider {
      * @return An array of accounts
      */
     public async getAccountsAsync(numberOfAccounts: number = DEFAULT_NUM_ADDRESSES_TO_FETCH): Promise<string[]> {
+        console.log("getAccountsAsync");
+
         const initialDerivedKeyInfo = await this._initialDerivedKeyInfoAsync();
+
+        console.log(initialDerivedKeyInfo);
+
         const derivedKeyInfos = walletUtils.calculateDerivedHDKeyInfos(initialDerivedKeyInfo, numberOfAccounts);
-        const accounts = _.map(derivedKeyInfos, k => k.address);
-        return accounts;
+
+        console.log(derivedKeyInfos);
+
+        const accounts = [];
+        
+        try {
+            for (let index = 0; index < numberOfAccounts; index++) {
+                const account = await this._getDerivedHDKeyInfo(this._baseDerivationPath.replace("x", index.toString(10)))
+                accounts.push(account);
+            }
+            console.log({accounts});
+        } catch (error) {
+            console.error(error);
+        }
+        
+        return accounts.map(({address}) => address);
+        // const accounts = _.map(derivedKeyInfos, k => k.address);
+        // return accounts;
     }
     /**
      * Signs a transaction on the Ledger with the account specificed by the `from` field in txParams.
@@ -123,7 +147,7 @@ export class LedgerSubprovider extends BaseWalletSubprovider {
         const ledgerTxHex = (() => {
             const values = Transaction.fromTxData(_txParams, { common: this._common }).raw();
             // tslint:disable-next-line: custom-no-magic-numbers
-            values[6] = ethUtil.bnToRlp(new ethUtil.BN(this._networkId));
+            values[6] = ethUtil.bnToUnpaddedBuffer(new ethUtil.BN(this._networkId));
             return ethUtil.rlp.encode(values).toString('hex');
         })();
         try {
@@ -225,31 +249,46 @@ export class LedgerSubprovider extends BaseWalletSubprovider {
         this._ledgerClientIfExists = undefined;
         this._connectionLock.release();
     }
-    private async _initialDerivedKeyInfoAsync(): Promise<DerivedHDKeyInfo> {
+
+    private async _getDerivedHDKeyInfo(derivationPath: string): Promise<DerivedHDKeyInfo> {
         this._ledgerClientIfExists = await this._createLedgerClientAsync();
-        const parentKeyDerivationPath = `m/${this._baseDerivationPath}`;
         let ledgerResponse;
         try {
             ledgerResponse = await this._ledgerClientIfExists.getAddress(
-                parentKeyDerivationPath,
+                derivationPath,
                 this._shouldAlwaysAskForConfirmation,
                 SHOULD_GET_CHAIN_CODE,
             );
         } finally {
             await this._destroyLedgerClientAsync();
         }
+
         const hdKey = new HDNode();
         hdKey.publicKey = Buffer.from(ledgerResponse.publicKey, 'hex');
         hdKey.chainCode = Buffer.from(ledgerResponse?.chainCode ?? "", 'hex');
         const address = walletUtils.addressOfHDKey(hdKey);
-        const initialDerivedKeyInfo = {
+
+        const derivedHDKeyInfo = {
             hdKey,
             address,
-            derivationPath: parentKeyDerivationPath,
+            derivationPath,
             baseDerivationPath: this._baseDerivationPath,
         };
-        return initialDerivedKeyInfo;
+        return derivedHDKeyInfo;
     }
+
+    private async _initialDerivedKeyInfoAsync(): Promise<DerivedHDKeyInfo> {
+        // const parentKeyDerivationPath = `m/${this._baseDerivationPath}`;
+        let parentKeyDerivationPath;
+        if (this._baseDerivationPath.includes("x")) {
+            parentKeyDerivationPath = this._baseDerivationPath.replace("x", "0");
+        } else {
+            // "legacy"
+            parentKeyDerivationPath = `m/${this._baseDerivationPath}`;
+        }
+        return await this._getDerivedHDKeyInfo(parentKeyDerivationPath);
+    }
+
     private _findDerivedKeyInfoForAddress(initalHDKey: DerivedHDKeyInfo, address: string): DerivedHDKeyInfo {
         const matchedDerivedKeyInfo = walletUtils.findDerivedKeyInfoForAddressIfExists(
             address,
