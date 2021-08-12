@@ -1,6 +1,5 @@
 import Eth from '@ledgerhq/hw-app-eth';
 // Ledger transports
-import TransportU2F from '@ledgerhq/hw-transport-u2f';
 import TransportWebUSB from "@ledgerhq/hw-transport-webusb";
 import TransportWebHID from "@ledgerhq/hw-transport-webhid";
 
@@ -16,14 +15,13 @@ import { LedgerEthereumClient } from './types';
 export async function ledgerEthereumBrowserClientFactoryAsync(): Promise<LedgerEthereumClient> {
     let ledgerConnection: LedgerTransport;
     // Web HID is experimental but works better on all platforms
-    if (TransportWebHID.isSupported()) {
+    if (await TransportWebHID.isSupported()) {
         ledgerConnection = await TransportWebHID.create()
     // Web USB is more stable and works with some issues on all platforms
-    } else if (TransportWebUSB.isSupported()) {
+    } else if (await TransportWebUSB.isSupported()) {
         ledgerConnection = await TransportWebUSB.create()
-    // U2F is deprecated but should work if the previous transports are not
     } else {
-        ledgerConnection = await TransportU2F.create();
+        throw new Error("No supported transport available");
     }
     const ledgerEthClient = new Eth(ledgerConnection);
     return ledgerEthClient;
