@@ -4,7 +4,6 @@ import Common from '@ethereumjs/common';
 import { Transaction } from '@ethereumjs/tx';
 import ethUtil = require('ethereumjs-util');
 import HDNode = require('hdkey');
-import * as _ from 'lodash';
 import { Lock } from 'semaphore-async-await';
 
 import {
@@ -77,6 +76,8 @@ export class LedgerSubprovider extends BaseWalletSubprovider {
     private readonly _shouldAlwaysAskForConfirmation: boolean;
     private readonly _addressSearchLimit: number;
     private readonly _common: Common;
+    private accountsCache: Map<number, DerivedHDKeyInfo> = new Map();
+
     /**
      * Instantiates a LedgerSubprovider. Defaults to derivationPath set to `44'/60'/0'`.
      * TestRPC/Ganache defaults to `m/44'/60'/0'/0`, so set this in the configs if desired.
@@ -121,27 +122,31 @@ export class LedgerSubprovider extends BaseWalletSubprovider {
      * is automatically called when issuing a `eth_accounts` JSON RPC request via your providerEngine
      * instance.
      * @param numberOfAccounts Number of accounts to retrieve (default: 10)
+     * @param startingIndex The starting index
      * @return An array of accounts
      */
-    public async getAccountsAsync(numberOfAccounts: number = DEFAULT_NUM_ADDRESSES_TO_FETCH): Promise<string[]> {
-        const initialDerivedKeyInfo = await this._initialDerivedKeyInfoAsync();
-
-        const derivedKeyInfos = walletUtils.calculateDerivedHDKeyInfos(initialDerivedKeyInfo, numberOfAccounts);
-
+    public async getAccountsAsync(numberOfAccounts: number = DEFAULT_NUM_ADDRESSES_TO_FETCH, startingIndex: number = 0): Promise<string[]> {
         const accounts = [];
         
         try {
-            for (let index = 0; index < numberOfAccounts; index++) {
-                const account = await this._getDerivedHDKeyInfo(this._baseDerivationPath.replace("x", index.toString(10)))
-                accounts.push(account);
+            for (let index = startingIndex; index < numberOfAccounts; index++) {
+                const account = await this._getDerivedHDKeyInfo(this._baseDerivationPath.replace("x", index.toString(10)));
+                accounts.push(account.address);
             }
         } catch (error) {
             console.error(error);
         }
         
-        return accounts.map(({address}) => address);
-        // const accounts = _.map(derivedKeyInfos, k => k.address);
-        // return accounts;
+        return accounts;
+    }
+    /**
+     * Retrieve a users Ledger account at a specific index.
+     * @param accountIndex The index of the account to retrieve (default: 0)
+     * @return The account at the specificed index
+     */
+    public async getAccountAsync(accountIndex: number = 0): Promise<string> {
+        const account = await this._getDerivedHDKeyInfo(this._baseDerivationPath.replace("x", accountIndex.toString(10)));
+        return account.address;
     }
     /**
      * Signs a transaction on the Ledger with the account specificed by the `from` field in txParams.
@@ -305,13 +310,7 @@ export class LedgerSubprovider extends BaseWalletSubprovider {
 
     private async _initialDerivedKeyInfoAsync(): Promise<DerivedHDKeyInfo> {
         // const parentKeyDerivationPath = `m/${this._baseDerivationPath}`;
-        let parentKeyDerivationPath;
-        if (this._baseDerivationPath.includes("x")) {
-            parentKeyDerivationPath = this._baseDerivationPath.replace("x", "0");
-        } else {
-            // "legacy"
-            parentKeyDerivationPath = `m/${this._baseDerivationPath}`;
-        }
+        const parentKeyDerivationPath = this._baseDerivationPath.replace("x", "0");
         return await this._getDerivedHDKeyInfo(parentKeyDerivationPath);
     }
 
@@ -322,12 +321,7 @@ export class LedgerSubprovider extends BaseWalletSubprovider {
         const { baseDerivationPath } = initalHDKey;
 
         while (!found && index < this._addressSearchLimit) {
-            let parentKeyDerivationPath;
-            if (baseDerivationPath.includes("x")) {
-                parentKeyDerivationPath = baseDerivationPath.replace("x", index.toString(10));
-            } else {
-                parentKeyDerivationPath = `m/${baseDerivationPath}`;
-            }
+            const parentKeyDerivationPath = baseDerivationPath.replace("x", index.toString(10));
             const derivedHDKeyInfo = await this._getDerivedHDKeyInfo(parentKeyDerivationPath);
             
             if (derivedHDKeyInfo.address.toLowerCase() === address.toLowerCase()) {
