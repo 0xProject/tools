@@ -13,14 +13,16 @@ import { LedgerEthereumClient } from './types';
  * @throws Error no transport available
  */
 export async function ledgerEthereumBrowserClientFactoryAsync(): Promise<LedgerEthereumClient> {
-    let ledgerConnection: LedgerTransport;
-    // Web HID is experimental but works better on all platforms
-    if (await TransportWebHID.isSupported()) {
-        ledgerConnection = await TransportWebHID.create()
-    // Web USB is more stable and works with some issues on all platforms
-    } else if (await TransportWebUSB.isSupported()) {
+    let ledgerConnection;
+    if (await TransportWebUSB.isSupported()) {
+        // Web USB is more stable and works with some issues on all platforms
         ledgerConnection = await TransportWebUSB.create()
-    } else {
+    } else if (await TransportWebHID.isSupported()) {
+        // Web HID is experimental but works better on all platforms
+        ledgerConnection = await TransportWebHID.create()
+    }
+    // No transport available
+    if (!ledgerConnection) {
         throw new Error("No supported transport available");
     }
     const ledgerEthClient = new Eth(ledgerConnection);

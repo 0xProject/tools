@@ -127,8 +127,8 @@ export class LedgerSubprovider extends BaseWalletSubprovider {
      */
     public async getAccountsAsync(numberOfAccounts: number = DEFAULT_NUM_ADDRESSES_TO_FETCH, startingIndex: number = 0): Promise<string[]> {
         const accounts = [];
-        
         try {
+            // Must be executed one at a time
             for (let index = startingIndex; index < numberOfAccounts; index++) {
                 const account = await this._getDerivedHDKeyInfo(this._baseDerivationPath.replace("x", index.toString(10)));
                 accounts.push(account.address);
@@ -136,7 +136,6 @@ export class LedgerSubprovider extends BaseWalletSubprovider {
         } catch (error) {
             console.error(error);
         }
-        
         return accounts;
     }
     /**
