@@ -76,7 +76,8 @@ function slice(n: Numberish, start: number, end?: number): string {
  * Get the keccak hash of some data.
  */
 function hash(n: Numberish | Buffer): string {
-    return ethUtil.bufferToHex(ethUtil.keccak256(ethUtil.toBuffer(hexUtils.toHex(n))));
+    const buf = Buffer.isBuffer(n) ? n : ethUtil.toBuffer(hexUtils.toHex(n));
+    return ethUtil.bufferToHex(ethUtil.keccak256(buf));
 }
 
 /**

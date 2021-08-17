@@ -6,8 +6,7 @@
                 "note": "Allow hexUtils.hash() to take Buffer type; isHex() accepts '0x' as valid hex",
                 "pr": 42
             }
-        ],
-        "timestamp": 1628911540
+        ]
     },
     {
         "timestamp": 1619585664,
