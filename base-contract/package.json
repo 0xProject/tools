@@ -54,7 +54,7 @@
         "@types/node": "12.12.54",
         "ethereumjs-account": "^3.0.0",
         "ethereumjs-blockstream": "^7.0.0",
-        "ethereumjs-util": "^7.0.10",
+        "ethereumjs-util": "^7.1.0",
         "ethereumjs-vm": "^4.2.0",
         "ethers": "~4.0.4",
         "js-sha3": "^0.7.0",

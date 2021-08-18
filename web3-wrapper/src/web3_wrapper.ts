@@ -220,6 +220,33 @@ export class Web3Wrapper {
         return chainId;
     }
     /**
+     * Fetch the current gas price.
+     * For post-London hardfork chains, this will be baseFeePerGas + maxPriorityFeePerGas
+     */
+    public async getGasPriceAsync(): Promise<BigNumber> {
+        const gasPriceStr = await this.sendRawPayloadAsync<string>({ method: 'eth_gasPrice' });
+        return new BigNumber(gasPriceStr);
+    }
+    /**
+     * Fetch the base fee per gas for the pending block.
+     */
+    public async getBaseFeePerGasAsync(): Promise<BigNumber> {
+        const rawBlock = await this.sendRawPayloadAsync<{ baseFeePerGas?: string }>({
+            method: 'eth_getBlockByNumber',
+            params: ['pending', false],
+        });
+        const { baseFeePerGas } = rawBlock;
+        return new BigNumber(baseFeePerGas || 0);
+    }
+    /**
+     * Fetch the current max piority fee per gas. This is the suggested miner tip
+     * to get mined in the current block.
+     */
+    public async getMaxPriorityFeePerGasAsync(): Promise<BigNumber> {
+        const feeStr = await this.sendRawPayloadAsync<string>({ method: 'eth_maxPriorityFeePerGas' });
+        return new BigNumber(feeStr);
+    }
+    /**
      * Retrieves the transaction receipt for a given transaction hash if found
      * @param txHash Transaction hash
      * @returns The transaction receipt, including it's status (0: failed, 1: succeeded). Returns undefined if transaction not found.

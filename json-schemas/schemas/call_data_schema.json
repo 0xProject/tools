@@ -12,6 +12,12 @@
         "gasPrice": {
             "oneOf": [{ "$ref": "/numberSchema" }, { "$ref": "/jsNumberSchema" }]
         },
+        "maxFeePerGas": {
+            "oneOf": [{ "$ref": "/numberSchema" }, { "$ref": "/jsNumberSchema" }]
+        },
+        "maxPriorityFeePerGas": {
+            "oneOf": [{ "$ref": "/numberSchema" }, { "$ref": "/jsNumberSchema" }]
+        },
         "data": {
             "type": "string",
             "pattern": "^0x[0-9a-f]*$"

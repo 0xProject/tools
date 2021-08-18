@@ -381,7 +381,9 @@ export interface Transaction {
     from: string;
     to: string | null;
     value: BigNumber;
-    gasPrice: BigNumber;
+    gasPrice?: BigNumber;
+    maxFeePerGas?: BigNumber;
+    maxPriorityFeePerGas?: BigNumber;
     gas: number;
     input: string;
 }
@@ -391,6 +393,8 @@ export interface CallTxDataBase {
     value?: number | string | BigNumber;
     gas?: number | string | BigNumber;
     gasPrice?: number | string | BigNumber;
+    maxFeePerGas?: number | string | BigNumber;
+    maxPriorityFeePerGas?: number | string | BigNumber;
     data?: string;
     nonce?: number;
     accessList?: TxAccessList;

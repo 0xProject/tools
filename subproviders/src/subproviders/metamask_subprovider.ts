@@ -1,8 +1,10 @@
 import { providerUtils } from '@0x/utils';
-import { marshaller, Web3Wrapper } from '@0x/web3-wrapper';
-import { JSONRPCRequestPayload, SupportedProvider, ZeroExProvider } from 'ethereum-types';
+import { CallDataRPC, marshaller, TxDataRPC, Web3Wrapper } from '@0x/web3-wrapper';
+import { default as Common } from '@ethereumjs/common';
+import { CallData, JSONRPCRequestPayload, SupportedProvider, TxData, ZeroExProvider } from 'ethereum-types';
 
 import { Callback, ErrorCallback } from '../types';
+import { getCommonForChain } from '../utils/chain_utils';
 
 import { Subprovider } from './subprovider';
 
@@ -17,6 +19,8 @@ import { Subprovider } from './subprovider';
 export class MetamaskSubprovider extends Subprovider {
     private readonly _web3Wrapper: Web3Wrapper;
     private readonly _provider: ZeroExProvider;
+    private _common?: Common;
+
     /**
      * Instantiates a new MetamaskSubprovider
      * @param supportedProvider Web3 provider that should handle  all user account related requests
@@ -36,7 +40,7 @@ export class MetamaskSubprovider extends Subprovider {
      * @param end Callback to call if subprovider handled the request and wants to pass back the request.
      */
     // tslint:disable-next-line:prefer-function-over-method async-suffix
-    public async handleRequest(payload: JSONRPCRequestPayload, next: Callback, end: ErrorCallback): Promise<void> {
+    public async handleRequest(payload: JSONRPCRequestPayload, _next: Callback, end: ErrorCallback): Promise<void> {
         let message;
         let address;
         switch (payload.method) {
@@ -56,16 +60,32 @@ export class MetamaskSubprovider extends Subprovider {
                     end(err);
                 }
                 return;
-            case 'eth_sendTransaction':
-                const [txParams] = payload.params;
+            case 'eth_call': {
                 try {
-                    const txData = marshaller.unmarshalTxData(txParams);
+                    const txData = cleanTxDataForChain<CallDataRPC, CallData>(
+                        await this._getCommonAsync(),
+                        payload.params[0],
+                    );
+                    const txHash = await this._web3Wrapper.callAsync(txData);
+                    end(null, txHash);
+                } catch (err) {
+                    end(err);
+                }
+                return;
+            }
+            case 'eth_sendTransaction': {
+                try {
+                    const txData = cleanTxDataForChain<TxDataRPC, TxData>(
+                        await this._getCommonAsync(),
+                        payload.params[0],
+                    );
                     const txHash = await this._web3Wrapper.sendTransactionAsync(txData);
                     end(null, txHash);
                 } catch (err) {
                     end(err);
                 }
                 return;
+            }
             case 'eth_sign':
                 [address, message] = payload.params;
                 try {
@@ -106,7 +126,18 @@ export class MetamaskSubprovider extends Subprovider {
                 }
                 return;
             default:
-                next();
+                this._provider.sendAsync(payload, (err, response) => {
+                    if (err) {
+                        return end(err);
+                    }
+                    if (!response || response.result === undefined) {
+                        return end(new Error(`No result for ${payload.method} RPC call`));
+                    }
+                    if (response.error) {
+                        return end(new Error(response.error.message || (response.error as any)));
+                    }
+                    end(err, response.result);
+                });
                 return;
         }
     }
@@ -131,4 +162,34 @@ export class MetamaskSubprovider extends Subprovider {
             },
         );
     }
+
+    private async _getCommonAsync(): Promise<Common> {
+        if (this._common) {
+            return this._common;
+        }
+        const chainId = await this._web3Wrapper.getChainIdAsync();
+        return (this._common = getCommonForChain(chainId));
+    }
+}
+
+function cleanTxDataForChain<TRPCData extends TxDataRPC | CallDataRPC, TData extends TxData | CallData>(
+    common: Common,
+    rpcData: TRPCData,
+): TData {
+    const txData = marshaller.unmarshalTxData(rpcData) as TData;
+    if (common.isActivatedEIP(1559)) {
+        // If 1559 fields are present, remove legacy gasPrice.
+        if (txData.maxFeePerGas || txData.maxPriorityFeePerGas) {
+            delete txData.gasPrice;
+        }
+    } else {
+        // Remove 1559 fields on legacy fee networks.
+        delete txData.maxFeePerGas;
+        delete txData.maxPriorityFeePerGas;
+    }
+    // Delete access list on networks that don't support it.
+    if (!common.isActivatedEIP(2930)) {
+        delete txData.accessList;
+    }
+    return txData;
 }

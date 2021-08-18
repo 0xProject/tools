@@ -1,5 +1,5 @@
 import { BigNumber } from '@0x/utils';
-import { AccessListEIP2930Transaction, Transaction, TransactionFactory } from '@ethereumjs/tx';
+import { TransactionFactory } from '@ethereumjs/tx';
 import { JSONRPCRequestPayload } from 'ethereum-types';
 import { toBuffer } from 'ethereumjs-util';
 
@@ -10,7 +10,9 @@ import { Subprovider } from './subprovider';
 const HEX_BASE = 16;
 
 export interface DebugPayloadRawTransactionAttributes {
-    gasPrice: string;
+    gasPrice?: string;
+    maxFeePerGas?: string;
+    maxPriorityFeePerGas?: string;
     gasLimit: string;
     nonce: string;
     value: string;
@@ -32,14 +34,15 @@ const defaultDebugCallback = (debugPayload: DebugPayload) => console.debug(JSON.
 export class DebugSubprovider extends Subprovider {
     private readonly _debugCallback: WithDebugPayload;
 
-    private static _generateRawTransactionAttributes(
-        txn: Transaction | AccessListEIP2930Transaction,
-    ): DebugPayloadRawTransactionAttributes {
+    private static _generateRawTransactionAttributes(txn: any): DebugPayloadRawTransactionAttributes {
         const hexBufferToString = (value: Buffer): string => new BigNumber(value.toString('hex'), HEX_BASE).toString();
 
         return {
             gasLimit: hexBufferToString(txn.gasLimit),
-            gasPrice: hexBufferToString(txn.gasPrice),
+            gasPrice: txn.gasPrice !== undefined ? hexBufferToString(txn.gasPrice) : undefined,
+            maxFeePerGas: txn.maxFeePerGas !== undefined ? hexBufferToString(txn.maxFeePerGas) : undefined,
+            maxPriorityFeePerGas:
+                txn.maxPriorityFeePerGas !== undefined ? hexBufferToString(txn.maxPriorityFeePerGas) : undefined,
             nonce: hexBufferToString(txn.nonce),
             value: hexBufferToString(txn.value),
             // tslint:disable-next-line: no-unnecessary-type-assertion

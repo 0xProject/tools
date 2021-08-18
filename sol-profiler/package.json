@@ -39,7 +39,7 @@
         "@0x/utils": "^6.4.3",
         "@types/node": "12.12.54",
         "ethereum-types": "^3.5.0",
-        "ethereumjs-util": "^7.0.10",
+        "ethereumjs-util": "^7.1.0",
         "lodash": "^4.17.11",
         "web3-provider-engine": "14.0.6"
     },
