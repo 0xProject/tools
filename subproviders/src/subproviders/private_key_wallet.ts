@@ -127,7 +127,7 @@ function createTransactionObject(
     common: Common,
     txParams: PartialTxParams,
 ): ethjsTx.Transaction | ethjsTx.FeeMarketEIP1559Transaction | ethjsTx.AccessListEIP2930Transaction {
-    const normalziedTxParams = { ...txParams, gasLimit: txParams.gas };
+    const normalizedTxParams = { ...txParams, gasLimit: txParams.gas };
     let effectiveHardfork = common.hardfork();
     // tslint:disable-next-line:custom-no-magic-numbers
     if (common.isActivatedEIP(1559)) {
