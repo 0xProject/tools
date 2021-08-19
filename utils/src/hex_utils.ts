@@ -75,8 +75,9 @@ function slice(n: Numberish, start: number, end?: number): string {
 /**
  * Get the keccak hash of some data.
  */
-function hash(n: Numberish): string {
-    return ethUtil.bufferToHex(ethUtil.keccak256(ethUtil.toBuffer(hexUtils.toHex(n))));
+function hash(n: Numberish | Buffer): string {
+    const buf = Buffer.isBuffer(n) ? n : ethUtil.toBuffer(hexUtils.toHex(n));
+    return ethUtil.bufferToHex(ethUtil.keccak256(buf));
 }
 
 /**
@@ -94,7 +95,7 @@ function toHex(n: Numberish | Buffer, _size: number = WORD_LENGTH): string {
     if (Buffer.isBuffer(n)) {
         return `0x${n.toString('hex')}`;
     }
-    if (typeof n === 'string' && /^0x[0-9a-f]+$/i.test(n)) {
+    if (typeof n === 'string' && isHex(n)) {
         // Already a hex.
         return n;
     }
@@ -117,5 +118,5 @@ function toHex(n: Numberish | Buffer, _size: number = WORD_LENGTH): string {
  * Check if a string is a hex string.
  */
 function isHex(s: string): boolean {
-    return /^0x[0-9a-f]+$/i.test(s);
+    return /^0x[0-9a-f]*$/i.test(s);
 }
