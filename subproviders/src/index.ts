@@ -72,3 +72,5 @@ export {
     Web3JsV2Provider,
     Web3JsV3Provider,
 } from 'ethereum-types';
+
+export { Hardfork } from '@ethereumjs/common';

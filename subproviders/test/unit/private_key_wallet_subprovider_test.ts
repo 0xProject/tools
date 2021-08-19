@@ -1,4 +1,5 @@
 import { providerUtils } from '@0x/utils';
+import { Hardfork } from '@ethereumjs/common';
 import * as chai from 'chai';
 import { JSONRPCResponsePayload } from 'ethereum-types';
 import * as ethUtils from 'ethereumjs-util';
@@ -9,21 +10,29 @@ import { chaiSetup } from '../chai_setup';
 import { fixtureData } from '../utils/fixture_data';
 import { reportCallbackErrors } from '../utils/report_callback_errors';
 
+// tslint:disable: custom-no-magic-numbers
+
 chaiSetup.configure();
 const expect = chai.expect;
 
 describe('PrivateKeyWalletSubprovider', () => {
     let subprovider: PrivateKeyWalletSubprovider;
-    let subprovider2930: PrivateKeyWalletSubprovider;
+    let berlinSubprovider: PrivateKeyWalletSubprovider;
+    let istanbulSubprovider: PrivateKeyWalletSubprovider;
     before(async () => {
         subprovider = new PrivateKeyWalletSubprovider(
             fixtureData.TEST_RPC_ACCOUNT_0_ACCOUNT_PRIVATE_KEY,
             fixtureData.NETWORK_ID,
         );
-        subprovider2930 = new PrivateKeyWalletSubprovider(
+        berlinSubprovider = new PrivateKeyWalletSubprovider(
             fixtureData.TEST_RPC_ACCOUNT_0_ACCOUNT_PRIVATE_KEY,
             fixtureData.NETWORK_ID,
-            'berlin',
+            Hardfork.Berlin,
+        );
+        istanbulSubprovider = new PrivateKeyWalletSubprovider(
+            fixtureData.TEST_RPC_ACCOUNT_0_ACCOUNT_PRIVATE_KEY,
+            fixtureData.NETWORK_ID,
+            Hardfork.Istanbul,
         );
     });
     describe('direct method calls', () => {
@@ -40,6 +49,27 @@ describe('PrivateKeyWalletSubprovider', () => {
             });
             it('signs a transaction', async () => {
                 const txHex = await subprovider.signTransactionAsync(fixtureData.TX_DATA);
+                expect(getSignedTransactionType(txHex)).to.eq(TransactionType.Legacy);
+                expect(txHex).to.be.equal(fixtureData.TX_DATA_SIGNED_RESULT);
+            });
+            it('signs an EIP2930 transaction', async () => {
+                const txHex = await subprovider.signTransactionAsync(fixtureData.TX_DATA_2930);
+                expect(getSignedTransactionType(txHex)).to.eq(TransactionType.AccessList);
+                expect(txHex).to.be.equal(fixtureData.TX_DATA_SIGNED_RESULT_2930);
+            });
+            it('signs an EIP1559 transaction', async () => {
+                const txHex = await subprovider.signTransactionAsync(fixtureData.TX_DATA_1559);
+                expect(getSignedTransactionType(txHex)).to.eq(TransactionType.FeeMarket);
+                expect(txHex).to.be.equal(fixtureData.TX_DATA_SIGNED_RESULT_1559);
+            });
+            it('ignores 1559 fields on a berlin hardfork', async () => {
+                const txHex = await berlinSubprovider.signTransactionAsync(fixtureData.TX_DATA_1559);
+                expect(getSignedTransactionType(txHex)).to.eq(TransactionType.AccessList);
+                expect(txHex).to.be.equal(fixtureData.TX_DATA_SIGNED_RESULT_2930);
+            });
+            it('ignores 1559 and 2930 fields on an istanbul hardfork', async () => {
+                const txHex = await istanbulSubprovider.signTransactionAsync(fixtureData.TX_DATA_1559);
+                expect(getSignedTransactionType(txHex)).to.eq(TransactionType.Legacy);
                 expect(txHex).to.be.equal(fixtureData.TX_DATA_SIGNED_RESULT);
             });
             it('signs a transaction where the tx.origin is checksummed.', async () => {
@@ -61,17 +91,11 @@ describe('PrivateKeyWalletSubprovider', () => {
     });
     describe('calls through a provider', () => {
         let provider: Web3ProviderEngine;
-        let provider2930: Web3ProviderEngine;
         before(() => {
             provider = new Web3ProviderEngine();
             provider.addProvider(subprovider);
             provider.addProvider(new GanacheSubprovider({}));
             providerUtils.startProviderEngine(provider);
-
-            provider2930 = new Web3ProviderEngine();
-            provider2930.addProvider(subprovider2930);
-            provider2930.addProvider(new GanacheSubprovider({}));
-            providerUtils.startProviderEngine(provider2930);
         });
         describe('success cases', () => {
             it('returns a list of accounts', (done: DoneCallback) => {
@@ -98,6 +122,7 @@ describe('PrivateKeyWalletSubprovider', () => {
                 };
                 const callback = reportCallbackErrors(done)((err: Error, response: JSONRPCResponsePayload) => {
                     expect(err).to.be.a('null');
+                    expect(getSignedTransactionType(response.result.raw)).to.eq(TransactionType.Legacy);
                     expect(response.result.raw).to.be.equal(fixtureData.TX_DATA_SIGNED_RESULT);
                     done();
                 });
@@ -146,20 +171,6 @@ describe('PrivateKeyWalletSubprovider', () => {
                     done();
                 });
                 provider.sendAsync(payload, callback);
-            });
-            it('signs an EIP2930 transaction', (done: DoneCallback) => {
-                const payload = {
-                    jsonrpc: '2.0',
-                    method: 'eth_signTransaction',
-                    params: [fixtureData.TX_DATA_2930],
-                    id: 1,
-                };
-                const callback = reportCallbackErrors(done)((err: Error, response: JSONRPCResponsePayload) => {
-                    expect(err).to.be.a('null');
-                    expect(response.result.raw).to.be.equal(fixtureData.TX_DATA_SIGNED_RESULT_2930);
-                    done();
-                });
-                provider2930.sendAsync(payload, callback);
             });
         });
         describe('failure cases', () => {
@@ -267,3 +278,24 @@ describe('PrivateKeyWalletSubprovider', () => {
         });
     });
 });
+
+enum TransactionType {
+    Legacy,
+    AccessList,
+    FeeMarket,
+}
+
+function getSignedTransactionType(signedData: string): TransactionType {
+    const prefix = parseInt(signedData.slice(2, 4), 16);
+    // tslint:disable-next-line: number-literal-format
+    if (prefix >= 0x7f) {
+        return TransactionType.Legacy;
+    }
+    if (prefix === 0x1) {
+        return TransactionType.AccessList;
+    }
+    if (prefix === 0x2) {
+        return TransactionType.FeeMarket;
+    }
+    throw new Error(`Unknown signed tx prefix: ${prefix.toString(16)}`);
+}

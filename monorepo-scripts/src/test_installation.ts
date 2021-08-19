@@ -132,13 +132,14 @@ async function testInstallPackageAsync(
         compilerOptions: {
             typeRoots: ['node_modules/@0x/typescript-typings/types', 'node_modules/@types'],
             module: 'commonjs',
-            target: 'es5',
+            target: 'es6',
             lib: ['es2017', 'dom'],
             declaration: true,
             noImplicitReturns: true,
             pretty: true,
             strict: true,
             resolveJsonModule: true,
+            esModuleInterop: true,
         },
         include: ['index.ts'],
     };

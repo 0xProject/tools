@@ -36,7 +36,9 @@ export interface TransactionRPC {
     from: string;
     to: string | null;
     value: string;
-    gasPrice: string;
+    gasPrice?: string;
+    maxFeePerGas?: string;
+    maxPriorityFeePerGas?: string;
     gas: string;
     input: string;
 }
@@ -73,15 +75,15 @@ export interface CallTxDataBaseRPC {
     value?: string;
     gas?: string;
     gasPrice?: string;
+    maxFeePerGas?: string;
+    maxPriorityFeePerGas?: string;
     data?: string;
     nonce?: string;
     type?: number;
     accessList?: Array<{ address: string; storageKeys: string[] }>;
 }
 
-export interface TxDataRPC extends CallTxDataBaseRPC {
-    from: string;
-}
+export interface TxDataRPC extends CallDataRPC {}
 
 export interface CallDataRPC extends CallTxDataBaseRPC {
     from?: string;

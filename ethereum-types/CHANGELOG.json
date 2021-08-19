@@ -1,5 +1,14 @@
 [
     {
+        "version": "3.6.0",
+        "changes": [
+            {
+                "note": "Add 1559 fields to transaction and call object types",
+                "pr": 45
+            }
+        ]
+    },
+    {
         "version": "3.5.0",
         "changes": [
             {

@@ -1,6 +1,7 @@
 import { assert } from '@0x/assert';
 import { EIP712TypedData } from '@0x/types';
 import { addressUtils } from '@0x/utils';
+import { Hardfork } from '@ethereumjs/common';
 import * as bip39 from 'bip39';
 import HDNode = require('hdkey');
 import * as _ from 'lodash';
@@ -22,7 +23,7 @@ const DEFAULT_ADDRESS_SEARCH_LIMIT = 1000;
  */
 export class MnemonicWalletSubprovider extends BaseWalletSubprovider {
     public readonly chainId: number;
-    public readonly hardfork: string | undefined;
+    public readonly hardfork?: Hardfork;
     private readonly _addressSearchLimit: number;
     private _baseDerivationPath: string;
     private _derivedKeyInfo: DerivedHDKeyInfo;

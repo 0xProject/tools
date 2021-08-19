@@ -87,7 +87,13 @@ export const marshaller = {
             transactionIndex: txRpc.transactionIndex !== null ? utils.convertHexToNumber(txRpc.transactionIndex) : null,
             nonce: utils.convertHexToNumber(txRpc.nonce),
             gas: utils.convertHexToNumber(txRpc.gas),
-            gasPrice: utils.convertAmountToBigNumber(txRpc.gasPrice),
+            gasPrice: txRpc.gasPrice !== undefined ? utils.convertAmountToBigNumber(txRpc.gasPrice) : undefined,
+            maxFeePerGas:
+                txRpc.maxFeePerGas !== undefined ? utils.convertAmountToBigNumber(txRpc.maxFeePerGas) : undefined,
+            maxPriorityFeePerGas:
+                txRpc.maxPriorityFeePerGas !== undefined
+                    ? utils.convertAmountToBigNumber(txRpc.maxPriorityFeePerGas)
+                    : undefined,
             value: utils.convertAmountToBigNumber(txRpc.value),
         };
         return tx;
@@ -124,6 +130,14 @@ export const marshaller = {
             value: txDataRpc.value !== undefined ? utils.convertAmountToBigNumber(txDataRpc.value) : undefined,
             gas: txDataRpc.gas !== undefined ? utils.convertHexToNumber(txDataRpc.gas) : undefined,
             gasPrice: txDataRpc.gasPrice !== undefined ? utils.convertAmountToBigNumber(txDataRpc.gasPrice) : undefined,
+            maxFeePerGas:
+                txDataRpc.maxFeePerGas !== undefined
+                    ? utils.convertAmountToBigNumber(txDataRpc.maxFeePerGas)
+                    : undefined,
+            maxPriorityFeePerGas:
+                txDataRpc.maxPriorityFeePerGas !== undefined
+                    ? utils.convertAmountToBigNumber(txDataRpc.maxPriorityFeePerGas)
+                    : undefined,
             nonce: txDataRpc.nonce !== undefined ? utils.convertHexToNumber(txDataRpc.nonce) : undefined,
         };
         return txData;
@@ -146,7 +160,7 @@ export const marshaller = {
             ...callTxDataBaseRPC,
             from: marshaller.marshalAddress(txData.from),
         };
-        const prunableIfUndefined = ['gasPrice', 'gas', 'value', 'nonce'];
+        const prunableIfUndefined = ['gasPrice', 'maxFeePerGas', 'maxPriorityFeePerGas', 'gas', 'value', 'nonce'];
         _.each(txDataRPC, (value: any, key: string) => {
             if (value === undefined && _.includes(prunableIfUndefined, key)) {
                 delete (txDataRPC as any)[key];
@@ -240,7 +254,7 @@ export const marshaller = {
         return formattedLog;
     },
     _marshalCallTxDataBase(callTxDataBase: Partial<CallTxDataBase>): Partial<CallTxDataBaseRPC> {
-        let accessList;
+        let accessList: Array<{ address: string; storageKeys: string[] }> | undefined;
         if (callTxDataBase.accessList && Object.keys(callTxDataBase.accessList).length) {
             accessList = Object.entries(callTxDataBase.accessList).map(([address, storageKeys]) => ({
                 address,
@@ -254,10 +268,18 @@ export const marshaller = {
                 callTxDataBase.gasPrice === undefined
                     ? undefined
                     : utils.encodeAmountAsHexString(callTxDataBase.gasPrice),
+            maxFeePerGas:
+                callTxDataBase.maxFeePerGas === undefined
+                    ? undefined
+                    : utils.encodeAmountAsHexString(callTxDataBase.maxFeePerGas),
+            maxPriorityFeePerGas:
+                callTxDataBase.maxPriorityFeePerGas === undefined
+                    ? undefined
+                    : utils.encodeAmountAsHexString(callTxDataBase.maxPriorityFeePerGas),
             gas: callTxDataBase.gas === undefined ? undefined : utils.encodeAmountAsHexString(callTxDataBase.gas),
             value: callTxDataBase.value === undefined ? undefined : utils.encodeAmountAsHexString(callTxDataBase.value),
             nonce: callTxDataBase.nonce === undefined ? undefined : utils.encodeAmountAsHexString(callTxDataBase.nonce),
-            ...(accessList ? { type: 0x1, accessList } : {}),
+            accessList,
         };
         return callTxDataBaseRPC;
     },

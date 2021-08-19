@@ -1,4 +1,5 @@
 import { ECSignature } from '@0x/types';
+import { Hardfork } from '@ethereumjs/common';
 import { JSONRPCRequestPayload } from 'ethereum-types';
 import HDNode = require('hdkey');
 export interface LedgerCommunicationClient {
@@ -69,7 +70,7 @@ export interface MnemonicWalletSubproviderConfigs {
     addressSearchLimit?: number;
     baseDerivationPath?: string;
     chainId?: number;
-    hardfork?: string;
+    hardfork?: Hardfork;
 }
 
 export interface SignatureData {
@@ -88,12 +89,13 @@ export interface LedgerGetAddressResult {
 export interface PartialTxParams {
     nonce: string;
     gasPrice?: string;
+    maxFeePerGas?: string;
+    maxPriorityFeePerGas?: string;
     gas: string;
     to: string;
     from: string;
     value?: string;
     data?: string;
-    chainId: number; // EIP 155 chainId - mainnet: 1, ropsten: 3
     type?: number;
     accessList?: Array<{ address: string; storageKeys: string[] }>;
 }

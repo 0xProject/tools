@@ -1,5 +1,14 @@
 [
     {
+        "version": "7.6.0",
+        "changes": [
+            {
+                "note": "Add support for fee market (1559) RPC methods",
+                "pr": 45
+            }
+        ]
+    },
+    {
         "timestamp": 1624871999,
         "version": "7.5.4",
         "changes": [
