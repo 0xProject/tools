@@ -131,19 +131,19 @@ function createTransactionObject(
     let effectiveHardfork = common.hardfork();
     // tslint:disable-next-line:custom-no-magic-numbers
     if (common.isActivatedEIP(1559)) {
-        if (!normalziedTxParams.maxFeePerGas || !normalziedTxParams.maxPriorityFeePerGas) {
+        if (!normalizedTxParams.maxFeePerGas || !normalizedTxParams.maxPriorityFeePerGas) {
             // Use legacy transaction if neither new gas fields are present.
             effectiveHardfork = Hardfork.Berlin;
         }
     }
     let tx;
     if (effectiveHardfork === Hardfork.London) {
-        const { gasPrice: _gasPrice, ...txWithoutGasPrice } = normalziedTxParams;
+        const { gasPrice: _gasPrice, ...txWithoutGasPrice } = normalizedTxParams;
         tx = ethjsTx.FeeMarketEIP1559Transaction.fromTxData(txWithoutGasPrice, { common });
-    } else if (effectiveHardfork === Hardfork.Berlin && normalziedTxParams.accessList) {
-        tx = ethjsTx.AccessListEIP2930Transaction.fromTxData(normalziedTxParams, { common });
+    } else if (effectiveHardfork === Hardfork.Berlin && normalizedTxParams.accessList) {
+        tx = ethjsTx.AccessListEIP2930Transaction.fromTxData(normalizedTxParams, { common });
     } else {
-        tx = ethjsTx.Transaction.fromTxData(normalziedTxParams, { common });
+        tx = ethjsTx.Transaction.fromTxData(normalizedTxParams, { common });
     }
     return tx;
 }
