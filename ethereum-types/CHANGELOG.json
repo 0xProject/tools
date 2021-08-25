@@ -6,7 +6,8 @@
                 "note": "Add 1559 fields to transaction and call object types",
                 "pr": 45
             }
-        ]
+        ],
+        "timestamp": 1629895966
     },
     {
         "version": "3.5.0",

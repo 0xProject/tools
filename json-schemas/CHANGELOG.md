@@ -5,6 +5,10 @@ Edit the package's CHANGELOG.json file only.
 
 CHANGELOG
 
+## v6.3.0 - _August 25, 2021_
+
+    * Update call data and tx data schemas for 1559 fields (#45)
+
 ## v6.2.0 - _June 28, 2021_
 
     * Return all schema validation errors and expose Ajv types, remove outdated relayer api schemas (#38)

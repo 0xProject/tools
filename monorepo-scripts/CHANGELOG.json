@@ -6,7 +6,8 @@
                 "note": "Update tsconfig for test installation",
                 "pr": 45
             }
-        ]
+        ],
+        "timestamp": 1629895966
     },
     {
         "version": "3.1.8",

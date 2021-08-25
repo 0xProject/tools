@@ -5,6 +5,10 @@ Edit the package's CHANGELOG.json file only.
 
 CHANGELOG
 
+## v3.6.0 - _August 25, 2021_
+
+    * Add 1559 fields to transaction and call object types (#45)
+
 ## v3.5.0 - _April 26, 2021_
 
     * Add `TxAccessList` and `TxAccessListWithGas` types (#33)

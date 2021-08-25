@@ -5,6 +5,10 @@ Edit the package's CHANGELOG.json file only.
 
 CHANGELOG
 
+## v5.2.1 - _August 25, 2021_
+
+    * Dependencies updated
+
 ## v5.2.0 - _April 26, 2021_
 
     * Remove `ethereumjs-util` types (#33)

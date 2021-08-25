@@ -5,6 +5,10 @@ Edit the package's CHANGELOG.json file only.
 
 CHANGELOG
 
+## v3.2.0 - _August 25, 2021_
+
+    * Update tsconfig for test installation (#45)
+
 ## v3.1.8 - _June 28, 2021_
 
     * Fix doc generate TS parsing potentially undefined export token (#38)

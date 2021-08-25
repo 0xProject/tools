@@ -6,7 +6,8 @@
                 "note": "Update call data and tx data schemas for 1559 fields",
                 "pr": 45
             }
-        ]
+        ],
+        "timestamp": 1629895966
     },
     {
         "version": "6.2.0",

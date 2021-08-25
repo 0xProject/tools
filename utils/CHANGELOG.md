@@ -5,6 +5,10 @@ Edit the package's CHANGELOG.json file only.
 
 CHANGELOG
 
+## v6.4.4 - _August 25, 2021_
+
+    * Allow hexUtils.hash() to take Buffer type; isHex() accepts '0x' as valid hex (#42)
+
 ## v6.4.3 - _April 28, 2021_
 
     * Dependencies updated

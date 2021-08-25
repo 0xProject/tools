@@ -5,6 +5,10 @@ Edit the package's CHANGELOG.json file only.
 
 CHANGELOG
 
+## v7.6.0 - _August 25, 2021_
+
+    * Add support for fee market (1559) RPC methods (#45)
+
 ## v7.5.4 - _June 28, 2021_
 
     * Dependencies updated

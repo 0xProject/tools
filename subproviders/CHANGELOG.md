@@ -5,6 +5,10 @@ Edit the package's CHANGELOG.json file only.
 
 CHANGELOG
 
+## v6.6.0 - _August 25, 2021_
+
+    * Add fee market (1559) support to private key and mnemonic wallet (#45)
+
 ## v6.5.4 - _June 28, 2021_
 
     * Dependencies updated
