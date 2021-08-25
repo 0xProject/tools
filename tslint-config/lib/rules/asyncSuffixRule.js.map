@@ -1,0 +1,1 @@
+{"version":3,"file":"asyncSuffixRule.js","sourceRoot":"","sources":["../../rules/asyncSuffixRule.ts"],"names":[],"mappings":";;;AAAA,+BAA+B;AAG/B,yDAA2D;AAE3D,MAAa,IAAK,SAAQ,IAAI,CAAC,KAAK,CAAC,YAAY;IACtC,KAAK,CAAC,UAAyB;QAClC,OAAO,IAAI,CAAC,eAAe,CAAC,IAAI,gCAAiB,CAAC,UAAU,EAAE,IAAI,CAAC,UAAU,EAAE,CAAC,CAAC,CAAC;IACtF,CAAC;CACJ;AAJD,oBAIC"}

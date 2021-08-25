@@ -1,0 +1,1 @@
+{"version":3,"file":"transform_docs.d.ts","sourceRoot":"","sources":["../../src/transform_docs.ts"],"names":[],"mappings":"AAAA,OAAO,EAAqD,YAAY,EAAc,MAAM,gBAAgB,CAAC;AAE7G,MAAM,WAAW,aAAa;IAC1B,WAAW,EAAE,OAAO,CAAC;IACrB,OAAO,EAAE,OAAO,CAAC;IACjB,SAAS,EAAE,MAAM,EAAE,CAAC;CACvB;AAUD;;;GAGG;AACH,wBAAgB,aAAa,CAAC,IAAI,EAAE,YAAY,EAAE,IAAI,GAAE,OAAO,CAAC,aAAa,CAAM,GAAG,YAAY,CAiBjG"}

@@ -1,0 +1,1 @@
+{"version":3,"file":"booleanNamingRule.d.ts","sourceRoot":"","sources":["../../rules/booleanNamingRule.ts"],"names":[],"mappings":"AACA,OAAO,KAAK,IAAI,MAAM,QAAQ,CAAC;AAC/B,OAAO,KAAK,EAAE,MAAM,YAAY,CAAC;AAIjC,qBAAa,IAAK,SAAQ,IAAI,CAAC,KAAK,CAAC,SAAS;IAC1C,OAAc,cAAc,SAAoF;IAEzG,gBAAgB,CAAC,UAAU,EAAE,EAAE,CAAC,UAAU,EAAE,OAAO,EAAE,EAAE,CAAC,OAAO,GAAG,IAAI,CAAC,WAAW,EAAE;CAG9F"}

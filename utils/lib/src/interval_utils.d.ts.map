@@ -1,0 +1,1 @@
+{"version":3,"file":"interval_utils.d.ts","sourceRoot":"","sources":["../../src/interval_utils.ts"],"names":[],"mappings":";;AAAA,eAAO,MAAM,aAAa;kCAEd,MAAM,QAAQ,IAAI,CAAC,cACX,MAAM,iBACH,KAAK,KAAK,IAAI,GAC9B,OAAO,KAAK;4CAiByB,OAAO,KAAK,GAAG,IAAI;oBAG3C,MAAM,IAAI,cAAc,MAAM,iBAAiB,KAAK,KAAK,IAAI,GAAG,OAAO,KAAK;8BAUlE,OAAO,KAAK,GAAG,IAAI;CAGhD,CAAC"}

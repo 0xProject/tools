@@ -1,0 +1,55 @@
+{
+    "id": "/callDataSchema",
+    "properties": {
+        "from": { "$ref": "/addressSchema" },
+        "to": { "$ref": "/addressSchema" },
+        "value": {
+            "oneOf": [{ "$ref": "/numberSchema" }, { "$ref": "/jsNumberSchema" }]
+        },
+        "gas": {
+            "oneOf": [{ "$ref": "/numberSchema" }, { "$ref": "/jsNumberSchema" }]
+        },
+        "gasPrice": {
+            "oneOf": [{ "$ref": "/numberSchema" }, { "$ref": "/jsNumberSchema" }]
+        },
+        "data": {
+            "type": "string",
+            "pattern": "^0x[0-9a-f]*$"
+        },
+        "nonce": {
+            "type": "number",
+            "minimum": 0
+        },
+        "overrides": {
+            "type": "object",
+            "additionalProperties": {
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "type": "string",
+                        "pattern": "^0x[0-9a-fA-F]*$"
+                    },
+                    "nonce": {
+                        "oneOf": [{ "$ref": "/wholeNumberSchema" }]
+                    },
+                    "balance": {
+                        "oneOf": [{ "$ref": "/wholeNumberSchema" }]
+                    }
+                }
+            }
+        },
+        "accessList": {
+            "type": "object",
+            "additionalProperties": {
+                "type": "array",
+                "items": {
+                    "type": "string",
+                    "pattern": "^0x[0-9a-fA-F]{64}$"
+                }
+            }
+        }
+    },
+    "required": [],
+    "type": "object",
+    "additionalProperties": false
+}
