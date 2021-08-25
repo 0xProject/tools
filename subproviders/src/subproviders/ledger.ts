@@ -110,10 +110,10 @@ export class LedgerSubprovider extends BaseWalletSubprovider {
     }
     /**
      * Set a desired derivation path when computing the available user addresses
-     * @param basDerivationPath The desired derivation path (e.g `44'/60'/0'`)
+     * @param baseDerivationPath The desired derivation path (e.g `44'/60'/0'`)
      */
-    public setPath(basDerivationPath: string): void {
-        this._baseDerivationPath = basDerivationPath;
+    public setPath(baseDerivationPath: string): void {
+        this._baseDerivationPath = baseDerivationPath;
     }
     /**
      * Retrieve a users Ledger accounts. The accounts are derived from the derivationPath,
