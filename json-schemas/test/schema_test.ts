@@ -146,7 +146,7 @@ describe('Schema', () => {
 
     describe('#V4 OtcOrder Schema', () => {
         const sampleV4OtcOrder = {
-            expiryAndNonce: '10245297534903488071670748544871872923373704163702630819581039014967',
+            expiryAndNonce: '0x6148f04f00000000000000010000000000000000000000006148f437',
             makerAmount: '123660506086783300',
             takerAmount: '125000000000000000000',
             makerToken: '0x374a16f5e686c09b0cc9e8bc3466b3b645c74aa7',
