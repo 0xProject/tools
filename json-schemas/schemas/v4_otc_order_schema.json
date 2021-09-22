@@ -1,0 +1,48 @@
+{
+    "id": "/v4OtcOrderSchema",
+    "properties": {
+        "maker": {
+            "$ref": "/addressSchema"
+        },
+        "taker": {
+            "$ref": "/addressSchema"
+        },
+        "txOrigin": {
+            "$ref": "/addressSchema"
+        },
+        "makerAmount": {
+            "$ref": "/wholeNumberSchema"
+        },
+        "takerAmount": {
+            "$ref": "/wholeNumberSchema"
+        },
+        "makerToken": {
+            "$ref": "/addressSchema"
+        },
+        "takerToken": {
+            "$ref": "/addressSchema"
+        },
+        "expiryAndNonce": {
+            "$ref": "/hexSchema"
+        },
+        "chainId": {
+            "type": "number"
+        },
+        "verifyingContract": {
+            "$ref": "/addressSchema"
+        }
+    },
+    "required": [
+        "maker",
+        "taker",
+        "txOrigin",
+        "makerAmount",
+        "takerAmount",
+        "makerToken",
+        "takerToken",
+        "expiryAndNonce",
+        "chainId",
+        "verifyingContract"
+    ],
+    "type": "object"
+}

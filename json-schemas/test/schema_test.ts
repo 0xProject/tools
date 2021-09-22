@@ -12,24 +12,25 @@ const expect = chai.expect;
 const NULL_ADDRESS = '0x0000000000000000000000000000000000000000';
 const CHAIN_ID = 1337;
 const {
-    numberSchema,
     addressSchema,
+    blockParamSchema,
+    blockRangeSchema,
     hexSchema,
+    jsNumber,
+    numberSchema,
     orderCancellationRequestsSchema,
     orderFillOrKillRequestsSchema,
     orderFillRequestsSchema,
     orderHashSchema,
     orderSchema,
+    paginatedCollectionSchema,
     signedOrderSchema,
     signedOrdersSchema,
-    blockParamSchema,
-    blockRangeSchema,
     tokenSchema,
-    jsNumber,
     txDataSchema,
-    paginatedCollectionSchema,
-    wholeNumberSchema,
+    v4OtcOrderSchema,
     v4RfqSignedOrderSchema,
+    wholeNumberSchema,
 } = schemas;
 
 describe('Schema', () => {
@@ -142,6 +143,36 @@ describe('Schema', () => {
             validateAgainstSchema(testCases, blockRangeSchema, shouldFail);
         });
     });
+
+    describe('#V4 OtcOrder Schema', () => {
+        const sampleV4OtcOrder = {
+            expiryAndNonce: '0x6148f04f00000000000000010000000000000000000000006148f437',
+            makerAmount: '123660506086783300',
+            takerAmount: '125000000000000000000',
+            makerToken: '0x374a16f5e686c09b0cc9e8bc3466b3b645c74aa7',
+            takerToken: '0xf84830b73b2ed3c7267e7638f500110ea47fdf30',
+            chainId: 3,
+            verifyingContract: '0xdef1c0ded9bec7f1a1670819833240f027b25eff',
+            maker: '0x06754422cf9f54ae0e67D42FD788B33D8eb4c5D5',
+            taker: '0x06652BDD5A8eB3d206caedd6b95b61F820Abb9B1',
+            txOrigin: '0x06652BDD5A8eB3d206caedd6b95b61F820Abb9B1',
+            signature: {
+                r: '0x81483df776387dbc439dd6daee3f365b57f4640f523c24f7e5ebdfd585ba5991',
+                s: '0x140c07f0b775c43c3e048205d1ac1360fb0d3254a48d928b7775a850d29536ff',
+                v: 27,
+                signatureType: 3,
+            },
+        };
+
+        it('should validate a valid V4 Otc Order', () => {
+            validateAgainstSchema([sampleV4OtcOrder], v4OtcOrderSchema);
+        });
+        it('should fail for an invalid V4 Otc Order', () => {
+            const shouldFail = true;
+            validateAgainstSchema([{ ...sampleV4OtcOrder, expiryAndNonce: 100.1 }], v4OtcOrderSchema, shouldFail);
+        });
+    });
+
     describe('#V4 RFQ Schema', () => {
         const sampleV4RfqOrder = `
         {
@@ -166,7 +197,7 @@ describe('Schema', () => {
         }
         `;
 
-        it('correctly deserializes a V4 RFQ order', () => {
+        it('should validate a valid V4 RFQ order', () => {
             validateAgainstSchema([JSON.parse(sampleV4RfqOrder)], v4RfqSignedOrderSchema);
         });
     });
