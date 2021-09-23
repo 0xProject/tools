@@ -1,6 +1,6 @@
 {
     "name": "@0x/sol-compiler",
-    "version": "4.7.5",
+    "version": "4.7.6",
     "engines": {
         "node": ">=6.12"
     },
@@ -46,7 +46,7 @@
     },
     "homepage": "https://github.com/0xProject/tools/tree/main/sol-compiler",
     "devDependencies": {
-        "@0x/dev-utils": "^4.2.9",
+        "@0x/dev-utils": "^4.2.10",
         "@0x/ts-doc-gen": "^0.0.28",
         "@0x/tslint-config": "^4.1.4",
         "@types/mkdirp": "^0.5.2",
@@ -75,13 +75,13 @@
         "zeppelin-solidity": "1.8.0"
     },
     "dependencies": {
-        "@0x/assert": "^3.0.29",
-        "@0x/json-schemas": "^6.3.0",
+        "@0x/assert": "^3.0.30",
+        "@0x/json-schemas": "^6.4.0",
         "@0x/sol-resolver": "^3.1.9",
         "@0x/types": "^3.3.4",
         "@0x/typescript-typings": "^5.2.1",
         "@0x/utils": "^6.4.4",
-        "@0x/web3-wrapper": "^7.6.0",
+        "@0x/web3-wrapper": "^7.6.1",
         "@types/node": "12.12.54",
         "@types/yargs": "^11.0.0",
         "chalk": "^2.3.0",

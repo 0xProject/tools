@@ -1,6 +1,6 @@
 {
     "name": "@0x/contracts-gen",
-    "version": "2.0.40",
+    "version": "2.0.41",
     "engines": {
         "node": ">=6.12"
     },
@@ -27,7 +27,7 @@
     },
     "homepage": "https://github.com/0xProject/tools/tree/main/contracts-gen",
     "dependencies": {
-        "@0x/sol-compiler": "^4.7.5",
+        "@0x/sol-compiler": "^4.7.6",
         "@0x/sol-resolver": "^3.1.9",
         "@0x/types": "^3.3.4",
         "@0x/typescript-typings": "^5.2.1",
