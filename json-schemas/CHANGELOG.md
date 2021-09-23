@@ -5,6 +5,10 @@ Edit the package's CHANGELOG.json file only.
 
 CHANGELOG
 
+## v6.4.0 - _September 22, 2021_
+
+    * Add v4 OtcOrder Schema (#47)
+
 ## v6.3.0 - _August 25, 2021_
 
     * Update call data and tx data schemas for 1559 fields (#45)
