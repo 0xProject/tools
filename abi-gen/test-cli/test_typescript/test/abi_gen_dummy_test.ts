@@ -67,6 +67,10 @@ describe('AbiGenDummy Contract', () => {
         await blockchainLifecycle.revertAsync();
     });
     describe('simplePureFunction', () => {
+        it('can get the function selector', () => {
+            const selector = abiGenDummy.simplePureFunction().selector;
+            expect(selector).to.equal('0xa3c2f6b6');
+        });
         it('should call simplePureFunction', async () => {
             const result = await abiGenDummy.simplePureFunction().callAsync();
             expect(result).to.deep.equal(new BigNumber(1));
