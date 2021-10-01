@@ -981,8 +981,10 @@ export class AbiGenDummyContract extends BaseContract {
         const self = (this as any) as AbiGenDummyContract;
         assert.isArray('a', a);
         const functionSignature = 'acceptsAnArrayOfBytes(bytes[])';
+        const selector = self._lookupAbiEncoder(functionSignature).getSelector();
 
         return {
+            selector,
             async callAsync(callData: Partial<CallData> = {}, defaultBlock?: BlockParam): Promise<void> {
                 BaseContract._assertCallParams(callData, defaultBlock);
                 let rawCallResult;
@@ -1007,8 +1009,10 @@ export class AbiGenDummyContract extends BaseContract {
         const self = (this as any) as AbiGenDummyContract;
         assert.isString('a', a);
         const functionSignature = 'acceptsBytes(bytes)';
+        const selector = self._lookupAbiEncoder(functionSignature).getSelector();
 
         return {
+            selector,
             async callAsync(callData: Partial<CallData> = {}, defaultBlock?: BlockParam): Promise<void> {
                 BaseContract._assertCallParams(callData, defaultBlock);
                 let rawCallResult;
@@ -1045,8 +1049,10 @@ export class AbiGenDummyContract extends BaseContract {
         const self = (this as any) as AbiGenDummyContract;
 
         const functionSignature = 'complexInputComplexOutput((uint256,bytes,string))';
+        const selector = self._lookupAbiEncoder(functionSignature).getSelector();
 
         return {
+            selector,
             async callAsync(
                 callData: Partial<CallData> = {},
                 defaultBlock?: BlockParam,
@@ -1098,8 +1104,10 @@ export class AbiGenDummyContract extends BaseContract {
         assert.isString('r', r);
         assert.isString('s', s);
         const functionSignature = 'ecrecoverFn(bytes32,uint8,bytes32,bytes32)';
+        const selector = self._lookupAbiEncoder(functionSignature).getSelector();
 
         return {
+            selector,
             async callAsync(callData: Partial<CallData> = {}, defaultBlock?: BlockParam): Promise<string> {
                 BaseContract._assertCallParams(callData, defaultBlock);
                 let rawCallResult;
@@ -1123,8 +1131,10 @@ export class AbiGenDummyContract extends BaseContract {
     public emitSimpleEvent(): ContractTxFunctionObj<void> {
         const self = (this as any) as AbiGenDummyContract;
         const functionSignature = 'emitSimpleEvent()';
+        const selector = self._lookupAbiEncoder(functionSignature).getSelector();
 
         return {
+            selector,
             async sendTransactionAsync(
                 txData?: Partial<TxData> | undefined,
                 opts: SendTransactionOpts = { shouldValidate: true },
@@ -1187,8 +1197,10 @@ export class AbiGenDummyContract extends BaseContract {
         const self = (this as any) as AbiGenDummyContract;
         assert.isArray('index_0', index_0);
         const functionSignature = 'methodAcceptingArrayOfArrayOfStructs((bytes,uint32,bytes[],string)[][])';
+        const selector = self._lookupAbiEncoder(functionSignature).getSelector();
 
         return {
+            selector,
             async callAsync(callData: Partial<CallData> = {}, defaultBlock?: BlockParam): Promise<void> {
                 BaseContract._assertCallParams(callData, defaultBlock);
                 let rawCallResult;
@@ -1220,8 +1232,10 @@ export class AbiGenDummyContract extends BaseContract {
         const self = (this as any) as AbiGenDummyContract;
         assert.isArray('index_0', index_0);
         const functionSignature = 'methodAcceptingArrayOfStructs((bytes,uint32,bytes[],string)[])';
+        const selector = self._lookupAbiEncoder(functionSignature).getSelector();
 
         return {
+            selector,
             async callAsync(callData: Partial<CallData> = {}, defaultBlock?: BlockParam): Promise<void> {
                 BaseContract._assertCallParams(callData, defaultBlock);
                 let rawCallResult;
@@ -1247,8 +1261,10 @@ export class AbiGenDummyContract extends BaseContract {
     > {
         const self = (this as any) as AbiGenDummyContract;
         const functionSignature = 'methodReturningArrayOfStructs()';
+        const selector = self._lookupAbiEncoder(functionSignature).getSelector();
 
         return {
+            selector,
             async callAsync(
                 callData: Partial<CallData> = {},
                 defaultBlock?: BlockParam,
@@ -1279,8 +1295,10 @@ export class AbiGenDummyContract extends BaseContract {
     public methodReturningMultipleValues(): ContractFunctionObj<[BigNumber, string]> {
         const self = (this as any) as AbiGenDummyContract;
         const functionSignature = 'methodReturningMultipleValues()';
+        const selector = self._lookupAbiEncoder(functionSignature).getSelector();
 
         return {
+            selector,
             async callAsync(callData: Partial<CallData> = {}, defaultBlock?: BlockParam): Promise<[BigNumber, string]> {
                 BaseContract._assertCallParams(callData, defaultBlock);
                 let rawCallResult;
@@ -1306,8 +1324,10 @@ export class AbiGenDummyContract extends BaseContract {
     }> {
         const self = (this as any) as AbiGenDummyContract;
         const functionSignature = 'methodUsingNestedStructWithInnerStructNotUsedElsewhere()';
+        const selector = self._lookupAbiEncoder(functionSignature).getSelector();
 
         return {
+            selector,
             async callAsync(
                 callData: Partial<CallData> = {},
                 defaultBlock?: BlockParam,
@@ -1344,8 +1364,10 @@ export class AbiGenDummyContract extends BaseContract {
         assert.isString('index_1', index_1);
         assert.isString('index_2', index_2);
         const functionSignature = 'multiInputMultiOutput(uint256,bytes,string)';
+        const selector = self._lookupAbiEncoder(functionSignature).getSelector();
 
         return {
+            selector,
             async callAsync(
                 callData: Partial<CallData> = {},
                 defaultBlock?: BlockParam,
@@ -1381,8 +1403,10 @@ export class AbiGenDummyContract extends BaseContract {
         const self = (this as any) as AbiGenDummyContract;
 
         const functionSignature = 'nestedStructInput(((bytes,uint32,bytes[],string),string))';
+        const selector = self._lookupAbiEncoder(functionSignature).getSelector();
 
         return {
+            selector,
             async callAsync(callData: Partial<CallData> = {}, defaultBlock?: BlockParam): Promise<void> {
                 BaseContract._assertCallParams(callData, defaultBlock);
                 let rawCallResult;
@@ -1409,8 +1433,10 @@ export class AbiGenDummyContract extends BaseContract {
     }> {
         const self = (this as any) as AbiGenDummyContract;
         const functionSignature = 'nestedStructOutput()';
+        const selector = self._lookupAbiEncoder(functionSignature).getSelector();
 
         return {
+            selector,
             async callAsync(
                 callData: Partial<CallData> = {},
                 defaultBlock?: BlockParam,
@@ -1451,8 +1477,10 @@ export class AbiGenDummyContract extends BaseContract {
     public noInputNoOutput(): ContractFunctionObj<void> {
         const self = (this as any) as AbiGenDummyContract;
         const functionSignature = 'noInputNoOutput()';
+        const selector = self._lookupAbiEncoder(functionSignature).getSelector();
 
         return {
+            selector,
             async callAsync(callData: Partial<CallData> = {}, defaultBlock?: BlockParam): Promise<void> {
                 BaseContract._assertCallParams(callData, defaultBlock);
                 let rawCallResult;
@@ -1479,8 +1507,10 @@ export class AbiGenDummyContract extends BaseContract {
     public noInputSimpleOutput(): ContractFunctionObj<BigNumber> {
         const self = (this as any) as AbiGenDummyContract;
         const functionSignature = 'noInputSimpleOutput()';
+        const selector = self._lookupAbiEncoder(functionSignature).getSelector();
 
         return {
+            selector,
             async callAsync(callData: Partial<CallData> = {}, defaultBlock?: BlockParam): Promise<BigNumber> {
                 BaseContract._assertCallParams(callData, defaultBlock);
                 let rawCallResult;
@@ -1504,8 +1534,10 @@ export class AbiGenDummyContract extends BaseContract {
     public nonPureMethod(): ContractTxFunctionObj<BigNumber> {
         const self = (this as any) as AbiGenDummyContract;
         const functionSignature = 'nonPureMethod()';
+        const selector = self._lookupAbiEncoder(functionSignature).getSelector();
 
         return {
+            selector,
             async sendTransactionAsync(
                 txData?: Partial<TxData> | undefined,
                 opts: SendTransactionOpts = { shouldValidate: true },
@@ -1560,8 +1592,10 @@ export class AbiGenDummyContract extends BaseContract {
     public nonPureMethodThatReturnsNothing(): ContractTxFunctionObj<void> {
         const self = (this as any) as AbiGenDummyContract;
         const functionSignature = 'nonPureMethodThatReturnsNothing()';
+        const selector = self._lookupAbiEncoder(functionSignature).getSelector();
 
         return {
+            selector,
             async sendTransactionAsync(
                 txData?: Partial<TxData> | undefined,
                 opts: SendTransactionOpts = { shouldValidate: true },
@@ -1617,8 +1651,10 @@ export class AbiGenDummyContract extends BaseContract {
         const self = (this as any) as AbiGenDummyContract;
         assert.isString('a', a);
         const functionSignature = 'overloadedMethod(string)';
+        const selector = self._lookupAbiEncoder(functionSignature).getSelector();
 
         return {
+            selector,
             async callAsync(callData: Partial<CallData> = {}, defaultBlock?: BlockParam): Promise<void> {
                 BaseContract._assertCallParams(callData, defaultBlock);
                 let rawCallResult;
@@ -1643,8 +1679,10 @@ export class AbiGenDummyContract extends BaseContract {
         const self = (this as any) as AbiGenDummyContract;
         assert.isBigNumber('a', a);
         const functionSignature = 'overloadedMethod(int256)';
+        const selector = self._lookupAbiEncoder(functionSignature).getSelector();
 
         return {
+            selector,
             async callAsync(callData: Partial<CallData> = {}, defaultBlock?: BlockParam): Promise<void> {
                 BaseContract._assertCallParams(callData, defaultBlock);
                 let rawCallResult;
@@ -1668,8 +1706,10 @@ export class AbiGenDummyContract extends BaseContract {
     public pureFunctionWithConstant(): ContractFunctionObj<BigNumber> {
         const self = (this as any) as AbiGenDummyContract;
         const functionSignature = 'pureFunctionWithConstant()';
+        const selector = self._lookupAbiEncoder(functionSignature).getSelector();
 
         return {
+            selector,
             async callAsync(callData: Partial<CallData> = {}, defaultBlock?: BlockParam): Promise<BigNumber> {
                 BaseContract._assertCallParams(callData, defaultBlock);
                 let rawCallResult;
@@ -1693,8 +1733,10 @@ export class AbiGenDummyContract extends BaseContract {
     public requireWithConstant(): ContractFunctionObj<void> {
         const self = (this as any) as AbiGenDummyContract;
         const functionSignature = 'requireWithConstant()';
+        const selector = self._lookupAbiEncoder(functionSignature).getSelector();
 
         return {
+            selector,
             async callAsync(callData: Partial<CallData> = {}, defaultBlock?: BlockParam): Promise<void> {
                 BaseContract._assertCallParams(callData, defaultBlock);
                 let rawCallResult;
@@ -1718,8 +1760,10 @@ export class AbiGenDummyContract extends BaseContract {
     public revertWithConstant(): ContractFunctionObj<void> {
         const self = (this as any) as AbiGenDummyContract;
         const functionSignature = 'revertWithConstant()';
+        const selector = self._lookupAbiEncoder(functionSignature).getSelector();
 
         return {
+            selector,
             async callAsync(callData: Partial<CallData> = {}, defaultBlock?: BlockParam): Promise<void> {
                 BaseContract._assertCallParams(callData, defaultBlock);
                 let rawCallResult;
@@ -1747,8 +1791,10 @@ export class AbiGenDummyContract extends BaseContract {
         const self = (this as any) as AbiGenDummyContract;
         assert.isBigNumber('index_0', index_0);
         const functionSignature = 'simpleInputNoOutput(uint256)';
+        const selector = self._lookupAbiEncoder(functionSignature).getSelector();
 
         return {
+            selector,
             async callAsync(callData: Partial<CallData> = {}, defaultBlock?: BlockParam): Promise<void> {
                 BaseContract._assertCallParams(callData, defaultBlock);
                 let rawCallResult;
@@ -1776,8 +1822,10 @@ export class AbiGenDummyContract extends BaseContract {
         const self = (this as any) as AbiGenDummyContract;
         assert.isBigNumber('index_0', index_0);
         const functionSignature = 'simpleInputSimpleOutput(uint256)';
+        const selector = self._lookupAbiEncoder(functionSignature).getSelector();
 
         return {
+            selector,
             async callAsync(callData: Partial<CallData> = {}, defaultBlock?: BlockParam): Promise<BigNumber> {
                 BaseContract._assertCallParams(callData, defaultBlock);
                 let rawCallResult;
@@ -1801,8 +1849,10 @@ export class AbiGenDummyContract extends BaseContract {
     public simplePureFunction(): ContractFunctionObj<BigNumber> {
         const self = (this as any) as AbiGenDummyContract;
         const functionSignature = 'simplePureFunction()';
+        const selector = self._lookupAbiEncoder(functionSignature).getSelector();
 
         return {
+            selector,
             async callAsync(callData: Partial<CallData> = {}, defaultBlock?: BlockParam): Promise<BigNumber> {
                 BaseContract._assertCallParams(callData, defaultBlock);
                 let rawCallResult;
@@ -1827,8 +1877,10 @@ export class AbiGenDummyContract extends BaseContract {
         const self = (this as any) as AbiGenDummyContract;
         assert.isBigNumber('x', x);
         const functionSignature = 'simplePureFunctionWithInput(uint256)';
+        const selector = self._lookupAbiEncoder(functionSignature).getSelector();
 
         return {
+            selector,
             async callAsync(callData: Partial<CallData> = {}, defaultBlock?: BlockParam): Promise<BigNumber> {
                 BaseContract._assertCallParams(callData, defaultBlock);
                 let rawCallResult;
@@ -1852,8 +1904,10 @@ export class AbiGenDummyContract extends BaseContract {
     public simpleRequire(): ContractFunctionObj<void> {
         const self = (this as any) as AbiGenDummyContract;
         const functionSignature = 'simpleRequire()';
+        const selector = self._lookupAbiEncoder(functionSignature).getSelector();
 
         return {
+            selector,
             async callAsync(callData: Partial<CallData> = {}, defaultBlock?: BlockParam): Promise<void> {
                 BaseContract._assertCallParams(callData, defaultBlock);
                 let rawCallResult;
@@ -1877,8 +1931,10 @@ export class AbiGenDummyContract extends BaseContract {
     public simpleRevert(): ContractFunctionObj<void> {
         const self = (this as any) as AbiGenDummyContract;
         const functionSignature = 'simpleRevert()';
+        const selector = self._lookupAbiEncoder(functionSignature).getSelector();
 
         return {
+            selector,
             async callAsync(callData: Partial<CallData> = {}, defaultBlock?: BlockParam): Promise<void> {
                 BaseContract._assertCallParams(callData, defaultBlock);
                 let rawCallResult;
@@ -1908,8 +1964,10 @@ export class AbiGenDummyContract extends BaseContract {
         const self = (this as any) as AbiGenDummyContract;
 
         const functionSignature = 'structInput((bytes,uint32,bytes[],string))';
+        const selector = self._lookupAbiEncoder(functionSignature).getSelector();
 
         return {
+            selector,
             async callAsync(callData: Partial<CallData> = {}, defaultBlock?: BlockParam): Promise<void> {
                 BaseContract._assertCallParams(callData, defaultBlock);
                 let rawCallResult;
@@ -1942,8 +2000,10 @@ export class AbiGenDummyContract extends BaseContract {
     }> {
         const self = (this as any) as AbiGenDummyContract;
         const functionSignature = 'structOutput()';
+        const selector = self._lookupAbiEncoder(functionSignature).getSelector();
 
         return {
+            selector,
             async callAsync(
                 callData: Partial<CallData> = {},
                 defaultBlock?: BlockParam,
@@ -1986,8 +2046,10 @@ export class AbiGenDummyContract extends BaseContract {
         assert.isString('y', y);
         assert.isBigNumber('c', c);
         const functionSignature = 'withAddressInput(address,uint256,uint256,address,uint256)';
+        const selector = self._lookupAbiEncoder(functionSignature).getSelector();
 
         return {
+            selector,
             async callAsync(callData: Partial<CallData> = {}, defaultBlock?: BlockParam): Promise<string> {
                 BaseContract._assertCallParams(callData, defaultBlock);
                 let rawCallResult;
@@ -2012,8 +2074,10 @@ export class AbiGenDummyContract extends BaseContract {
         const self = (this as any) as AbiGenDummyContract;
         assert.isBigNumber('wad', wad);
         const functionSignature = 'withdraw(uint256)';
+        const selector = self._lookupAbiEncoder(functionSignature).getSelector();
 
         return {
+            selector,
             async sendTransactionAsync(
                 txData?: Partial<TxData> | undefined,
                 opts: SendTransactionOpts = { shouldValidate: true },

@@ -264,8 +264,10 @@ export class TestLibDummyContract extends BaseContract {
         const self = (this as any) as TestLibDummyContract;
         assert.isBigNumber('x', x);
         const functionSignature = 'publicAddConstant(uint256)';
+        const selector = self._lookupAbiEncoder(functionSignature).getSelector();
 
         return {
+            selector,
             async callAsync(callData: Partial<CallData> = {}, defaultBlock?: BlockParam): Promise<BigNumber> {
                 BaseContract._assertCallParams(callData, defaultBlock);
                 let rawCallResult;
@@ -290,8 +292,10 @@ export class TestLibDummyContract extends BaseContract {
         const self = (this as any) as TestLibDummyContract;
         assert.isBigNumber('x', x);
         const functionSignature = 'publicAddOne(uint256)';
+        const selector = self._lookupAbiEncoder(functionSignature).getSelector();
 
         return {
+            selector,
             async callAsync(callData: Partial<CallData> = {}, defaultBlock?: BlockParam): Promise<BigNumber> {
                 BaseContract._assertCallParams(callData, defaultBlock);
                 let rawCallResult;

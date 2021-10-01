@@ -296,8 +296,10 @@ export class {{contractName}}Contract extends BaseContract {
             {{#assertionType name type}}{{/assertionType}}
         {{/each}}
         const functionSignature = '{{this.functionSignature}}';
+        const selector = self._lookupAbiEncoder(functionSignature).getSelector();
 
         return {
+            selector,
             {{^this.constant}}
             {{> method_tx}}
             {{/this.constant}}

@@ -48,6 +48,7 @@ export interface AwaitTransactionSuccessOpts extends SendTransactionOpts {
 }
 
 export interface ContractFunctionObj<T> {
+    selector: string;
     callAsync(callData?: Partial<CallData>, defaultBlock?: BlockParam): Promise<T>;
     getABIEncodedTransactionData(): string;
 }
