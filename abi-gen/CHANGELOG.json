@@ -1,5 +1,14 @@
 [
     {
+        "version": "5.7.0",
+        "changes": [
+            {
+                "note": "Add selector to ContractFunctionObj",
+                "pr": 48
+            }
+        ]
+    },
+    {
         "timestamp": 1632416472,
         "version": "5.6.3",
         "changes": [
