@@ -148,7 +148,7 @@ export async function getSolcJSReleasesAsync(isOfflineMode: boolean): Promise<Bi
             }
         }
         // Fetch from the WWW.
-        const versionList = await fetch('https://solc-bin.ethereum.org/bin/list.json');
+        const versionList = await fetch('https://binaries.soliditylang.org/bin/list.json');
         const versionListJSON = await versionList.json();
         solcJSReleasesCache = versionListJSON.releases as BinaryPaths;
         // Cache the result on disk.
