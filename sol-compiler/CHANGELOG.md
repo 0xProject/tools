@@ -5,6 +5,10 @@ Edit the package's CHANGELOG.json file only.
 
 CHANGELOG
 
+## v4.7.7 - _October 27, 2021_
+
+    * update solidity binaries link (#49)
+
 ## v4.7.6 - _September 23, 2021_
 
     * Dependencies updated
