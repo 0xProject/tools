@@ -1,6 +1,6 @@
 {
     "name": "@0x/sol-compiler",
-    "version": "4.7.6",
+    "version": "4.7.7",
     "engines": {
         "node": ">=6.12"
     },
