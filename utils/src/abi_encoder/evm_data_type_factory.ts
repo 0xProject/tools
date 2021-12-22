@@ -88,6 +88,8 @@ export class Method extends MethodDataType {
 export class EvmDataTypeFactory implements DataTypeFactory {
     private static _instance: DataTypeFactory;
 
+    private _registeredStructs: { [structName: string]: DataType } = {};
+
     public static getInstance(): DataTypeFactory {
         if (!EvmDataTypeFactory._instance) {
             EvmDataTypeFactory._instance = new EvmDataTypeFactory();
@@ -113,10 +115,15 @@ export class EvmDataTypeFactory implements DataTypeFactory {
             dataType = new StaticBytes(dataItem);
         } else if (Tuple.matchType(dataItem.type)) {
             dataType = new Tuple(dataItem);
+            if (dataItem.internalType) {
+                this._registeredStructs[dataItem.internalType] = dataType;
+            }
         } else if (DynamicBytes.matchType(dataItem.type)) {
             dataType = new DynamicBytes(dataItem);
         } else if (String.matchType(dataItem.type)) {
             dataType = new String(dataItem);
+        } else if (this._registeredStructs[dataItem.type]) {
+            dataType = this._registeredStructs[dataItem.type];
         }
         // @TODO: DataTypeement Fixed/UFixed types
         if (dataType === undefined) {
