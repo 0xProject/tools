@@ -88,7 +88,7 @@ export class Method extends MethodDataType {
 export class EvmDataTypeFactory implements DataTypeFactory {
     private static _instance: DataTypeFactory;
 
-    private _registeredStructs: { [structName: string]: DataType } = {};
+    private readonly _registeredStructs: { [structName: string]: DataType } = {};
 
     public static getInstance(): DataTypeFactory {
         if (!EvmDataTypeFactory._instance) {

@@ -59,7 +59,8 @@ describe('isOutputFileUpToDate()', () => {
             });
         });
 
-        describe('with an existing output file', () => {
+        // https://github.com/0xProject/0x-monorepo/issues/2000
+        describe.skip('with an existing output file', () => {
             let outputFile: string;
             before(() => {
                 outputFile = tmp.fileSync(
@@ -73,7 +74,6 @@ describe('isOutputFileUpToDate()', () => {
             it('should return true when output file is newer than abi file', async () => {
                 expect(utils.isOutputFileUpToDate(outputFile, [abiFile])).to.be.true();
             });
-
             it('should return false when output file exists but is older than abi file', () => {
                 const outFileModTimeMs = fs.statSync(outputFile).mtimeMs;
                 const abiFileModTimeMs = outFileModTimeMs + 1;
