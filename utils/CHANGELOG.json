@@ -1,5 +1,14 @@
 [
     {
+        "version": "6.5.0",
+        "changes": [
+            {
+                "note": "Add support for nested user-defined types in AbiEncoder.create",
+                "pr": 55
+            }
+        ]
+    },
+    {
         "version": "6.4.4",
         "changes": [
             {
