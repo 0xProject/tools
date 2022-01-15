@@ -261,7 +261,10 @@ describe('ABI Encoder: EVM Data Type Encoding/Decoding', () => {
             const testDataItem = {
                 name: 'Tuple',
                 type: 'tuple',
-                components: [{ name: 'field_1', type: 'int32' }, { name: 'field_2', type: 'bool' }],
+                components: [
+                    { name: 'field_1', type: 'int32' },
+                    { name: 'field_2', type: 'bool' },
+                ],
             };
             const dataType = new AbiEncoder.Tuple(testDataItem);
             // Construct args to be encoded
@@ -285,7 +288,10 @@ describe('ABI Encoder: EVM Data Type Encoding/Decoding', () => {
             const testDataItem = {
                 name: 'Tuple',
                 type: 'tuple',
-                components: [{ name: 'field_1', type: 'string' }, { name: 'field_2', type: 'bytes' }],
+                components: [
+                    { name: 'field_1', type: 'string' },
+                    { name: 'field_2', type: 'bytes' },
+                ],
             };
             const dataType = new AbiEncoder.Tuple(testDataItem);
             // Construct args to be encoded
@@ -443,7 +449,10 @@ describe('ABI Encoder: EVM Data Type Encoding/Decoding', () => {
             const testDataItem = {
                 name: 'Tuple',
                 type: 'tuple',
-                components: [{ name: 'field_1', type: 'int32' }, { name: 'field_2', type: 'bool' }],
+                components: [
+                    { name: 'field_1', type: 'int32' },
+                    { name: 'field_2', type: 'bool' },
+                ],
             };
             const dataType = new AbiEncoder.Tuple(testDataItem);
             // Construct args to be encoded
@@ -458,7 +467,10 @@ describe('ABI Encoder: EVM Data Type Encoding/Decoding', () => {
             const testDataItem = {
                 name: 'Tuple',
                 type: 'tuple',
-                components: [{ name: 'field_1', type: 'int32' }, { name: 'field_2', type: 'bool' }],
+                components: [
+                    { name: 'field_1', type: 'int32' },
+                    { name: 'field_2', type: 'bool' },
+                ],
             };
             const dataType = new AbiEncoder.Tuple(testDataItem);
             // Construct args to be encoded

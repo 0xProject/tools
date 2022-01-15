@@ -202,7 +202,10 @@ describe('ABI Encoder: Optimized Method Encoding/Decoding', () => {
     it('Duplicate Two-Dimensional Arrays', async () => {
         // Generate calldata
         const method = new AbiEncoder.Method(OptimizedAbis.duplicateTwoDimensionalArrays);
-        const twoDimArray1 = [['Hello', 'World'], ['Foo', 'Bar', 'Zaa']];
+        const twoDimArray1 = [
+            ['Hello', 'World'],
+            ['Foo', 'Bar', 'Zaa'],
+        ];
         const twoDimArray2 = twoDimArray1;
         const args = [twoDimArray1, twoDimArray2];
         // Validata calldata

@@ -505,7 +505,9 @@ export class Web3Wrapper {
      * @returns The snapshot id. This can be used to revert to this snapshot
      */
     public async takeSnapshotAsync(): Promise<number> {
-        const snapshotId = Number(await this.sendRawPayloadAsync<string>({ method: 'evm_snapshot', params: [] }));
+        const snapshotId = Number(
+            await this.sendRawPayloadAsync<string>({ method: 'evm_snapshot', params: [] }),
+        );
         return snapshotId;
     }
     /**

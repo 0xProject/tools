@@ -448,9 +448,7 @@ export class DocGenerateUtils {
                     }
                     if (!_.startsWith(innerExportPath, './')) {
                         throw new Error(
-                            `GENERATE_DOCS: WARNING - ${
-                                this._packageName
-                            } is exporting one of ${innerExportItems} from a package which is itself exporting from another\
+                            `GENERATE_DOCS: WARNING - ${this._packageName} is exporting one of ${innerExportItems} from a package which is itself exporting from another\
                             internal package ${innerExportPath}. To fix this, export the dependency directly from ${innerExportPath}\
                             instead of the intermediate package.`,
                         );

@@ -215,9 +215,7 @@ describe('PrivateKeyWalletSubprovider', () => {
                 const callback = reportCallbackErrors(done)((err: Error, _response: JSONRPCResponsePayload) => {
                     expect(err).to.not.be.a('null');
                     expect(err.message).to.be.equal(
-                        `Requested to sign message with address: ${
-                            fixtureData.TEST_RPC_ACCOUNT_1
-                        }, instantiated with address: ${fixtureData.TEST_RPC_ACCOUNT_0}`,
+                        `Requested to sign message with address: ${fixtureData.TEST_RPC_ACCOUNT_1}, instantiated with address: ${fixtureData.TEST_RPC_ACCOUNT_0}`,
                     );
                     done();
                 });

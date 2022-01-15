@@ -160,7 +160,10 @@ describe('Assertions', () => {
             );
         });
         it('should throw for invalid input', () => {
-            const invalidInputs = [['hello', 'goodbye'], ['goodbye', 42, false, false]];
+            const invalidInputs = [
+                ['hello', 'goodbye'],
+                ['goodbye', 42, false, false],
+            ];
             invalidInputs.forEach(input =>
                 expect(assert.hasAtMostOneUniqueValue.bind(assert, input as any, errorMsg)).to.throw(),
             );

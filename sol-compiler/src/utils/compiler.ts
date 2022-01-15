@@ -138,9 +138,9 @@ export async function getSolcJSReleasesAsync(isOfflineMode: boolean): Promise<Bi
                 await fsWrapper.removeFileAsync(constants.SOLCJS_RELEASES_PATH);
             } else {
                 // Use the cached file otherwise.
-                return (solcJSReleasesCache = JSON.parse(((await fsWrapper.readFileAsync(
-                    constants.SOLCJS_RELEASES_PATH,
-                )) as any) as string));
+                return (solcJSReleasesCache = JSON.parse(
+                    ((await fsWrapper.readFileAsync(constants.SOLCJS_RELEASES_PATH)) as any) as string,
+                ));
             }
         } catch (err) {
             if (err.code !== 'ENOENT') {

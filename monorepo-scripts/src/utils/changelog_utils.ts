@@ -52,9 +52,7 @@ export const changelogUtils = {
         const lastEntry = changelog[0];
         if (semver.lt(lastEntry.version, currentVersion)) {
             throw new Error(
-                `Found CHANGELOG version lower then current package version. ${packageName} current: ${currentVersion}, Changelog: ${
-                    lastEntry.version
-                }`,
+                `Found CHANGELOG version lower then current package version. ${packageName} current: ${currentVersion}, Changelog: ${lastEntry.version}`,
             );
         }
         const isLastEntryCurrentVersion = lastEntry.version === currentVersion;

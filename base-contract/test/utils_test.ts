@@ -78,7 +78,10 @@ describe('Utils tests', () => {
             };
             const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
             const val = [
-                [{ to: ZERO_ADDRESS, amount: new BigNumber(1) }, { to: ZERO_ADDRESS, amount: new BigNumber(2) }],
+                [
+                    { to: ZERO_ADDRESS, amount: new BigNumber(1) },
+                    { to: ZERO_ADDRESS, amount: new BigNumber(2) },
+                ],
             ];
             const formatted = formatABIDataItem(abi, val, (type: string, value: any) => {
                 calls.push({ type, value });
