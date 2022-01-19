@@ -75,9 +75,7 @@ async function checkCurrentVersionMatchesLatestPublishedNPMPackageAsync(
         utils.log(`Found version mismatches between package.json and NPM published versions (might be unpublished).`);
         _.each(versionMismatches, versionMismatch => {
             utils.log(
-                `${versionMismatch.packageName}: ${versionMismatch.packageJsonVersion} package.json, ${
-                    versionMismatch.npmVersion
-                } on NPM`,
+                `${versionMismatch.packageName}: ${versionMismatch.packageJsonVersion} package.json, ${versionMismatch.npmVersion} on NPM`,
             );
         });
         throw new Error(`Please fix the above package.json/NPM inconsistencies.`);
@@ -114,9 +112,7 @@ async function checkChangelogFormatAsync(updatedPublicPackages: Package[]): Prom
         utils.log(`CHANGELOG versions cannot below package.json versions:`);
         _.each(changeLogInconsistencies, inconsistency => {
             utils.log(
-                `${inconsistency.packageName}: ${inconsistency.packageJsonVersion} package.json, ${
-                    inconsistency.changelogVersion
-                } CHANGELOG.json`,
+                `${inconsistency.packageName}: ${inconsistency.packageJsonVersion} package.json, ${inconsistency.changelogVersion} CHANGELOG.json`,
             );
         });
         throw new Error('Fix the above inconsistencies to continue.');

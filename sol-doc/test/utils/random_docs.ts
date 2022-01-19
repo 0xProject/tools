@@ -76,7 +76,10 @@ export function randomFunctionKind(): FunctionKind {
 
 export function randomParameters(): ParamDocsMap {
     const numParams = _.random(0, 7);
-    return _.zipObject(_.times(numParams, () => randomWord()), _.times(numParams, idx => randomParameter(idx)));
+    return _.zipObject(
+        _.times(numParams, () => randomWord()),
+        _.times(numParams, idx => randomParameter(idx)),
+    );
 }
 
 export function randomParameter(order: number, fields?: Partial<ParamDocs>): ParamDocs {

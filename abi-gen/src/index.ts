@@ -93,12 +93,9 @@ function registerTypeScriptHelpers(): void {
     });
 
     // Check if 0 or false exists
-    Handlebars.registerHelper(
-        'isDefined',
-        (context: any): boolean => {
-            return context !== undefined;
-        },
-    );
+    Handlebars.registerHelper('isDefined', (context: any): boolean => {
+        return context !== undefined;
+    });
 
     // Format docstring for method description
     Handlebars.registerHelper(

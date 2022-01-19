@@ -13,7 +13,7 @@ export class ArrayDataType extends AbstractSetDataType {
         return ArrayDataType._MATCHER.test(type);
     }
 
-    private static _decodeElementTypeAndLengthFromType(type: string): [string, undefined | number] {
+    public static decodeElementTypeAndLengthFromType(type: string): [string, undefined | number] {
         const matches = ArrayDataType._MATCHER.exec(type);
         if (matches === null || matches.length !== 3) {
             throw new Error(`Could not parse array: ${type}`);
@@ -30,7 +30,7 @@ export class ArrayDataType extends AbstractSetDataType {
     public constructor(dataItem: DataItem, dataTypeFactory: DataTypeFactory) {
         // Construct parent
         const isArray = true;
-        const [arrayElementType, arrayLength] = ArrayDataType._decodeElementTypeAndLengthFromType(dataItem.type);
+        const [arrayElementType, arrayLength] = ArrayDataType.decodeElementTypeAndLengthFromType(dataItem.type);
         super(dataItem, dataTypeFactory, isArray, arrayLength, arrayElementType);
         // Set array properties
         this._elementType = arrayElementType;

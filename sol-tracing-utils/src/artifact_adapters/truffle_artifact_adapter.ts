@@ -99,9 +99,7 @@ export class TruffleArtifactAdapter extends AbstractArtifactAdapter {
             const compilerVersion = artifact.compiler.version;
             if (!compilerVersion.startsWith(this._solcVersion)) {
                 throw new Error(
-                    `${artifact.contractName} was compiled with solidity ${compilerVersion} but specified version is ${
-                        this._solcVersion
-                    } making it impossible to process traces`,
+                    `${artifact.contractName} was compiled with solidity ${compilerVersion} but specified version is ${this._solcVersion} making it impossible to process traces`,
                 );
             }
         }

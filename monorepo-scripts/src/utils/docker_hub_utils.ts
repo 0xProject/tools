@@ -22,9 +22,7 @@ export const dockerHubUtils = {
         });
         if (response.status !== HTTP_OK_STATUS) {
             throw new Error(
-                `DockerHub user login failed (status code: ${
-                    response.status
-                }). Make sure you have environment variables 'DOCKER_USERNAME; and 'DOCKER_PASS' set`,
+                `DockerHub user login failed (status code: ${response.status}). Make sure you have environment variables 'DOCKER_USERNAME; and 'DOCKER_PASS' set`,
             );
         }
         const respPayload = await response.json();
@@ -44,9 +42,7 @@ export const dockerHubUtils = {
         const respPayload = await response.json();
         if (response.status !== HTTP_OK_STATUS || respPayload.count === 0) {
             throw new Error(
-                `Failed to fetch org: ${organization}'s list of repos (status code: ${
-                    response.status
-                }). Make sure your account has been added to the '${organization}' org on DockerHub`,
+                `Failed to fetch org: ${organization}'s list of repos (status code: ${response.status}). Make sure your account has been added to the '${organization}' org on DockerHub`,
             );
         }
     },
@@ -56,9 +52,7 @@ export const dockerHubUtils = {
             await execAsync(`echo "$DOCKER_PASS" | docker login -u $DOCKER_USERNAME --password-stdin`);
         } catch (err) {
             throw new Error(
-                `Failed to log you into the 'docker' commandline tool. Make sure you have the 'docker' commandline tool installed. Full error: ${
-                    err.message
-                }`,
+                `Failed to log you into the 'docker' commandline tool. Make sure you have the 'docker' commandline tool installed. Full error: ${err.message}`,
             );
         }
     },

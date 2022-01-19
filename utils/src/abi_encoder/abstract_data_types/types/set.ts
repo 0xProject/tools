@@ -187,9 +187,7 @@ export abstract class AbstractSetDataType extends DataType {
         // Sanity check
         if (dataItem.components === undefined) {
             throw new Error(
-                `Tried to create a set using key/value pairs, but no components were defined by the input DataItem '${
-                    dataItem.name
-                }'.`,
+                `Tried to create a set using key/value pairs, but no components were defined by the input DataItem '${dataItem.name}'.`,
             );
         }
         // Create one member for each component of `dataItem`

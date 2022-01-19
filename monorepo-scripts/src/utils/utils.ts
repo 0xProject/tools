@@ -24,7 +24,12 @@ export const utils = {
     },
     getTopologicallySortedPackages(rootDir: string): Package[] {
         const packages = utils.getPackages(rootDir);
-        const batchedPackages: PackageJSON[] = _.flatten(batchPackages(_.map(packages, pkg => pkg.packageJson), false));
+        const batchedPackages: PackageJSON[] = _.flatten(
+            batchPackages(
+                _.map(packages, pkg => pkg.packageJson),
+                false,
+            ),
+        );
         const topsortedPackages: Package[] = _.map(
             batchedPackages,
             (pkg: PackageJSON) => _.find(packages, pkg1 => pkg1.packageJson.name === pkg.name) as Package,

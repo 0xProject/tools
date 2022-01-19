@@ -137,8 +137,33 @@ export class EvmDataTypeFactory implements DataTypeFactory {
  * @param input A single or set of DataItem or a signature for an EVM data type.
  * @return DataType corresponding to input.
  */
-export function create(input: DataItem | DataItem[] | string): DataType {
-    const dataItem = consolidateDataItemsIntoSingle(input);
+export function create(input: DataItem | DataItem[] | string, nestedDataItems?: DataItem[]): DataType {
+    let dataItem = consolidateDataItemsIntoSingle(input);
+
+    if (nestedDataItems) {
+        const nestedTypes = _.keyBy(nestedDataItems, 'internalType');
+
+        const replaceTypes = (_dataItem: DataItem) => {
+            const aliasedType = _dataItem.type;
+            if (Array.matchType(aliasedType)) {
+                const [elementType, arrayLength] = Array.decodeElementTypeAndLengthFromType(aliasedType);
+                if (elementType in nestedTypes) {
+                    _dataItem.type = `${nestedTypes[elementType].type}[${arrayLength ?? ''}]`;
+                    _dataItem.components = nestedTypes[elementType].components;
+                }
+            } else if (aliasedType in nestedTypes) {
+                _dataItem.type = nestedTypes[aliasedType].type;
+                _dataItem.components = nestedTypes[aliasedType].components;
+            }
+            if (_dataItem.components) {
+                _dataItem.components.map(replaceTypes);
+            }
+        };
+
+        dataItem = _.cloneDeep(dataItem);
+        replaceTypes(dataItem);
+    }
+
     const dataType = EvmDataTypeFactory.getInstance().create(dataItem);
     return dataType;
 }

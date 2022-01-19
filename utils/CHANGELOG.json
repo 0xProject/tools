@@ -1,5 +1,18 @@
 [
     {
+        "version": "6.5.0",
+        "changes": [
+            {
+                "note": "Add support for nested user-defined types in AbiEncoder.create",
+                "pr": 55
+            },
+            {
+                "note": "Fix providerUtils.standardizeOrThrow for web3.js",
+                "pr": 57
+            }
+        ]
+    },
+    {
         "version": "6.4.4",
         "changes": [
             {

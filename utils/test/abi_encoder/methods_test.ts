@@ -103,7 +103,16 @@ describe('ABI Encoder: Method Encoding / Decoding', () => {
         const methodArgs = [];
         const methodArgsLength = 8;
         for (let i = 0; i < methodArgsLength; ++i) {
-            methodArgs.push([[[++value, ++value], [++value, ++value]], [[++value, ++value], [++value, ++value]]]);
+            methodArgs.push([
+                [
+                    [++value, ++value],
+                    [++value, ++value],
+                ],
+                [
+                    [++value, ++value],
+                    [++value, ++value],
+                ],
+            ]);
         }
         // Validate calldata
         const expectedEncoding =

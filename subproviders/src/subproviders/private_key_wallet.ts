@@ -57,9 +57,7 @@ export class PrivateKeyWalletSubprovider extends BaseWalletSubprovider {
         PrivateKeyWalletSubprovider._validateTxParams(txParams);
         if (txParams.from !== undefined && txParams.from.toLowerCase() !== this._address.toLowerCase()) {
             throw new Error(
-                `Requested to sign transaction with address: ${txParams.from}, instantiated with address: ${
-                    this._address
-                }`,
+                `Requested to sign transaction with address: ${txParams.from}, instantiated with address: ${this._address}`,
             );
         }
         const tx = createTransactionObject(this._common, txParams).sign(this._privateKeyBuffer);

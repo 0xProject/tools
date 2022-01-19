@@ -54,9 +54,7 @@ export function linkLibrariesInBytecode(
             const libraryAddress = libraryAddresses[libraryName];
             if (!libraryAddress) {
                 throw new Error(
-                    `${
-                        artifact.contractName
-                    } has an unlinked reference library ${libraryName} but no addresses was provided'.`,
+                    `${artifact.contractName} has an unlinked reference library ${libraryName} but no addresses was provided'.`,
                 );
             }
             for (const ref of libraryRefs) {
