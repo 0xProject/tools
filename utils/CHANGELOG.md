@@ -5,6 +5,11 @@ Edit the package's CHANGELOG.json file only.
 
 CHANGELOG
 
+## v6.5.0 - _January 19, 2022_
+
+    * Add support for nested user-defined types in AbiEncoder.create (#55)
+    * Fix providerUtils.standardizeOrThrow for web3.js (#57)
+
 ## v6.4.4 - _August 25, 2021_
 
     * Allow hexUtils.hash() to take Buffer type; isHex() accepts '0x' as valid hex (#42)

@@ -5,6 +5,10 @@ Edit the package's CHANGELOG.json file only.
 
 CHANGELOG
 
+## v6.4.1 - _January 19, 2022_
+
+    * Dependencies updated
+
 ## v6.4.0 - _September 22, 2021_
 
     * Add v4 OtcOrder Schema (#47)

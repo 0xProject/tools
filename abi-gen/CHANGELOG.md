@@ -5,6 +5,10 @@ Edit the package's CHANGELOG.json file only.
 
 CHANGELOG
 
+## v5.7.1 - _January 19, 2022_
+
+    * Dependencies updated
+
 ## v5.7.0 - _October 27, 2021_
 
     * Add selector to ContractFunctionObj (#48)

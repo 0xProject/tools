@@ -5,6 +5,10 @@ Edit the package's CHANGELOG.json file only.
 
 CHANGELOG
 
+## v3.2.1 - _January 19, 2022_
+
+    * Dependencies updated
+
 ## v3.2.0 - _August 25, 2021_
 
     * Update tsconfig for test installation (#45)

@@ -10,7 +10,8 @@
                 "note": "Fix providerUtils.standardizeOrThrow for web3.js",
                 "pr": 57
             }
-        ]
+        ],
+        "timestamp": 1642570387
     },
     {
         "version": "6.4.4",
