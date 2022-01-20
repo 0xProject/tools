@@ -1,5 +1,14 @@
 [
     {
+        "version": "5.7.2",
+        "changes": [
+            {
+                "note": "Inline selector lookup in abi-gen template",
+                "pr": 58
+            }
+        ]
+    },
+    {
         "timestamp": 1642570387,
         "version": "5.7.1",
         "changes": [
