@@ -5,6 +5,10 @@ Edit the package's CHANGELOG.json file only.
 
 CHANGELOG
 
+## v5.7.2 - _January 20, 2022_
+
+    * Inline selector lookup in abi-gen template (#58)
+
 ## v5.7.1 - _January 19, 2022_
 
     * Dependencies updated
