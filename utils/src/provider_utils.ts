@@ -72,30 +72,8 @@ export const providerUtils = {
             return provider;
             // Case 4: The provider does not have a `sendAsync` method but does have a `send` method
         } else if ((supportedProvider as any).send !== undefined) {
-            // HACK(fabio): Detect if the `send` method has the old interface `send(payload, cb)` such
-            // as in versions < Web3.js@1.0.0-beta.37. If so, do a simple re-mapping
-            if (
-                _.includes((supportedProvider as any).send.toString().replaceAll(' ', ''), 'function(payload,callback)')
-            ) {
-                provider.sendAsync = (supportedProvider as any).send.bind(supportedProvider);
-                return provider;
-            } else {
-                // If doesn't have old interface, we assume it has new interface `send(method, payload)`
-                // such as in versions > Web3.js@1.0.0-beta.38 and convert it to `sendAsync`
-                provider.sendAsync = (payload: JSONRPCRequestPayload, callback: JSONRPCErrorCallback) => {
-                    const method = payload.method;
-                    const params = payload.params;
-                    (supportedProvider as any)
-                        .send(method, params)
-                        .then((result: any) => {
-                            callback(null, result);
-                        })
-                        .catch((err: Error) => {
-                            callback(err);
-                        });
-                };
-                return provider;
-            }
+            provider.sendAsync = (supportedProvider as any).send.bind(supportedProvider);
+            return provider;
         }
         throw new Error(
             `Unsupported provider found. Please make sure it conforms to one of the supported providers. See 'Provider' type in 'ethereum-types' package.`,
