@@ -5,6 +5,10 @@ Edit the package's CHANGELOG.json file only.
 
 CHANGELOG
 
+## v6.5.1 - _February 26, 2022_
+
+    * Dependencies updated
+
 ## v6.5.0 - _January 19, 2022_
 
     * Add support for nested user-defined types in AbiEncoder.create (#55)
