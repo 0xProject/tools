@@ -50,7 +50,7 @@
         "@types/mocha": "^5.2.7",
         "@types/node": "12.12.54",
         "abortcontroller-polyfill": "^1.1.9",
-        "bignumber.js": "~9.0.0",
+        "bignumber.js": "~9.0.2",
         "chalk": "^2.3.0",
         "detect-node": "2.0.3",
         "ethereum-types": "^3.6.0",

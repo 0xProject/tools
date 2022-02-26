@@ -31,7 +31,7 @@
     },
     "dependencies": {
         "@types/node": "12.12.54",
-        "bignumber.js": "~9.0.0",
+        "bignumber.js": "~9.0.2",
         "ethereum-types": "^3.6.0"
     },
     "publishConfig": {
