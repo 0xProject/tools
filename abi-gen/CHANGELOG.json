@@ -1,5 +1,14 @@
 [
     {
+        "version": "5.8.0",
+        "changes": [
+            {
+                "note": "Handle potentially missing linkReferences in 0.8",
+                "pr": 62
+            }
+        ]
+    },
+    {
         "timestamp": 1647412162,
         "version": "5.7.4",
         "changes": [
