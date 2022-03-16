@@ -1,5 +1,14 @@
 [
     {
+        "version": "4.8.0",
+        "changes": [
+            {
+                "note": "Fix 0.8 support",
+                "pr": 61
+            }
+        ]
+    },
+    {
         "timestamp": 1645908702,
         "version": "4.7.9",
         "changes": [

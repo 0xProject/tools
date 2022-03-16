@@ -19,7 +19,6 @@ export class SolcWrapperV06 extends SolcWrapperV05 {
         }
         // Shim the old `compileStandardWrapper` function.
         const solcInstance = (await getSolcJSAsync(this.solidityVersion, !!this._opts.isOfflineMode)) as SolcV06;
-        solcInstance.compileStandardWrapper = solcInstance.compile;
         return compileSolcJSAsync(solcInstance, input);
     }
 

@@ -1,5 +1,14 @@
 [
     {
+        "version": "7.3.0",
+        "changes": [
+            {
+                "note": "Update deps",
+                "pr": 61
+            }
+        ]
+    },
+    {
         "timestamp": 1645908702,
         "version": "7.2.9",
         "changes": [
