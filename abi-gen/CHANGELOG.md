@@ -5,6 +5,10 @@ Edit the package's CHANGELOG.json file only.
 
 CHANGELOG
 
+## v5.8.0 - _March 16, 2022_
+
+    * Handle potentially missing linkReferences in 0.8 (#62)
+
 ## v5.7.4 - _March 16, 2022_
 
     * Dependencies updated

@@ -5,6 +5,10 @@ Edit the package's CHANGELOG.json file only.
 
 CHANGELOG
 
+## v5.3.1 - _March 16, 2022_
+
+    * Dependencies updated
+
 ## v5.3.0 - _March 16, 2022_
 
     * Update typings for solc 0.8 (#61)

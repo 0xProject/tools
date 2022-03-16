@@ -6,7 +6,8 @@
                 "note": "Make compiler artifact `linkReferences` optional",
                 "pr": 62
             }
-        ]
+        ],
+        "timestamp": 1647415391
     },
     {
         "timestamp": 1645908702,
