@@ -1,6 +1,6 @@
 {
     "name": "@0x/sol-profiler",
-    "version": "4.1.33",
+    "version": "4.1.34",
     "engines": {
         "node": ">=6.12"
     },
@@ -33,10 +33,10 @@
     },
     "homepage": "https://github.com/0xProject/tools/tree/main/sol-profiler",
     "dependencies": {
-        "@0x/sol-tracing-utils": "^7.2.9",
-        "@0x/subproviders": "^6.6.3",
-        "@0x/typescript-typings": "^5.2.2",
-        "@0x/utils": "^6.5.1",
+        "@0x/sol-tracing-utils": "^7.3.0",
+        "@0x/subproviders": "^6.6.4",
+        "@0x/typescript-typings": "^5.3.0",
+        "@0x/utils": "^6.5.2",
         "@types/node": "12.12.54",
         "ethereum-types": "^3.6.1",
         "ethereumjs-util": "^7.1.0",
