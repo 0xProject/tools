@@ -101,10 +101,12 @@ declare module 'solc' {
     export interface SolcInstance {
         compile(
             sources: InputSources,
-            optimizerEnabled: number,
-            findImports: (importPath: string) => ImportContents,
+            findImports?: (importPath: string) => ImportContents,
         ): CompilationResult;
-        compileStandardWrapper(input: string, findImports?: (importPath: string) => ImportContents): string;
+        compile(
+            sources: string,
+            findImports?: (importPath: string) => ImportContents,
+        ): string;
         version(): string;
     }
     export function loadRemoteVersion(
