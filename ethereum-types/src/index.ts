@@ -643,7 +643,7 @@ export interface EvmOutput {
 }
 
 export interface EvmBytecodeOutput {
-    linkReferences: EvmBytecodeOutputLinkReferences;
+    linkReferences?: EvmBytecodeOutputLinkReferences;
     object: string;
     sourceMap: string;
 }

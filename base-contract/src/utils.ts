@@ -49,7 +49,7 @@ export function linkLibrariesInBytecode(
 ): string {
     const bytecodeArtifact = artifact.compilerOutput.evm.bytecode;
     let bytecode = bytecodeArtifact.object.substr(2);
-    for (const link of Object.values(bytecodeArtifact.linkReferences)) {
+    for (const link of Object.values(bytecodeArtifact.linkReferences || {})) {
         for (const [libraryName, libraryRefs] of Object.entries(link)) {
             const libraryAddress = libraryAddresses[libraryName];
             if (!libraryAddress) {
