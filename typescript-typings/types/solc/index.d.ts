@@ -99,14 +99,8 @@ declare module 'solc' {
         settings: CompilerSettings;
     }
     export interface SolcInstance {
-        compile(
-            sources: InputSources,
-            findImports?: (importPath: string) => ImportContents,
-        ): CompilationResult;
-        compile(
-            sources: string,
-            findImports?: (importPath: string) => ImportContents,
-        ): string;
+        compile(sources: InputSources, findImports?: (importPath: string) => ImportContents): CompilationResult;
+        compile(sources: string, findImports?: (importPath: string) => ImportContents): string;
         version(): string;
     }
     export function loadRemoteVersion(
