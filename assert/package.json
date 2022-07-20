@@ -49,7 +49,7 @@
         "@0x/typescript-typings": "^5.3.1",
         "@0x/utils": "^6.5.3",
         "@types/node": "12.12.54",
-        "lodash": "^4.17.11",
+        "lodash": "^4.17.21",
         "valid-url": "^1.0.9"
     },
     "publishConfig": {

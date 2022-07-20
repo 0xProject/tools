@@ -58,7 +58,7 @@
         "ethers": "~4.0.4",
         "isomorphic-fetch": "2.2.1",
         "js-sha3": "^0.7.0",
-        "lodash": "^4.17.11"
+        "lodash": "^4.17.21"
     },
     "publishConfig": {
         "access": "public"

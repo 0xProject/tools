@@ -39,7 +39,7 @@
         "@types/minimatch": "^3.0.3",
         "@types/node": "12.12.54",
         "ethereum-types": "^3.7.0",
-        "lodash": "^4.17.11",
+        "lodash": "^4.17.21",
         "minimatch": "^3.0.4",
         "web3-provider-engine": "16.0.4"
     },

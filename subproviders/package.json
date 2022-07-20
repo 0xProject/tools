@@ -59,7 +59,7 @@
         "ganache": "^7.3.2",
         "hdkey": "^0.7.1",
         "json-rpc-error": "2.0.0",
-        "lodash": "^4.17.11",
+        "lodash": "^4.17.21",
         "semaphore-async-await": "^1.5.1",
         "web3-provider-engine": "16.0.4"
     },

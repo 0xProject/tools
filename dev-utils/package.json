@@ -58,7 +58,7 @@
         "chai-bignumber": "^3.0.0",
         "dirty-chai": "^2.0.1",
         "ethereum-types": "^3.7.0",
-        "lodash": "^4.17.11",
+        "lodash": "^4.17.21",
         "web3-provider-engine": "16.0.4"
     },
     "publishConfig": {

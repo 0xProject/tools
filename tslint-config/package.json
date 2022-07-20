@@ -41,7 +41,7 @@
     },
     "dependencies": {
         "@types/node": "12.12.54",
-        "lodash": "^4.17.11",
+        "lodash": "^4.17.21",
         "tslint": "5.11.0",
         "tslint-eslint-rules": "5.4.0",
         "tslint-react": "^3.2.0",

@@ -34,7 +34,7 @@
         "@0x/utils": "^6.5.3",
         "@types/node": "12.12.54",
         "ethereum-types": "^3.7.0",
-        "lodash": "^4.17.11",
+        "lodash": "^4.17.21",
         "mkdirp": "^0.5.1",
         "prettier": "^1.16.3",
         "to-snake-case": "^1.0.0"
