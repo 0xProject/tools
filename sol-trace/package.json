@@ -42,7 +42,7 @@
         "ethereumjs-util": "^7.1.0",
         "lodash": "^4.17.11",
         "loglevel": "^1.6.1",
-        "web3-provider-engine": "14.0.6"
+        "web3-provider-engine": "16.0.4"
     },
     "devDependencies": {
         "@0x/ts-doc-gen": "^0.0.28",

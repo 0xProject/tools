@@ -142,6 +142,7 @@ describe('AbiGenDummy Contract', () => {
             const v = signature.slice(130, 132);
             const v_decimal = parseInt(v, 16) + 27; // v: (0 or 1) => (27 or 28)
             // tslint:enable:custom-no-magic-numbers
+            console.log({ message, v_decimal, r, s });
 
             const result = await abiGenDummy.ecrecoverFn(message, v_decimal, r, s).callAsync();
             expect(result).to.equal(signerAddress);
