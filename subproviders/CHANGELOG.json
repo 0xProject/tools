@@ -1,5 +1,14 @@
 [
     {
+        "version": "7.0.0",
+        "changes": [
+            {
+                "note": "Update Ganache to 7.x",
+                "pr": 64
+            }
+        ]
+    },
+    {
         "timestamp": 1647415391,
         "version": "6.6.5",
         "changes": [
