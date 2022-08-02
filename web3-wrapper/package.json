@@ -64,7 +64,7 @@
         "@0x/utils": "^6.5.3",
         "@types/node": "12.12.54",
         "ethereum-types": "^3.7.0",
-        "ethereumjs-util": "^7.1.0",
+        "ethereumjs-util": "^7.1.5",
         "ethers": "~4.0.4",
         "lodash": "^4.17.21"
     },
