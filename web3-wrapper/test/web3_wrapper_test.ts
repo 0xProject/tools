@@ -1,8 +1,8 @@
 import { BigNumber } from '@0x/utils';
 import * as chai from 'chai';
 import { BlockParamLiteral, JSONRPCErrorCallback, JSONRPCRequestPayload, TransactionReceipt } from 'ethereum-types';
-import * as _ from 'lodash';
 import { provider } from 'ganache';
+import * as _ from 'lodash';
 import 'mocha';
 
 import { Web3Wrapper } from '../src/web3_wrapper';
