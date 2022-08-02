@@ -1,5 +1,5 @@
 import Eth from '@ledgerhq/hw-app-eth';
-import TransportU2F from '@ledgerhq/hw-transport-u2f';
+import TransportWebUSB from '@ledgerhq/hw-transport-webusb';
 export import Web3ProviderEngine = require('web3-provider-engine');
 
 import { LedgerEthereumClient } from './types';
@@ -9,7 +9,7 @@ import { LedgerEthereumClient } from './types';
  * @return LedgerEthereumClient A browser client for the LedgerSubprovider
  */
 export async function ledgerEthereumBrowserClientFactoryAsync(): Promise<LedgerEthereumClient> {
-    const ledgerConnection = await TransportU2F.create();
+    const ledgerConnection = await TransportWebUSB.create();
     const ledgerEthClient = new Eth(ledgerConnection);
     return ledgerEthClient;
 }

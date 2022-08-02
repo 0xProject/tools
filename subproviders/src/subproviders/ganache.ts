@@ -1,4 +1,3 @@
-import { Hardfork } from '@ethereumjs/common/dist/types';
 import { JSONRPCRequestPayload } from 'ethereum-types';
 import { EthereumProvider, provider, ProviderOptions } from 'ganache';
 
@@ -61,7 +60,7 @@ export class GanacheSubprovider extends Subprovider {
         // typing seems confused (or I'm confused)
         // An undefined value is not possible, the key is required to be missing
         if (!opts.fork) {
-            delete migratedOpts['fork'];
+            delete migratedOpts.fork;
         }
         this._ganacheProvider = provider(migratedOpts) as EthereumProvider;
     }
