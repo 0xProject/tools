@@ -88,7 +88,7 @@
         "webpack": "^4.20.2"
     },
     "optionalDependencies": {
-        "@ledgerhq/hw-transport-node-hid": "^4.3.0"
+        "@ledgerhq/hw-transport-node-hid": "^4.74.2"
     },
     "publishConfig": {
         "access": "public"
