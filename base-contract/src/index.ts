@@ -25,15 +25,15 @@ import {
     TxData,
     TxDataPayable,
 } from 'ethereum-types';
-import Account from 'ethereumjs-account';
 import * as util from 'ethereumjs-util';
-import { default as VM } from 'ethereumjs-vm';
-import PStateManager from 'ethereumjs-vm/dist/state/promisified';
+import VM from '@ethereumjs/vm';
 
 export { linkLibrariesInBytecode, methodAbiToFunctionSignature } from './utils';
 
 import { AwaitTransactionSuccessOpts } from './types';
 import { formatABIDataItem } from './utils';
+import { RunCallOpts } from '@ethereumjs/vm/dist/runCall';
+import Common, { Chain, Hardfork } from '@ethereumjs/common';
 
 export { SubscriptionManager } from './subscription_manager';
 
@@ -77,7 +77,7 @@ export class PromiseWithTransactionHash<T> implements Promise<T> {
     public catch<TResult>(onRejected?: (reason: any) => Promise<TResult>): Promise<TResult | T> {
         return this._promise.catch(onRejected);
     }
-    public finally(onFinally?: (() => void) | null): Promise<T> {
+    public finally(onFinally?: () => void | null): Promise<T> {
         return this._promise.finally(onFinally);
     }
     // tslint:enable:promise-function-async
@@ -102,7 +102,7 @@ export class BaseContract {
     public constructorArgs: any[] = [];
     public _deployedBytecodeIfExists?: Buffer;
     private _evmIfExists?: VM;
-    private _evmAccountIfExists?: Buffer;
+    private _evmAccountIfExists?: util.Address;
 
     protected static _formatABIDataItemList(
         abis: DataItem[],
@@ -190,7 +190,9 @@ export class BaseContract {
             const decoded = rawDecoded[i];
             if (!abiUtils.isAbiDataEqual(params.names[i], params.types[i], original, decoded)) {
                 throw new Error(
-                    `Cannot safely encode argument: ${params.names[i]} (${original}) of type ${params.types[i]}. (Possible type overflow or other encoding error)`,
+                    `Cannot safely encode argument: ${params.names[i]} (${original}) of type ${
+                        params.types[i]
+                    }. (Possible type overflow or other encoding error)`,
                 );
             }
         }
@@ -260,24 +262,23 @@ export class BaseContract {
     }
     protected async _evmExecAsync(encodedData: string): Promise<string> {
         const encodedDataBytes = Buffer.from(encodedData.substr(2), 'hex');
-        const addressBuf = Buffer.from(this.address.substr(2), 'hex');
+        const toAddress = new util.Address(Buffer.from(this.address.substr(2), 'hex'));
         // should only run once, the first time it is called
         if (this._evmIfExists === undefined) {
-            const vm = new VM({});
-            const psm = new PStateManager(vm.stateManager);
+            const vm = new VM();
 
             // create an account with 1 ETH
             const accountPk = Buffer.from(ARBITRARY_PRIVATE_KEY, 'hex');
-            const accountAddress = util.privateToAddress(accountPk);
-            const account = new Account({ balance: 1e18 });
-            await psm.putAccount(accountAddress, account);
+            const accountAddress = new util.Address(util.privateToAddress(accountPk));
+            const account = util.Account.fromAccountData({ balance: '0xde0b6b3a7640000' });
+            await vm.stateManager.putAccount(accountAddress, account);
 
             // 'deploy' the contract
             if (this._deployedBytecodeIfExists === undefined) {
                 const contractCode = await this._web3Wrapper.getContractCodeAsync(this.address);
                 this._deployedBytecodeIfExists = Buffer.from(contractCode.substr(2), 'hex');
             }
-            await psm.putContractCode(addressBuf, this._deployedBytecodeIfExists);
+            await vm.stateManager.putContractCode(toAddress, this._deployedBytecodeIfExists);
 
             // save for later
             this._evmIfExists = vm;
@@ -285,12 +286,13 @@ export class BaseContract {
         }
         let rawCallResult;
         try {
-            const result = await this._evmIfExists.runCall({
-                to: addressBuf,
+            const callOpts: RunCallOpts = {
+                to: toAddress,
                 caller: this._evmAccountIfExists,
                 origin: this._evmAccountIfExists,
                 data: encodedDataBytes,
-            });
+            };
+            const result = await this._evmIfExists.runCall(callOpts);
             rawCallResult = `0x${result.execResult.returnValue.toString('hex')}`;
         } catch (err) {
             BaseContract._throwIfThrownErrorIsRevertError(err);

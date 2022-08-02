@@ -34,7 +34,7 @@
         "@0x/types": "^3.3.6",
         "@0x/typescript-typings": "^5.3.1",
         "@types/node": "12.12.54",
-        "lodash": "^4.17.11"
+        "lodash": "^4.17.21"
     },
     "publishConfig": {
         "access": "public"

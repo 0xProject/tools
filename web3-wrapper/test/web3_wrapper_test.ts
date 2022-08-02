@@ -1,8 +1,8 @@
 import { BigNumber } from '@0x/utils';
 import * as chai from 'chai';
 import { BlockParamLiteral, JSONRPCErrorCallback, JSONRPCRequestPayload, TransactionReceipt } from 'ethereum-types';
-import * as Ganache from 'ganache-core';
 import * as _ from 'lodash';
+import { provider } from 'ganache';
 import 'mocha';
 
 import { Web3Wrapper } from '../src/web3_wrapper';
@@ -16,8 +16,8 @@ const NUM_GANACHE_ADDRESSES = 10;
 
 describe('Web3Wrapper tests', () => {
     const NETWORK_ID = 50;
-    const provider = Ganache.provider({ network_id: NETWORK_ID });
-    const web3Wrapper = new Web3Wrapper(provider);
+    const ganacheProvider = provider({ network_id: NETWORK_ID });
+    const web3Wrapper = new Web3Wrapper(ganacheProvider);
     let addresses: string[];
     before(async () => {
         addresses = await web3Wrapper.getAvailableAddressesAsync();
@@ -61,7 +61,7 @@ describe('Web3Wrapper tests', () => {
         it('gets the users balance in wei', async () => {
             const secondAccount = addresses[1];
             const balanceInWei = await web3Wrapper.getBalanceInWeiAsync(secondAccount);
-            const tenEthInWei = 100000000000000000000;
+            const tenEthInWei = 1000000000000000000000;
             expect(balanceInWei).to.be.bignumber.equal(tenEthInWei);
         });
         it('should throw if supplied owner not an Ethereum address hex string', async () => {
