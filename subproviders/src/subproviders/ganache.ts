@@ -15,6 +15,7 @@ export interface GanacheOpts {
     port?: number;
     network_id?: number;
     networkId?: number;
+    // @deprecated  _chainId has been removed in 7.x
     _chainId?: number;
     chainId?: number;
     mnemonic?: string;
@@ -55,6 +56,7 @@ export class GanacheSubprovider extends Subprovider {
             unlocked_accounts: opts.unlocked_accounts,
             fork: { url: opts.fork },
             hardfork: opts.hardfork as any,
+            asyncRequestProcessing: false,
         };
         // HACK: removed undefined values as this seems to cause an issue
         // when the keys are present, especially for `fork` option.
