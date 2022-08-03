@@ -78,7 +78,7 @@
         "tmp": "^0.0.33",
         "to-snake-case": "^1.0.0",
         "toposort": "^2.0.2",
-        "yargs": "^10.0.3"
+        "yargs": "^17.5.1"
     },
     "devDependencies": {
         "@0x/assert": "^3.0.34",

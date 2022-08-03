@@ -2,7 +2,6 @@ import {
     EmptyWalletSubprovider,
     FakeGasEstimateSubprovider,
     GanacheSubprovider,
-    NonceTrackerSubprovider,
     RPCSubprovider,
     Web3ProviderEngine,
 } from '@0x/subproviders';
