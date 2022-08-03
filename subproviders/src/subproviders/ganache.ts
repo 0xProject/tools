@@ -56,9 +56,13 @@ export class GanacheSubprovider extends Subprovider {
             fork: { url: opts.fork },
             hardfork: opts.hardfork as any,
         };
-        // HACK: appears to be a collision and fork is no longer a string
-        // typing seems confused (or I'm confused)
-        // An undefined value is not possible, the key is required to be missing
+        // HACK: removed undefined values as this seems to cause an issue
+        // when the keys are present, especially for `fork` option.
+        Object.keys(migratedOpts).forEach(k => {
+            if ((migratedOpts as any)[k] === undefined) {
+                delete (migratedOpts as any)[k];
+            }
+        });
         if (!opts.fork) {
             delete migratedOpts.fork;
         }

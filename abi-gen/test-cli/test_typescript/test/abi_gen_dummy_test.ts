@@ -22,17 +22,17 @@ const txDefaults = {
     gas: devConstants.GAS_LIMIT,
 };
 
-const provider: Web3ProviderEngine = web3Factory.getRpcProvider({ shouldUseInProcessGanache: true });
-const web3Wrapper = new Web3Wrapper(provider);
-
 chai.config.includeStack = true;
 chai.use(ChaiBigNumber());
 chai.use(dirtyChai);
 chai.use(chaiAsPromised);
 const expect = chai.expect;
-const blockchainLifecycle = new BlockchainLifecycle(web3Wrapper);
 
 describe('AbiGenDummy Contract', () => {
+    const provider: Web3ProviderEngine = web3Factory.getRpcProvider({ shouldUseInProcessGanache: true });
+    const web3Wrapper = new Web3Wrapper(provider);
+    const blockchainLifecycle = new BlockchainLifecycle(web3Wrapper);
+
     let abiGenDummy: AbiGenDummyContract;
     const runTestAsync = async (
         contractMethodName: string,
@@ -54,7 +54,6 @@ describe('AbiGenDummy Contract', () => {
         expect(decodedOutput, 'decoded output').to.be.deep.equal(output);
     };
     before(async () => {
-        providerUtils.startProviderEngine(provider);
         abiGenDummy = await AbiGenDummyContract.deployFrom0xArtifactAsync(
             artifacts.AbiGenDummy,
             provider,
@@ -300,12 +299,19 @@ describe('AbiGenDummy Contract', () => {
 
 describe('Lib dummy contract', () => {
     let libDummy: TestLibDummyContract;
+
+    const provider: Web3ProviderEngine = web3Factory.getRpcProvider({ shouldUseInProcessGanache: true });
+    const web3Wrapper = new Web3Wrapper(provider);
+    const blockchainLifecycle = new BlockchainLifecycle(web3Wrapper);
+
     before(async () => {
         await blockchainLifecycle.startAsync();
     });
+
     after(async () => {
         await blockchainLifecycle.revertAsync();
     });
+
     before(async () => {
         libDummy = await TestLibDummyContract.deployFrom0xArtifactAsync(
             artifacts.TestLibDummy,
@@ -314,9 +320,11 @@ describe('Lib dummy contract', () => {
             artifacts,
         );
     });
+
     beforeEach(async () => {
         await blockchainLifecycle.startAsync();
     });
+
     afterEach(async () => {
         await blockchainLifecycle.revertAsync();
     });

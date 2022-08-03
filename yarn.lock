@@ -6132,10 +6132,10 @@ ganache-cli@6.8.0-istanbul.0:
     source-map-support "0.5.12"
     yargs "13.2.4"
 
-ganache@^7.3.2:
-  version "7.3.2"
-  resolved "https://registry.yarnpkg.com/ganache/-/ganache-7.3.2.tgz#f2cd9df8244851f3d62c19cb5a71cc0c782932eb"
-  integrity sha512-X1IXfqrFQuiMqrONvb4zQqXwjf2Skg8iuofYlFrzWnCI+JZN2hJA5V5Egu/go3YgD8IRpQyLP/Jny0fZM0A5UA==
+ganache@^7.4.0:
+  version "7.4.0"
+  resolved "https://registry.yarnpkg.com/ganache/-/ganache-7.4.0.tgz#24c56a55c15f6031ffbbb8a634fbb52d752f155e"
+  integrity sha512-e1x0ZJsJ5zUP+hWtpSNv+FaavRdcrQhQwe+QZ4kVon5mDm6RgFpe3PzNDJXg82AeqqslohJeK9UinZbZzjewjQ==
   dependencies:
     "@trufflesuite/bigint-buffer" "1.1.10"
     "@types/bn.js" "^5.1.0"
