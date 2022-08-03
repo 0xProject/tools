@@ -51,6 +51,7 @@ describe('Chai tests', () => {
             it('should equate a ganache transaction revert error with return data to a StringRevertError with an equal message', () => {
                 const message = 'foo';
                 const error: any = new Error(`VM Exception while processing transaction: revert`);
+                // tslint:disable-next-line:custom-no-magic-numbers
                 error.code = -3200;
                 error.data =
                     '0x08c379a000000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000003666f6f0000000000000000000000000000000000000000000000000000000000';
@@ -60,12 +61,14 @@ describe('Chai tests', () => {
             it('should not equate a ganache transaction revert error with reason to a StringRevertError with a different message', () => {
                 const error: any = new Error(`VM Exception while processing transaction: revert`);
                 error.data = '0x';
+                // tslint:disable-next-line:custom-no-magic-numbers
                 error.code = -3200;
                 const revert = new StringRevertError('boo');
                 expect(error).is.not.equal(revert);
             });
             it('should not equate a ganache transaction revert error with return data to a StringRevertError with a different message', () => {
                 const error: any = new Error(`VM Exception while processing transaction: revert`);
+                // tslint:disable-next-line:custom-no-magic-numbers
                 error.code = -3200;
                 error.data =
                     '0x08c379a000000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000003666f6f0000000000000000000000000000000000000000000000000000000000';
