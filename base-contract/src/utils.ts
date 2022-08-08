@@ -61,6 +61,7 @@ export function linkLibrariesInBytecode(
                 bytecode = [
                     bytecode.substring(0, ref.start * 2),
                     libraryAddress.toLowerCase().substr(2),
+                    // tslint:disable-next-line:restrict-plus-operands
                     bytecode.substring((ref.start + ref.length) * 2),
                 ].join('');
             }

@@ -1,5 +1,14 @@
 [
     {
+        "version": "7.0.0",
+        "changes": [
+            {
+                "note": "Updated to Ganache 7.x modifying the support for Ganache revert errors",
+                "pr": 65
+            }
+        ]
+    },
+    {
         "timestamp": 1647415391,
         "version": "6.5.3",
         "changes": [

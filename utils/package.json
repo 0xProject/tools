@@ -54,9 +54,9 @@
         "chalk": "^2.3.0",
         "detect-node": "2.0.3",
         "ethereum-types": "^3.7.0",
-        "ethereumjs-util": "^7.1.0",
+        "ethereumjs-util": "^7.1.5",
         "ethers": "~4.0.4",
-        "isomorphic-fetch": "2.2.1",
+        "isomorphic-fetch": "^3.0.0",
         "js-sha3": "^0.7.0",
         "lodash": "^4.17.21"
     },

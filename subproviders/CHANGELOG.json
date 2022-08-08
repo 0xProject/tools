@@ -5,6 +5,10 @@
             {
                 "note": "Update Ganache to 7.x",
                 "pr": 64
+            },
+            {
+                "note": "Change to Ledger `TransportWebUSB` over `TransportU2F`",
+                "pr": 64
             }
         ]
     },

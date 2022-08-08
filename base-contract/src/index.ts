@@ -11,6 +11,8 @@ import {
     StringRevertError,
 } from '@0x/utils';
 import { Web3Wrapper } from '@0x/web3-wrapper';
+import VM from '@ethereumjs/vm';
+import { RunCallOpts } from '@ethereumjs/vm/dist/runCall';
 import {
     AbiDefinition,
     AbiType,
@@ -26,14 +28,9 @@ import {
     TxDataPayable,
 } from 'ethereum-types';
 import * as util from 'ethereumjs-util';
-import VM from '@ethereumjs/vm';
-
-export { linkLibrariesInBytecode, methodAbiToFunctionSignature } from './utils';
 
 import { AwaitTransactionSuccessOpts } from './types';
 import { formatABIDataItem } from './utils';
-import { RunCallOpts } from '@ethereumjs/vm/dist/runCall';
-import Common, { Chain, Hardfork } from '@ethereumjs/common';
 
 export { SubscriptionManager } from './subscription_manager';
 
@@ -45,6 +42,8 @@ export {
     ContractTxFunctionObj,
     SubscriptionErrors,
 } from './types';
+
+export { linkLibrariesInBytecode, methodAbiToFunctionSignature } from './utils';
 
 export interface AbiEncoderByFunctionSignature {
     [key: string]: AbiEncoder.Method;
@@ -190,9 +189,7 @@ export class BaseContract {
             const decoded = rawDecoded[i];
             if (!abiUtils.isAbiDataEqual(params.names[i], params.types[i], original, decoded)) {
                 throw new Error(
-                    `Cannot safely encode argument: ${params.names[i]} (${original}) of type ${
-                        params.types[i]
-                    }. (Possible type overflow or other encoding error)`,
+                    `Cannot safely encode argument: ${params.names[i]} (${original}) of type ${params.types[i]}. (Possible type overflow or other encoding error)`,
                 );
             }
         }

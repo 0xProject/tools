@@ -378,9 +378,7 @@ export class Web3Wrapper {
             try {
                 return await this.sendRawPayloadAsync<string>({
                     method,
-                    // `eth_signTypedData` expects an object, whereas the others expect
-                    // a JSON string.
-                    params: [address, method === 'eth_signTypedData' ? typedData : JSON.stringify(typedData)],
+                    params: [address, typedData],
                 });
             } catch (err) {
                 lastErr = err;

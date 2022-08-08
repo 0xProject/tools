@@ -344,16 +344,10 @@ const PARITY_TRANSACTION_REVERT_ERROR_MESSAGE = /^VM execution error/;
 const GANACHE_TRANSACTION_REVERT_ERROR_MESSAGE = /^VM Exception while processing transaction: revert/;
 const GETH_TRANSACTION_REVERT_ERROR_MESSAGE = /always failing transaction$/;
 
-interface GanacheTransactionRevertResult {
-    error: 'revert';
-    program_counter: number;
-    return?: string;
-    reason?: string;
-}
-
 interface GanacheTransactionRevertError extends Error {
-    results: { [hash: string]: GanacheTransactionRevertResult };
-    hashes: string[];
+    code: number;
+    data: string;
+    name: string;
 }
 
 interface ParityTransactionRevertError extends Error {
@@ -370,15 +364,7 @@ export function getThrownErrorRevertErrorBytes(
 ): string {
     // Handle ganache transaction reverts.
     if (isGanacheTransactionRevertError(error)) {
-        // Grab the first result attached.
-        const result = error.results[error.hashes[0]];
-        // If a reason is provided, just wrap it in a StringRevertError
-        if (result.reason !== undefined) {
-            return new StringRevertError(result.reason).encode();
-        }
-        if (result.return !== undefined && result.return !== '0x') {
-            return result.return;
-        }
+        return error.data;
     } else if (isParityTransactionRevertError(error)) {
         // Parity returns { data: 'Reverted 0xa6bcde47...', ... }
         const { data } = error;
@@ -408,7 +394,7 @@ function isParityTransactionRevertError(
 function isGanacheTransactionRevertError(
     error: Error | GanacheTransactionRevertError,
 ): error is GanacheTransactionRevertError {
-    if (GANACHE_TRANSACTION_REVERT_ERROR_MESSAGE.test(error.message) && 'hashes' in error && 'results' in error) {
+    if (GANACHE_TRANSACTION_REVERT_ERROR_MESSAGE.test(error.message) && 'data' in error) {
         return true;
     }
     return false;

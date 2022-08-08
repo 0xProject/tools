@@ -54,10 +54,10 @@
         "chalk": "^2.3.0",
         "es6-promisify": "^5.0.0",
         "glob": "^7.1.2",
-        "isomorphic-fetch": "2.2.1",
+        "isomorphic-fetch": "^3.0.0",
         "lodash": "^4.17.21",
         "mkdirp": "^0.5.1",
-        "moment": "2.21.0",
+        "moment": "^2.29.4",
         "promisify-child-process": "^1.0.5",
         "prompt": "^1.0.0",
         "publish-release": "https://github.com/0xProject/publish-release.git#3f8be1105a356527f4b362ff456d94bf9a82f2ed",
@@ -66,7 +66,7 @@
         "semver-diff": "^2.1.0",
         "semver-sort": "0.0.4",
         "typedoc": "~0.16.11",
-        "yargs": "^10.0.3"
+        "yargs": "^17.5.1"
     },
     "publishConfig": {
         "access": "public"

@@ -1,5 +1,18 @@
 [
     {
+        "version": "8.0.0",
+        "changes": [
+            {
+                "note": "Remove ganache specific `eth_signTypedData` as JSON string",
+                "pr": 65
+            },
+            {
+                "note": "Detect new structure for Ganache errors",
+                "pr": 65
+            }
+        ]
+    },
+    {
         "timestamp": 1647415391,
         "version": "7.6.5",
         "changes": [

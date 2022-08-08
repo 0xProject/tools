@@ -1,4 +1,3 @@
-import { Hardfork } from '@ethereumjs/common/dist/types';
 import { JSONRPCRequestPayload } from 'ethereum-types';
 import { EthereumProvider, provider, ProviderOptions } from 'ganache';
 
@@ -16,6 +15,7 @@ export interface GanacheOpts {
     port?: number;
     network_id?: number;
     networkId?: number;
+    // @deprecated  _chainId has been removed in 7.x
     _chainId?: number;
     chainId?: number;
     mnemonic?: string;
@@ -56,12 +56,17 @@ export class GanacheSubprovider extends Subprovider {
             unlocked_accounts: opts.unlocked_accounts,
             fork: { url: opts.fork },
             hardfork: opts.hardfork as any,
+            asyncRequestProcessing: false,
         };
-        // HACK: appears to be a collision and fork is no longer a string
-        // typing seems confused (or I'm confused)
-        // An undefined value is not possible, the key is required to be missing
+        // HACK: removed undefined values as this seems to cause an issue
+        // when the keys are present, especially for `fork` option.
+        Object.keys(migratedOpts).forEach(k => {
+            if ((migratedOpts as any)[k] === undefined) {
+                delete (migratedOpts as any)[k];
+            }
+        });
         if (!opts.fork) {
-            delete migratedOpts['fork'];
+            delete migratedOpts.fork;
         }
         this._ganacheProvider = provider(migratedOpts) as EthereumProvider;
     }

@@ -30,8 +30,8 @@ declare module '@ledgerhq/hw-app-eth' {
     export default Eth;
 }
 
-declare module '@ledgerhq/hw-transport-u2f' {
-    export default class TransportU2F implements LedgerTransport {
+declare module '@ledgerhq/hw-transport-webusb' {
+    export default class TransportWebUSB implements LedgerTransport {
         public static create(): Promise<LedgerTransport>;
         public close(): Promise<void>;
     }
