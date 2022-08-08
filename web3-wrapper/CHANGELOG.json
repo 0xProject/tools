@@ -5,6 +5,10 @@
             {
                 "note": "Remove ganache specific `eth_signTypedData` as JSON string",
                 "pr": 65
+            },
+            {
+                "note": "Detect new structure for Ganache errors",
+                "pr": 65
             }
         ]
     },
