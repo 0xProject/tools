@@ -13,7 +13,16 @@ import { constants } from './constants';
 import { Changelog, Package } from './types';
 import { utils } from './utils/utils';
 
-const ARGV = yargs.option('skip-install', { type: 'array', default: [] }).argv;
+const ARGV = yargs.options({
+    'skip-install': {
+        type: 'array',
+        default: [],
+    },
+    package: {
+        type: 'array',
+        default: [],
+    },
+}).argv;
 
 const mkdirpAsync = promisify(mkdirp);
 const rimrafAsync = promisify(rimraf);
@@ -56,12 +65,19 @@ const FIVE_MB = 1024 * 1024 * 5;
     // Since the error in package A is the root cause, we log it first.
     const packages = utils.getTopologicallySortedPackages(monorepoRootPath);
     const installablePackages = _.filter(packages, pkg => {
-        return (
-            !pkg.packageJson.private &&
-            pkg.packageJson.main !== undefined &&
-            pkg.packageJson.main.endsWith('.js') &&
-            !ARGV.skipInstall.includes(pkg.packageJson.name)
-        );
+        if (pkg.packageJson.private || pkg.packageJson.main === undefined || !pkg.packageJson.main.endsWith('.js')) {
+            return undefined;
+        }
+
+        if (ARGV.skipInstall.length > 0 && ARGV.skipInstall.includes(pkg.packageJson.name)) {
+            return undefined;
+        }
+
+        if (ARGV.package.length > 0 && !ARGV.package.includes(pkg.packageJson.name)) {
+            return undefined;
+        }
+
+        return pkg;
     });
     const CHUNK_SIZE = 15;
     const chunkedInstallablePackages = _.chunk(installablePackages, CHUNK_SIZE);
