@@ -42,7 +42,6 @@ const ARGV = yargs
         type: 'string',
     })
     .option('yes', { default: false, type: 'boolean' })
-    .option('franklin', { default: false, type: 'boolean' })
     .option('upload-docs', { default: false, type: 'boolean' })
     .option('auto-commit', { default: true, type: 'boolean' }).argv;
 
