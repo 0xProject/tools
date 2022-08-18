@@ -1,6 +1,6 @@
 {
     "name": "@0x/types",
-    "version": "3.3.6",
+    "version": "3.3.7",
     "engines": {
         "node": ">=6.12"
     },
@@ -23,7 +23,7 @@
     },
     "homepage": "https://github.com/0xProject/tools/tree/main/types",
     "devDependencies": {
-        "@0x/tslint-config": "^4.1.4",
+        "@0x/tslint-config": "^4.1.5",
         "make-promises-safe": "^1.1.0",
         "shx": "^0.2.2",
         "tslint": "5.11.0",
@@ -32,7 +32,7 @@
     "dependencies": {
         "@types/node": "12.12.54",
         "bignumber.js": "~9.0.2",
-        "ethereum-types": "^3.7.0"
+        "ethereum-types": "^3.7.1"
     },
     "publishConfig": {
         "access": "public"

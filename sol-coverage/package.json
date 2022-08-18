@@ -1,6 +1,6 @@
 {
     "name": "@0x/sol-coverage",
-    "version": "4.0.45",
+    "version": "4.0.46",
     "engines": {
         "node": ">=6.12"
     },
@@ -33,19 +33,19 @@
     },
     "homepage": "https://github.com/0xProject/tools/tree/main/sol-coverage",
     "dependencies": {
-        "@0x/sol-tracing-utils": "^7.3.1",
-        "@0x/subproviders": "^6.6.5",
-        "@0x/typescript-typings": "^5.3.1",
+        "@0x/sol-tracing-utils": "^7.3.2",
+        "@0x/subproviders": "^7.0.0",
+        "@0x/typescript-typings": "^5.3.2",
         "@types/minimatch": "^3.0.3",
         "@types/node": "12.12.54",
-        "ethereum-types": "^3.7.0",
+        "ethereum-types": "^3.7.1",
         "lodash": "^4.17.21",
         "minimatch": "^3.0.4",
         "web3-provider-engine": "16.0.4"
     },
     "devDependencies": {
         "@0x/ts-doc-gen": "^0.0.28",
-        "@0x/tslint-config": "^4.1.4",
+        "@0x/tslint-config": "^4.1.5",
         "@types/web3-provider-engine": "^14.0.0",
         "npm-run-all": "^4.1.2",
         "nyc": "^11.0.1",
