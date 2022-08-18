@@ -41,9 +41,10 @@ const ARGV = yargs
         describe: 'prerelease ID',
         type: 'string',
     })
-    .option('yes', { default: false })
-    .option('upload-docs', { default: false })
-    .option('auto-commit', { default: true }).argv;
+    .option('yes', { default: false, type: 'boolean' })
+    .option('franklin', { default: false, type: 'boolean' })
+    .option('upload-docs', { default: false, type: 'boolean' })
+    .option('auto-commit', { default: true, type: 'boolean' }).argv;
 
 async function confirmAsync(message: string): Promise<void> {
     prompt.start();
@@ -117,7 +118,7 @@ async function confirmAsync(message: string): Promise<void> {
 
     if (!isDryRun && releaseNotes) {
         try {
-            await alertDiscordAsync(releaseNotes);
+            await alertDiscordAsync(releaseNotes!);
         } catch (e) {
             utils.log("Publish successful, but couldn't auto-alert discord (", e.message, '), Please alert manually.');
         }

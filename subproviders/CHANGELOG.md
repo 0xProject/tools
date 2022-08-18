@@ -5,6 +5,11 @@ Edit the package's CHANGELOG.json file only.
 
 CHANGELOG
 
+## v7.0.0 - _August 18, 2022_
+
+    * Update Ganache to 7.x (#64)
+    * Change to Ledger `TransportWebUSB` over `TransportU2F` (#64)
+
 ## v6.6.5 - _March 16, 2022_
 
     * Dependencies updated

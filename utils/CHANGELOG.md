@@ -5,6 +5,10 @@ Edit the package's CHANGELOG.json file only.
 
 CHANGELOG
 
+## v7.0.0 - _August 18, 2022_
+
+    * Updated to Ganache 7.x modifying the support for Ganache revert errors (#65)
+
 ## v6.5.3 - _March 16, 2022_
 
     * Dependencies updated

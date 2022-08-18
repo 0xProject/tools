@@ -5,6 +5,10 @@ Edit the package's CHANGELOG.json file only.
 
 CHANGELOG
 
+## v3.7.1 - _August 18, 2022_
+
+    * Dependencies updated
+
 ## v3.7.0 - _March 16, 2022_
 
     * Make compiler artifact `linkReferences` optional (#62)

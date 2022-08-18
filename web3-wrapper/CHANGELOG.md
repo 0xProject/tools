@@ -5,6 +5,11 @@ Edit the package's CHANGELOG.json file only.
 
 CHANGELOG
 
+## v8.0.0 - _August 18, 2022_
+
+    * Remove ganache specific `eth_signTypedData` as JSON string (#65)
+    * Detect new structure for Ganache errors (#65)
+
 ## v7.6.5 - _March 16, 2022_
 
     * Dependencies updated

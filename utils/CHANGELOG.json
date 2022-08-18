@@ -6,7 +6,8 @@
                 "note": "Updated to Ganache 7.x modifying the support for Ganache revert errors",
                 "pr": 65
             }
-        ]
+        ],
+        "timestamp": 1660803501
     },
     {
         "timestamp": 1647415391,

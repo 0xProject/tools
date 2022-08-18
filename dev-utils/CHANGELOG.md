@@ -5,6 +5,10 @@ Edit the package's CHANGELOG.json file only.
 
 CHANGELOG
 
+## v5.0.0 - _August 18, 2022_
+
+    * Update Ganache to 7.x (#64)
+
 ## v4.2.14 - _March 16, 2022_
 
     * Dependencies updated

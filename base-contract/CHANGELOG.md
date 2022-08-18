@@ -5,6 +5,10 @@ Edit the package's CHANGELOG.json file only.
 
 CHANGELOG
 
+## v7.0.0 - _August 18, 2022_
+
+    * Update downstream dependencies to latest versions (#64)
+
 ## v6.5.0 - _March 16, 2022_
 
     * Handle potentially missing `linkReferences` in generated artifacts (#62)

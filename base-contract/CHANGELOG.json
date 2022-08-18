@@ -6,7 +6,8 @@
                 "note": "Update downstream dependencies to latest versions",
                 "pr": 64
             }
-        ]
+        ],
+        "timestamp": 1660803501
     },
     {
         "version": "6.5.0",

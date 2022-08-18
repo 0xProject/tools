@@ -10,7 +10,8 @@
                 "note": "Change to Ledger `TransportWebUSB` over `TransportU2F`",
                 "pr": 64
             }
-        ]
+        ],
+        "timestamp": 1660803501
     },
     {
         "timestamp": 1647415391,
