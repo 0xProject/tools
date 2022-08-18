@@ -117,7 +117,7 @@ async function confirmAsync(message: string): Promise<void> {
 
     if (!isDryRun && releaseNotes) {
         try {
-            await alertDiscordAsync(releaseNotes!);
+            await alertDiscordAsync(releaseNotes);
         } catch (e) {
             utils.log("Publish successful, but couldn't auto-alert discord (", e.message, '), Please alert manually.');
         }
