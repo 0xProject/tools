@@ -193,7 +193,7 @@ function generateArtifactsTs(
         if (contractName === 'ZRXToken') {
             // HACK(albrow): "as any" hack still required here because ZRXToken does not
             // conform to the v2 artifact type.
-            return `${contractName}: (${contractName} as any) as ContractArtifact,`;
+            return `${contractName}: ${contractName} as any as ContractArtifact,`;
         } else {
             return `${contractName}: ${contractName} as ContractArtifact,`;
         }
