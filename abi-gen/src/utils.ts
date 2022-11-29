@@ -224,7 +224,7 @@ export const utils = {
      * contract methods.
      */
     toPythonIdentifier(input: string): string {
-        let snakeCased = changeCase.snake(input);
+        let snakeCased = changeCase.snakeCase(input);
         const pythonReservedWords = [
             'False',
             'None',
