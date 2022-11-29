@@ -37,7 +37,7 @@
         "@types/rimraf": "^2.0.2",
         "@types/semver": "5.5.0",
         "@types/yargs": "^11.0.0",
-        "depcheck": "^0.6.9",
+        "depcheck": "^1.4.3",
         "make-promises-safe": "^1.1.0",
         "npm-run-all": "^4.1.2",
         "shx": "^0.2.2",
