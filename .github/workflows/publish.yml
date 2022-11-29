@@ -22,7 +22,7 @@ jobs:
                   | jq .state)
                   [[ "${REF_STATUS}" == '"${{ github.event.inputs.ci_status }}"' ]] || \
                   (echo "::error ::${{ github.ref }} does not have a successful CI status" && false)
-            - uses: actions/checkout@v2
+            - uses: actions/checkout@v3
               with:
                   ref: ${{ github.ref }}
                   fetch-depth: 0
