@@ -152,7 +152,7 @@ export function registerPythonHelpers(): void {
         return '';
     });
     Handlebars.registerHelper('toPythonClassname', (sourceName: string) => {
-        let pascalCased = changeCase.pascal(sourceName);
+        let pascalCased = changeCase.pascalCase(sourceName);
         // Retain trailing underscores.
         const m = /^.+?(_*)$/.exec(sourceName);
         if (m) {

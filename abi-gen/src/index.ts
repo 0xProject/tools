@@ -144,7 +144,7 @@ registerPartials();
 
 function makeLanguageSpecificName(methodName: string): string {
     if (args.language === 'Python') {
-        let snakeCased = changeCase.snake(methodName);
+        let snakeCased = changeCase.snakeCase(methodName);
         // Move leading underscores to the end.
         const m = /^(_*).+?(_*)$/.exec(methodName);
         if (m) {
