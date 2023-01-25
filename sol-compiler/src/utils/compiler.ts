@@ -92,21 +92,22 @@ export function getNormalizedErrMsg(errMsg: string): string {
 }
 
 /**
- * Parses the contract source code and extracts the dendencies
+ * Parses the contract source code and extracts the dependencies
  * @param  source Contract source code
- * @return List of dependendencies
+ * @return List of dependencies
  */
 export function parseDependencies(contractSource: ContractSource): string[] {
     // TODO: Use a proper parser
     const source = contractSource.source;
     const sourceWithoutComments = stripComments(source);
     const IMPORT_REGEX = /(import\s)/;
-    const DEPENDENCY_PATH_REGEX = /"([^"]+)"/; // Source: https://github.com/BlockChainCompany/soljitsu/blob/master/lib/shared.js
     const dependencies: string[] = [];
     const lines = sourceWithoutComments.split('\n');
     _.forEach(lines, line => {
         if (line.match(IMPORT_REGEX) !== null) {
-            const dependencyMatch = line.match(DEPENDENCY_PATH_REGEX);
+            const dependencyMatch =
+                line.match(constants.DEPENDENCY_PATH_REGEX_DOUBLE_QUOTES) ??
+                line.match(constants.DEPENDENCY_PATH_REGEX_SINGLE_QUOTES);
             if (dependencyMatch !== null) {
                 let dependencyPath = dependencyMatch[1];
                 if (dependencyPath.startsWith('.')) {
@@ -350,7 +351,9 @@ function recursivelyGatherDependencySources(
     const lastPathSeparatorPos = contractPath.lastIndexOf('/');
     const contractFolder = lastPathSeparatorPos === -1 ? '' : contractPath.slice(0, lastPathSeparatorPos + 1);
     for (const importStatementMatch of importStatementMatches) {
-        const importPathMatches = importStatementMatch.match(/\"([^\"]*)\"/);
+        const importPathMatches =
+            importStatementMatch.match(constants.DEPENDENCY_PATH_REGEX_DOUBLE_QUOTES) ??
+            importStatementMatch.match(constants.DEPENDENCY_PATH_REGEX_SINGLE_QUOTES);
         if (importPathMatches === null || importPathMatches.length === 0) {
             continue;
         }
