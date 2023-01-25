@@ -66,4 +66,6 @@ export const constants = {
         '0.1.2': 'soljson-v0.1.2+commit.d0d36e3.js',
         '0.1.1': 'soljson-v0.1.1+commit.6ff4cd6.js',
     },
+    DEPENDENCY_PATH_REGEX_DOUBLE_QUOTES: /"([^"]+)"/,
+    DEPENDENCY_PATH_REGEX_SINGLE_QUOTES: /'([^']+)'/,
 };

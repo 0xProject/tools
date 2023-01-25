@@ -73,6 +73,18 @@ describe('Compiler utils', () => {
                 'zeppelin-solidity/contracts/token/ERC20/ERC20.sol',
             ]);
         });
+        it('correctly parses single quote dependencies', async () => {
+            const path = `${__dirname}/fixtures/contracts/SingleQuoteImports.sol`;
+            const source = await fsWrapper.readFileAsync(path, {
+                encoding: 'utf8',
+            });
+            const dependencies = parseDependencies({ source, path, absolutePath: path });
+            const expectedDependencies = ['SomeDependency.sol'];
+            _.each(expectedDependencies, expectedDepdency => {
+                const foundDependency = _.find(dependencies, dependency => _.endsWith(dependency, expectedDepdency));
+                expect(foundDependency, `${expectedDepdency} not found`).to.not.be.undefined();
+            });
+        });
         // TODO: For now that doesn't work. This will work after we switch to a grammar-based parser
         it.skip('correctly parses commented out dependencies', async () => {
             const path = '';
