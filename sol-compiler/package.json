@@ -1,6 +1,6 @@
 {
     "name": "@0x/sol-compiler",
-    "version": "4.8.2",
+    "version": "4.8.3",
     "engines": {
         "node": ">=6.12"
     },
@@ -46,7 +46,7 @@
     },
     "homepage": "https://github.com/0xProject/tools/tree/main/sol-compiler",
     "devDependencies": {
-        "@0x/dev-utils": "^5.0.0",
+        "@0x/dev-utils": "^5.0.1",
         "@0x/ts-doc-gen": "^0.0.28",
         "@0x/tslint-config": "^4.1.5",
         "@types/mkdirp": "^0.5.2",
