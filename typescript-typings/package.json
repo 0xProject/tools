@@ -33,7 +33,7 @@
     },
     "devDependencies": {
         "shx": "^0.2.2",
-        "typescript": "4.2.2"
+        "typescript": "4.9.5"
     },
     "publishConfig": {
         "access": "public"
