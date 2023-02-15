@@ -19,6 +19,7 @@ export interface GanacheOpts {
     _chainId?: number;
     chainId?: number;
     mnemonic?: string;
+    allowUnlimitedContractSize?: boolean;
     gasLimit?: number;
     vmErrorsOnRPCResponse?: boolean;
     db_path?: string;
@@ -49,6 +50,7 @@ export class GanacheSubprovider extends Subprovider {
             chainId: opts._chainId || opts.chainId,
             mnemonic: opts.mnemonic,
             gasLimit: opts.gasLimit,
+            allowUnlimitedContractSize: opts.allowUnlimitedContractSize,
             vmErrorsOnRPCResponse: opts.vmErrorsOnRPCResponse,
             db_path: opts.db_path,
             total_accounts: opts.total_accounts,
