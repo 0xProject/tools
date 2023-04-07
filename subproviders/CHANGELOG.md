@@ -5,6 +5,14 @@ Edit the package's CHANGELOG.json file only.
 
 CHANGELOG
 
+## v8.0.1 - _April 7, 2023_
+
+    * Dependencies updated
+
+## v8.0.0 - _Invalid date_
+
+    * Remove subproviders except for private key, empty wallet, ganache, mnemonic, and RPC
+
 ## v7.0.1 - _January 26, 2023_
 
     * Dependencies updated
