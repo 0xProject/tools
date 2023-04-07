@@ -41,7 +41,7 @@
         "@0x/dev-utils": "^5.0.2",
         "@0x/sol-compiler": "^4.8.4",
         "@0x/sol-resolver": "^3.1.13",
-        "@0x/subproviders": "^7.0.1",
+        "@0x/subproviders": "^8.0.1",
         "@0x/typescript-typings": "^5.3.2",
         "@0x/utils": "^7.0.0",
         "@0x/web3-wrapper": "^8.0.1",
