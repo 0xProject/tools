@@ -1,7 +1,7 @@
 import { ContractFunctionObj } from '@0x/base-contract';
 import { BlockchainLifecycle, devConstants, web3Factory } from '@0x/dev-utils';
 import { Web3ProviderEngine } from '@0x/subproviders';
-import { BigNumber, providerUtils, StringRevertError } from '@0x/utils';
+import { BigNumber, StringRevertError } from '@0x/utils';
 import { BlockParamLiteral, Web3Wrapper } from '@0x/web3-wrapper';
 import * as chai from 'chai';
 import * as chaiAsPromised from 'chai-as-promised';

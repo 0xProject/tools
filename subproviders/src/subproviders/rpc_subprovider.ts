@@ -4,8 +4,6 @@ import { fetchAsync } from '@0x/utils';
 import { JSONRPCRequestPayload } from 'ethereum-types';
 import JsonRpcError = require('json-rpc-error');
 
-import { Callback, ErrorCallback } from '../types';
-
 import { Subprovider } from './subprovider';
 
 /**
@@ -35,7 +33,11 @@ export class RPCSubprovider extends Subprovider {
      * @param end Callback to call if subprovider handled the request and wants to pass back the request.
      */
     // tslint:disable-next-line:prefer-function-over-method async-suffix
-    public async handleRequest(payload: JSONRPCRequestPayload, _next: Callback, end: ErrorCallback): Promise<void> {
+    public async handleRequest(
+        payload: JSONRPCRequestPayload,
+        _next: () => void,
+        end: (err: Error | null, data?: any) => void,
+    ): Promise<void> {
         const finalPayload = Subprovider._createFinalPayload(payload);
         const headers = new Headers({
             Accept: 'application/json',

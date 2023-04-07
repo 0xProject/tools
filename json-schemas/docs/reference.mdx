@@ -1,17 +1,23 @@
 # Class: SchemaValidator
 
-A validator for [JSON-schemas](http://json-schema.org/)
+A validator wrapping (AJV) [https://github.com/ajv-validator/ajv]
 
 
 ##   Constructors
 
 
 
-\+ **new SchemaValidator**(): *[SchemaValidator](#class-schemavalidator)*
+\+ **new SchemaValidator**(`newSchemas`: object[]): *[SchemaValidator](#class-schemavalidator)*
 
-*Defined in [schema_validator.ts:15](https://github.com/0xProject/0x-monorepo/blob/34538f2ce/packages/json-schemas/src/schema_validator.ts#L15)*
+*Defined in [schema_validator.ts:11](https://github.com/0xProject/tools/blob/c64730cff/json-schemas/src/schema_validator.ts#L11)*
 
 Instantiates a SchemaValidator instance
+
+**Parameters:**
+
+Name | Type | Default |
+------ | ------ | ------ |
+`newSchemas` | object[] | [] |
 
 **Returns:** *[SchemaValidator](#class-schemavalidator)*
 
@@ -19,9 +25,9 @@ Instantiates a SchemaValidator instance
 
 ###  addSchema
 
-▸ **addSchema**(`schema`: `Schema`): *void*
+▸ **addSchema**(`schemaObjectOrArray`: object | object[]): *void*
 
-*Defined in [schema_validator.ts:32](https://github.com/0xProject/0x-monorepo/blob/34538f2ce/packages/json-schemas/src/schema_validator.ts#L32)*
+*Defined in [schema_validator.ts:26](https://github.com/0xProject/tools/blob/c64730cff/json-schemas/src/schema_validator.ts#L26)*
 
 Add a schema to the validator. All schemas and sub-schemas must be added to
 the validator before the `validate` and `isValid` methods can be called with
@@ -29,9 +35,9 @@ instances of that schema.
 
 **Parameters:**
 
-Name | Type | Description |
------- | ------ | ------ |
-`schema` | `Schema` | The schema to add  |
+Name | Type |
+------ | ------ |
+`schemaObjectOrArray` | object &#124; object[] |
 
 **Returns:** *void*
 
@@ -39,9 +45,9 @@ ___
 
 ###  isValid
 
-▸ **isValid**(`instance`: any, `schema`: `Schema`): *boolean*
+▸ **isValid**(`instance`: any, `schema`: object): *boolean*
 
-*Defined in [schema_validator.ts:57](https://github.com/0xProject/0x-monorepo/blob/34538f2ce/packages/json-schemas/src/schema_validator.ts#L57)*
+*Defined in [schema_validator.ts:59](https://github.com/0xProject/tools/blob/c64730cff/json-schemas/src/schema_validator.ts#L59)*
 
 Check whether an instance properly adheres to a JSON schema
 
@@ -50,7 +56,7 @@ Check whether an instance properly adheres to a JSON schema
 Name | Type | Description |
 ------ | ------ | ------ |
 `instance` | any | JS object in question |
-`schema` | `Schema` | Schema to check against |
+`schema` | object | Schema to check against |
 
 **Returns:** *boolean*
 
@@ -60,9 +66,9 @@ ___
 
 ###  validate
 
-▸ **validate**(`instance`: any, `schema`: `Schema`): *`ValidatorResult`*
+▸ **validate**(`instance`: any, `schema`: object): *Ajv*
 
-*Defined in [schema_validator.ts:46](https://github.com/0xProject/0x-monorepo/blob/34538f2ce/packages/json-schemas/src/schema_validator.ts#L46)*
+*Defined in [schema_validator.ts:49](https://github.com/0xProject/tools/blob/c64730cff/json-schemas/src/schema_validator.ts#L49)*
 
 Validate the JS object conforms to a specific JSON schema
 
@@ -71,11 +77,12 @@ Validate the JS object conforms to a specific JSON schema
 Name | Type | Description |
 ------ | ------ | ------ |
 `instance` | any | JS object in question |
-`schema` | `Schema` | Schema to check against |
+`schema` | object | Schema to check against |
 
-**Returns:** *`ValidatorResult`*
+**Returns:** *Ajv*
 
 The results of the validation
+
 
 <hr />
 

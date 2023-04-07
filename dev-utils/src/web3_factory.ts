@@ -1,10 +1,4 @@
-import {
-    EmptyWalletSubprovider,
-    FakeGasEstimateSubprovider,
-    GanacheSubprovider,
-    RPCSubprovider,
-    Web3ProviderEngine,
-} from '@0x/subproviders';
+import { GanacheSubprovider, RPCSubprovider, Web3ProviderEngine } from '@0x/subproviders';
 import { providerUtils } from '@0x/utils';
 import * as fs from 'fs';
 
@@ -15,11 +9,9 @@ import { env, EnvVars } from './env';
 
 export interface Web3Config {
     total_accounts?: number; // default: 10
-    hasAddresses?: boolean; // default: true
     shouldUseInProcessGanache?: boolean; // default: false
     shouldThrowErrorsOnGanacheRPCResponse?: boolean; // default: true
     rpcUrl?: string; // default: localhost:8545
-    shouldUseFakeGasEstimate?: boolean; // default: true
     ganacheDatabasePath?: string; // default: undefined, creates a tmp dir
     shouldAllowUnlimitedContractSize?: boolean;
     fork?: string;
@@ -34,17 +26,6 @@ export interface Web3Config {
 export const web3Factory = {
     getRpcProvider(config: Web3Config = {}): Web3ProviderEngine {
         const provider = new Web3ProviderEngine();
-
-        const hasAddresses = config.hasAddresses === undefined || config.hasAddresses;
-        const shouldUseFakeGasEstimate =
-            config.shouldUseFakeGasEstimate === undefined || config.shouldUseFakeGasEstimate;
-
-        if (!hasAddresses) {
-            provider.addProvider(new EmptyWalletSubprovider());
-        }
-        if (shouldUseFakeGasEstimate) {
-            provider.addProvider(new FakeGasEstimateSubprovider(constants.GAS_LIMIT));
-        }
 
         const logger = {
             log: (arg: any) => {

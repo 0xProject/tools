@@ -20,7 +20,17 @@
         "IterableIterator": true,
         "Set": true,
         "Exclude": true,
-        "Ajv": true
+        "Ajv": true,
+        "#": "private types below",
+        "EIP712TypedData": true,
+        "ErrorCallback": true,
+        "JSONRPCErrorCallback": true,
+        "JSONRPCRequestPayload": true,
+        "JSONRPCRequestPayloadWithMethod": true,
+        "JSONRPCResponsePayload": true,
+        "MnemonicWalletSubproviderConfigs": true,
+        "NextCallback": true,
+        "PartialTxParams": true
     },
     "ignoredExcessiveTypes": [
         "NonceSubproviderErrors",
