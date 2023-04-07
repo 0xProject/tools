@@ -3,7 +3,7 @@ import { addressUtils } from '@0x/utils';
 import { JSONRPCRequestPayload, JSONRPCResponsePayload } from 'ethereum-types';
 import * as _ from 'lodash';
 
-import { Callback, ErrorCallback, PartialTxParams, WalletSubproviderErrors } from '../types';
+import { PartialTxParams, WalletSubproviderErrors } from '../types';
 
 import { Subprovider } from './subprovider';
 
@@ -34,7 +34,11 @@ export abstract class BaseWalletSubprovider extends Subprovider {
      * @param end Callback to call if subprovider handled the request and wants to pass back the request.
      */
     // tslint:disable-next-line:async-suffix
-    public async handleRequest(payload: JSONRPCRequestPayload, next: Callback, end: ErrorCallback): Promise<void> {
+    public async handleRequest(
+        payload: JSONRPCRequestPayload,
+        next: () => void,
+        end: (err: Error | null, data?: any) => void,
+    ): Promise<void> {
         let accounts;
         let txParams;
         let address;

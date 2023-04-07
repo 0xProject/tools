@@ -1,5 +1,5 @@
 import { BlockchainLifecycle } from '@0x/dev-utils';
-import { Callback, ErrorCallback, NextCallback, Subprovider, Web3ProviderEngine } from '@0x/subproviders';
+import { Subprovider, Web3ProviderEngine } from '@0x/subproviders';
 import { logUtils } from '@0x/utils';
 import { CallDataRPC, marshaller, Web3Wrapper } from '@0x/web3-wrapper';
 import { JSONRPCRequestPayload, TxData } from 'ethereum-types';
@@ -15,6 +15,11 @@ interface MaybeFakeTxData extends TxData {
 }
 
 const BLOCK_GAS_LIMIT = 6000000;
+
+type ErrorCallback = (err: Error | null, data?: any) => void;
+type Callback = () => void;
+type OnNextCompleted = (err: Error | null, result: any, cb: Callback) => void;
+type NextCallback = (callback?: OnNextCompleted) => void;
 
 export interface TraceCollectionSubproviderConfig {
     shouldCollectTransactionTraces: boolean;

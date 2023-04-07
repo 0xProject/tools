@@ -1,8 +1,6 @@
 import { JSONRPCRequestPayload } from 'ethereum-types';
 import { EthereumProvider, provider, ProviderOptions } from 'ganache';
 
-import { Callback, ErrorCallback } from '../types';
-
 import { Subprovider } from './subprovider';
 
 // Historical GanacheOpts for compatability
@@ -79,7 +77,11 @@ export class GanacheSubprovider extends Subprovider {
      * @param end Callback to call if subprovider handled the request and wants to pass back the request.
      */
     // tslint:disable-next-line:prefer-function-over-method async-suffix
-    public async handleRequest(payload: JSONRPCRequestPayload, _next: Callback, end: ErrorCallback): Promise<void> {
+    public async handleRequest(
+        payload: JSONRPCRequestPayload,
+        _next: () => void,
+        end: (err: Error | null, data?: any) => void,
+    ): Promise<void> {
         this._ganacheProvider.sendAsync(payload as any, (err: Error | undefined, result: any) => {
             end(err ? err : null, result && result.result);
         });

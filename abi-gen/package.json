@@ -93,6 +93,7 @@
         "@types/glob": "5.0.35",
         "@types/mkdirp": "^0.5.2",
         "@types/mocha": "^5.2.7",
+        "@types/sinon": "^2.2.2",
         "@types/tmp": "^0.0.33",
         "@types/yargs": "^11.0.0",
         "chai": "^4.0.1",
