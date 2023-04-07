@@ -1,6 +1,6 @@
 {
     "name": "@0x/base-contract",
-    "version": "7.0.0",
+    "version": "7.0.1",
     "engines": {
         "node": ">=6.12"
     },
@@ -47,10 +47,10 @@
         "typescript": "4.2.2"
     },
     "dependencies": {
-        "@0x/assert": "^3.0.35",
-        "@0x/json-schemas": "^6.4.5",
+        "@0x/assert": "^3.0.36",
+        "@0x/json-schemas": "^6.4.6",
         "@0x/utils": "^7.0.0",
-        "@0x/web3-wrapper": "^8.0.0",
+        "@0x/web3-wrapper": "^8.0.1",
         "@ethereumjs/vm": "^5.9.3",
         "@types/node": "12.12.54",
         "ethereumjs-blockstream": "^7.0.0",

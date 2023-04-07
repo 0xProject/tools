@@ -1,6 +1,6 @@
 {
     "name": "@0x/sol-trace",
-    "version": "3.0.47",
+    "version": "3.0.48",
     "engines": {
         "node": ">=6.12"
     },
@@ -33,7 +33,7 @@
     },
     "homepage": "https://github.com/0xProject/tools/tree/main/sol-trace",
     "dependencies": {
-        "@0x/sol-tracing-utils": "^7.3.3",
+        "@0x/sol-tracing-utils": "^7.3.4",
         "@0x/subproviders": "^7.0.1",
         "@0x/typescript-typings": "^5.3.2",
         "@types/node": "12.12.54",
