@@ -4,6 +4,7 @@
         "changes": [
             {
                 "note": "Updated ethers to 5.x by moving usage to @ethersproject/abi",
+                "pr": 96
             }
         ],
         "timestamp": 1681158705
