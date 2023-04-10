@@ -1,5 +1,14 @@
 [
     {
+        "version": "7.1.0",
+        "changes": [
+            {
+                "note": "Updated ethers to 5.x by moving usage to @ethersproject/abi",
+            }
+        ],
+        "timestamp": 1681158705
+    },
+    {
         "version": "7.0.0",
         "changes": [
             {
