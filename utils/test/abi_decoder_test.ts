@@ -27,7 +27,7 @@ describe('AbiDecoder', () => {
                     type: 'string',
                 },
             ],
-            constant: false,
+            constant: true,
             payable: false,
             stateMutability: 'pure',
         };
