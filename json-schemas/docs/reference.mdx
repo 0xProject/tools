@@ -9,7 +9,7 @@ A validator wrapping (AJV) [https://github.com/ajv-validator/ajv]
 
 \+ **new SchemaValidator**(`newSchemas`: object[]): *[SchemaValidator](#class-schemavalidator)*
 
-*Defined in [schema_validator.ts:11](https://github.com/0xProject/tools/blob/c64730cff/json-schemas/src/schema_validator.ts#L11)*
+*Defined in [schema_validator.ts:11](https://github.com/0xProject/tools/blob/56e66742a/json-schemas/src/schema_validator.ts#L11)*
 
 Instantiates a SchemaValidator instance
 
@@ -27,7 +27,7 @@ Name | Type | Default |
 
 ▸ **addSchema**(`schemaObjectOrArray`: object | object[]): *void*
 
-*Defined in [schema_validator.ts:26](https://github.com/0xProject/tools/blob/c64730cff/json-schemas/src/schema_validator.ts#L26)*
+*Defined in [schema_validator.ts:26](https://github.com/0xProject/tools/blob/56e66742a/json-schemas/src/schema_validator.ts#L26)*
 
 Add a schema to the validator. All schemas and sub-schemas must be added to
 the validator before the `validate` and `isValid` methods can be called with
@@ -47,7 +47,7 @@ ___
 
 ▸ **isValid**(`instance`: any, `schema`: object): *boolean*
 
-*Defined in [schema_validator.ts:59](https://github.com/0xProject/tools/blob/c64730cff/json-schemas/src/schema_validator.ts#L59)*
+*Defined in [schema_validator.ts:59](https://github.com/0xProject/tools/blob/56e66742a/json-schemas/src/schema_validator.ts#L59)*
 
 Check whether an instance properly adheres to a JSON schema
 
@@ -68,7 +68,7 @@ ___
 
 ▸ **validate**(`instance`: any, `schema`: object): *Ajv*
 
-*Defined in [schema_validator.ts:49](https://github.com/0xProject/tools/blob/c64730cff/json-schemas/src/schema_validator.ts#L49)*
+*Defined in [schema_validator.ts:49](https://github.com/0xProject/tools/blob/56e66742a/json-schemas/src/schema_validator.ts#L49)*
 
 Validate the JS object conforms to a specific JSON schema
 
