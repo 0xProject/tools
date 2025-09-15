@@ -12,7 +12,7 @@ It's used to compute your code coverage while running solidity tests.
 
 *Overrides void*
 
-*Defined in [sol-coverage/src/coverage_subprovider.ts:44](https://github.com/0xProject/tools/blob/c64730cff/sol-coverage/src/coverage_subprovider.ts#L44)*
+*Defined in [sol-coverage/src/coverage_subprovider.ts:44](https://github.com/0xProject/tools/blob/56e66742a/sol-coverage/src/coverage_subprovider.ts#L44)*
 
 Instantiates a CoverageSubprovider instance
 
@@ -134,7 +134,7 @@ ___
 
 ▸ **writeCoverageAsync**(): *Promise‹void›*
 
-*Defined in [sol-coverage/src/coverage_subprovider.ts:78](https://github.com/0xProject/tools/blob/c64730cff/sol-coverage/src/coverage_subprovider.ts#L78)*
+*Defined in [sol-coverage/src/coverage_subprovider.ts:78](https://github.com/0xProject/tools/blob/56e66742a/sol-coverage/src/coverage_subprovider.ts#L78)*
 
 Write the test coverage results to a file in Istanbul format.
 
@@ -152,7 +152,7 @@ Write the test coverage results to a file in Istanbul format.
 
 ▸ **collectContractsDataAsync**(): *Promise‹[ContractData](#interface-contractdata)[]›*
 
-*Defined in [sol-tracing-utils/src/artifact_adapters/abstract_artifact_adapter.ts:4](https://github.com/0xProject/tools/blob/c64730cff/sol-tracing-utils/src/artifact_adapters/abstract_artifact_adapter.ts#L4)*
+*Defined in [sol-tracing-utils/src/artifact_adapters/abstract_artifact_adapter.ts:4](https://github.com/0xProject/tools/blob/56e66742a/sol-tracing-utils/src/artifact_adapters/abstract_artifact_adapter.ts#L4)*
 
 **Returns:** *Promise‹[ContractData](#interface-contractdata)[]›*
 
@@ -168,7 +168,7 @@ Write the test coverage results to a file in Istanbul format.
 
 \+ **new SolCompilerArtifactAdapter**(`artifactsPath?`: undefined | string, `sourcesPath?`: undefined | string): *[SolCompilerArtifactAdapter](#class-solcompilerartifactadapter)*
 
-*Defined in [sol-tracing-utils/src/artifact_adapters/sol_compiler_artifact_adapter.ts:25](https://github.com/0xProject/tools/blob/c64730cff/sol-tracing-utils/src/artifact_adapters/sol_compiler_artifact_adapter.ts#L25)*
+*Defined in [sol-tracing-utils/src/artifact_adapters/sol_compiler_artifact_adapter.ts:25](https://github.com/0xProject/tools/blob/56e66742a/sol-tracing-utils/src/artifact_adapters/sol_compiler_artifact_adapter.ts#L25)*
 
 Instantiates a SolCompilerArtifactAdapter
 
@@ -189,7 +189,7 @@ Name | Type | Description |
 
 *Overrides [AbstractArtifactAdapter](_sol_tracing_utils_src_artifact_adapters_abstract_artifact_adapter_.abstractartifactadapter.md).[collectContractsDataAsync](#abstract-collectcontractsdataasync)*
 
-*Defined in [sol-tracing-utils/src/artifact_adapters/sol_compiler_artifact_adapter.ts:52](https://github.com/0xProject/tools/blob/c64730cff/sol-tracing-utils/src/artifact_adapters/sol_compiler_artifact_adapter.ts#L52)*
+*Defined in [sol-tracing-utils/src/artifact_adapters/sol_compiler_artifact_adapter.ts:52](https://github.com/0xProject/tools/blob/56e66742a/sol-tracing-utils/src/artifact_adapters/sol_compiler_artifact_adapter.ts#L52)*
 
 **Returns:** *Promise‹[ContractData](#interface-contractdata)[]›*
 
@@ -205,7 +205,7 @@ Name | Type | Description |
 
 \+ **new TruffleArtifactAdapter**(`projectRoot`: string, `solcVersion`: string): *[TruffleArtifactAdapter](#class-truffleartifactadapter)*
 
-*Defined in [sol-tracing-utils/src/artifact_adapters/truffle_artifact_adapter.ts:29](https://github.com/0xProject/tools/blob/c64730cff/sol-tracing-utils/src/artifact_adapters/truffle_artifact_adapter.ts#L29)*
+*Defined in [sol-tracing-utils/src/artifact_adapters/truffle_artifact_adapter.ts:29](https://github.com/0xProject/tools/blob/56e66742a/sol-tracing-utils/src/artifact_adapters/truffle_artifact_adapter.ts#L29)*
 
 Instantiates a TruffleArtifactAdapter
 
@@ -226,7 +226,7 @@ Name | Type | Description |
 
 *Overrides [AbstractArtifactAdapter](_sol_tracing_utils_src_artifact_adapters_abstract_artifact_adapter_.abstractartifactadapter.md).[collectContractsDataAsync](#abstract-collectcontractsdataasync)*
 
-*Defined in [sol-tracing-utils/src/artifact_adapters/truffle_artifact_adapter.ts:40](https://github.com/0xProject/tools/blob/c64730cff/sol-tracing-utils/src/artifact_adapters/truffle_artifact_adapter.ts#L40)*
+*Defined in [sol-tracing-utils/src/artifact_adapters/truffle_artifact_adapter.ts:40](https://github.com/0xProject/tools/blob/56e66742a/sol-tracing-utils/src/artifact_adapters/truffle_artifact_adapter.ts#L40)*
 
 **Returns:** *Promise‹[ContractData](#interface-contractdata)[]›*
 
@@ -243,246 +243,81 @@ Name | Type | Description |
 
 
 
+ 
 
 
 
 
 
+ 
+
+ 
 
 
 
+# Interface: SourceCodes
 
 
+##  Hierarchy
+
+* **SourceRange**
 
 
+##  Properties
 
+###  fileName
 
+• **fileName**: *string*
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# Interface: JSONRPCResponseError
-
-
-##   Properties
-
-###  code
-
-• **code**: *number*
-
-*Defined in [ethereum-types/src/index.ts:337](https://github.com/0xProject/tools/blob/c64730cff/ethereum-types/src/index.ts#L337)*
+*Defined in [sol-tracing-utils/src/types.ts:10](https://github.com/0xProject/tools/blob/56e66742a/sol-tracing-utils/src/types.ts#L10)*
 
 ___
 
-###  message
+###  location
 
-• **message**: *string*
+• **location**: *[SingleFileSourceRange](#class-singlefilesourcerange)*
 
-*Defined in [ethereum-types/src/index.ts:336](https://github.com/0xProject/tools/blob/c64730cff/ethereum-types/src/index.ts#L336)*
+*Defined in [sol-tracing-utils/src/types.ts:9](https://github.com/0xProject/tools/blob/56e66742a/sol-tracing-utils/src/types.ts#L9)*
 
 
 <hr />
 
-# Interface: JSONRPCResponsePayload
+# Interface: Sources
 
 
-##   Properties
+##  Hierarchy
 
-### `Optional` error
+* **SourceSnippet**
 
-• **error**? : *[JSONRPCResponseError](#class-jsonrpcresponseerror)*
 
-*Defined in [ethereum-types/src/index.ts:344](https://github.com/0xProject/tools/blob/c64730cff/ethereum-types/src/index.ts#L344)*
+##  Properties
 
-___
+###  fileName
 
-###  id
+• **fileName**: *string*
 
-• **id**: *number*
-
-*Defined in [ethereum-types/src/index.ts:342](https://github.com/0xProject/tools/blob/c64730cff/ethereum-types/src/index.ts#L342)*
+*Defined in [sol-tracing-utils/src/types.ts:136](https://github.com/0xProject/tools/blob/56e66742a/sol-tracing-utils/src/types.ts#L136)*
 
 ___
 
-###  jsonrpc
+###  range
 
-• **jsonrpc**: *string*
+• **range**: *[SingleFileSourceRange](#class-singlefilesourcerange)*
 
-*Defined in [ethereum-types/src/index.ts:343](https://github.com/0xProject/tools/blob/c64730cff/ethereum-types/src/index.ts#L343)*
+*Defined in [sol-tracing-utils/src/types.ts:137](https://github.com/0xProject/tools/blob/56e66742a/sol-tracing-utils/src/types.ts#L137)*
 
 ___
 
-###  result
+###  source
 
-• **result**: *any*
+• **source**: *string*
 
-*Defined in [ethereum-types/src/index.ts:341](https://github.com/0xProject/tools/blob/c64730cff/ethereum-types/src/index.ts#L341)*
+*Defined in [sol-tracing-utils/src/types.ts:135](https://github.com/0xProject/tools/blob/56e66742a/sol-tracing-utils/src/types.ts#L135)*
 
 
 <hr />
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
  
-
-
-
-
-
- 
-
- 
-
-
-
-
-
-
-
- 
-
-
-
-
-
-
-
-
-
-
-
-
-##  Type aliases
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -501,7 +336,7 @@ ___
 
 Ƭ **CoverageSubproviderPartialConfig**: *Partial‹[CoverageSubproviderConfig](#interface-coveragesubproviderconfig)›*
 
-*Defined in [sol-coverage/src/coverage_subprovider.ts:31](https://github.com/0xProject/tools/blob/c64730cff/sol-coverage/src/coverage_subprovider.ts#L31)*
+*Defined in [sol-coverage/src/coverage_subprovider.ts:31](https://github.com/0xProject/tools/blob/56e66742a/sol-coverage/src/coverage_subprovider.ts#L31)*
 
 ## Object literals
 
@@ -509,19 +344,19 @@ ___
 
 #### ▪ **DEFAULT_COVERAGE_SUBPROVIDER_CONFIG**: *object*
 
-*Defined in [sol-coverage/src/coverage_subprovider.ts:33](https://github.com/0xProject/tools/blob/c64730cff/sol-coverage/src/coverage_subprovider.ts#L33)*
+*Defined in [sol-coverage/src/coverage_subprovider.ts:33](https://github.com/0xProject/tools/blob/56e66742a/sol-coverage/src/coverage_subprovider.ts#L33)*
 
 ####  ignoreFilesGlobs
 
 • **ignoreFilesGlobs**: *never[]* = []
 
-*Defined in [sol-coverage/src/coverage_subprovider.ts:35](https://github.com/0xProject/tools/blob/c64730cff/sol-coverage/src/coverage_subprovider.ts#L35)*
+*Defined in [sol-coverage/src/coverage_subprovider.ts:35](https://github.com/0xProject/tools/blob/56e66742a/sol-coverage/src/coverage_subprovider.ts#L35)*
 
 ####  isVerbose
 
 • **isVerbose**: *boolean* = true
 
-*Defined in [sol-coverage/src/coverage_subprovider.ts:34](https://github.com/0xProject/tools/blob/c64730cff/sol-coverage/src/coverage_subprovider.ts#L34)*
+*Defined in [sol-coverage/src/coverage_subprovider.ts:34](https://github.com/0xProject/tools/blob/56e66742a/sol-coverage/src/coverage_subprovider.ts#L34)*
 
 
 <hr />

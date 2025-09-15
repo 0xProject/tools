@@ -12,7 +12,7 @@ ProfilerSubprovider is used to profile Solidity code while running tests.
 
 *Overrides void*
 
-*Defined in [sol-profiler/src/profiler_subprovider.ts:30](https://github.com/0xProject/tools/blob/c64730cff/sol-profiler/src/profiler_subprovider.ts#L30)*
+*Defined in [sol-profiler/src/profiler_subprovider.ts:30](https://github.com/0xProject/tools/blob/56e66742a/sol-profiler/src/profiler_subprovider.ts#L30)*
 
 Instantiates a ProfilerSubprovider instance
 
@@ -134,7 +134,7 @@ ___
 
 ▸ **writeProfilerOutputAsync**(): *Promise‹void›*
 
-*Defined in [sol-profiler/src/profiler_subprovider.ts:104](https://github.com/0xProject/tools/blob/c64730cff/sol-profiler/src/profiler_subprovider.ts#L104)*
+*Defined in [sol-profiler/src/profiler_subprovider.ts:104](https://github.com/0xProject/tools/blob/56e66742a/sol-profiler/src/profiler_subprovider.ts#L104)*
 
 Write the test profiler results to a file in Istanbul format.
 
@@ -143,353 +143,6 @@ Write the test profiler results to a file in Istanbul format.
 
 <hr />
 
-# Class: AbstractArtifactAdapter
-
-
-##   Methods
-
-### `Abstract` collectContractsDataAsync
-
-▸ **collectContractsDataAsync**(): *Promise‹[ContractData](#interface-contractdata)[]›*
-
-*Defined in [sol-tracing-utils/src/artifact_adapters/abstract_artifact_adapter.ts:4](https://github.com/0xProject/tools/blob/c64730cff/sol-tracing-utils/src/artifact_adapters/abstract_artifact_adapter.ts#L4)*
-
-**Returns:** *Promise‹[ContractData](#interface-contractdata)[]›*
-
-
-<hr />
-
-# Class: SolCompilerArtifactAdapter
-
-
-##   Constructors
-
-
-
-\+ **new SolCompilerArtifactAdapter**(`artifactsPath?`: undefined | string, `sourcesPath?`: undefined | string): *[SolCompilerArtifactAdapter](#class-solcompilerartifactadapter)*
-
-*Defined in [sol-tracing-utils/src/artifact_adapters/sol_compiler_artifact_adapter.ts:25](https://github.com/0xProject/tools/blob/c64730cff/sol-tracing-utils/src/artifact_adapters/sol_compiler_artifact_adapter.ts#L25)*
-
-Instantiates a SolCompilerArtifactAdapter
-
-**Parameters:**
-
-Name | Type | Description |
------- | ------ | ------ |
-`artifactsPath?` | undefined &#124; string | Path to your artifacts directory |
-`sourcesPath?` | undefined &#124; string | Path to your contract sources directory  |
-
-**Returns:** *[SolCompilerArtifactAdapter](#class-solcompilerartifactadapter)*
-
-## Methods
-
-###  collectContractsDataAsync
-
-▸ **collectContractsDataAsync**(): *Promise‹[ContractData](#interface-contractdata)[]›*
-
-*Overrides [AbstractArtifactAdapter](_sol_tracing_utils_src_artifact_adapters_abstract_artifact_adapter_.abstractartifactadapter.md).[collectContractsDataAsync](#abstract-collectcontractsdataasync)*
-
-*Defined in [sol-tracing-utils/src/artifact_adapters/sol_compiler_artifact_adapter.ts:52](https://github.com/0xProject/tools/blob/c64730cff/sol-tracing-utils/src/artifact_adapters/sol_compiler_artifact_adapter.ts#L52)*
-
-**Returns:** *Promise‹[ContractData](#interface-contractdata)[]›*
-
-
-<hr />
-
-# Class: TruffleArtifactAdapter
-
-
-##   Constructors
-
-
-
-\+ **new TruffleArtifactAdapter**(`projectRoot`: string, `solcVersion`: string): *[TruffleArtifactAdapter](#class-truffleartifactadapter)*
-
-*Defined in [sol-tracing-utils/src/artifact_adapters/truffle_artifact_adapter.ts:29](https://github.com/0xProject/tools/blob/c64730cff/sol-tracing-utils/src/artifact_adapters/truffle_artifact_adapter.ts#L29)*
-
-Instantiates a TruffleArtifactAdapter
-
-**Parameters:**
-
-Name | Type | Description |
------- | ------ | ------ |
-`projectRoot` | string | Path to the truffle project's root directory |
-`solcVersion` | string | Solidity version with which to compile all the contracts  |
-
-**Returns:** *[TruffleArtifactAdapter](#class-truffleartifactadapter)*
-
-## Methods
-
-###  collectContractsDataAsync
-
-▸ **collectContractsDataAsync**(): *Promise‹[ContractData](#interface-contractdata)[]›*
-
-*Overrides [AbstractArtifactAdapter](_sol_tracing_utils_src_artifact_adapters_abstract_artifact_adapter_.abstractartifactadapter.md).[collectContractsDataAsync](#abstract-collectcontractsdataasync)*
-
-*Defined in [sol-tracing-utils/src/artifact_adapters/truffle_artifact_adapter.ts:40](https://github.com/0xProject/tools/blob/c64730cff/sol-tracing-utils/src/artifact_adapters/truffle_artifact_adapter.ts#L40)*
-
-**Returns:** *Promise‹[ContractData](#interface-contractdata)[]›*
-
-
-<hr />
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# Interface: JSONRPCResponseError
-
-
-##   Properties
-
-###  code
-
-• **code**: *number*
-
-*Defined in [ethereum-types/src/index.ts:337](https://github.com/0xProject/tools/blob/c64730cff/ethereum-types/src/index.ts#L337)*
-
-___
-
-###  message
-
-• **message**: *string*
-
-*Defined in [ethereum-types/src/index.ts:336](https://github.com/0xProject/tools/blob/c64730cff/ethereum-types/src/index.ts#L336)*
-
-
-<hr />
-
-# Interface: JSONRPCResponsePayload
-
-
-##   Properties
-
-### `Optional` error
-
-• **error**? : *[JSONRPCResponseError](#class-jsonrpcresponseerror)*
-
-*Defined in [ethereum-types/src/index.ts:344](https://github.com/0xProject/tools/blob/c64730cff/ethereum-types/src/index.ts#L344)*
-
-___
-
-###  id
-
-• **id**: *number*
-
-*Defined in [ethereum-types/src/index.ts:342](https://github.com/0xProject/tools/blob/c64730cff/ethereum-types/src/index.ts#L342)*
-
-___
-
-###  jsonrpc
-
-• **jsonrpc**: *string*
-
-*Defined in [ethereum-types/src/index.ts:343](https://github.com/0xProject/tools/blob/c64730cff/ethereum-types/src/index.ts#L343)*
-
-___
-
-###  result
-
-• **result**: *any*
-
-*Defined in [ethereum-types/src/index.ts:341](https://github.com/0xProject/tools/blob/c64730cff/ethereum-types/src/index.ts#L341)*
-
-
-<hr />
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
-
-
-
-
-
- 
-
- 
-
-
-
-
-
-
-
- 
-
-
-
-
-
-
-
-
-
-
-
-
-##  Type aliases
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -497,9 +150,9 @@ ___
 
 ### `Const` profilerHandler
 
-▸ **profilerHandler**(`contractData`: ContractData, `subtrace`: [Subtrace](#subtrace), `pcToSourceRange`: object, `fileIndex`: number): *Coverage*
+▸ **profilerHandler**(`contractData`: ContractData, `subtrace`: Subtrace, `pcToSourceRange`: object, `fileIndex`: number): *Coverage*
 
-*Defined in [sol-profiler/src/profiler_subprovider.ts:118](https://github.com/0xProject/tools/blob/c64730cff/sol-profiler/src/profiler_subprovider.ts#L118)*
+*Defined in [sol-profiler/src/profiler_subprovider.ts:118](https://github.com/0xProject/tools/blob/56e66742a/sol-profiler/src/profiler_subprovider.ts#L118)*
 
 Computed partial coverage for a single file & subtrace for the purposes of
 gas profiling.
@@ -509,7 +162,7 @@ gas profiling.
 Name | Type | Description |
 ------ | ------ | ------ |
 `contractData` | ContractData | Contract metadata (source, srcMap, bytecode) |
-`subtrace` | [Subtrace](#subtrace) | A subset of a transcation/call trace that was executed within that contract |
+`subtrace` | Subtrace | A subset of a transcation/call trace that was executed within that contract |
 `pcToSourceRange` | object | A mapping from program counters to source ranges |
 `fileIndex` | number | Index of a file to compute coverage for |
 
@@ -519,29 +172,4 @@ Partial istanbul coverage for that file & subtrace
 
 
 <hr />
-
-
-
-<hr /> 
-
-
-
-<hr /> 
-
-
-
-<hr /> 
-
-
-
-
-##  Type aliases
-
-
-
-
-
-
-
-
 

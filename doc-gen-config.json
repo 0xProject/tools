@@ -22,6 +22,9 @@
         "Exclude": true,
         "Ajv": true,
         "#": "private types below",
+        "AbstractArtifactAdapter": true,
+        "CompilerOptions": true,
+        "DoneCallback": true,
         "EIP712TypedData": true,
         "ErrorCallback": true,
         "JSONRPCErrorCallback": true,
@@ -30,7 +33,10 @@
         "JSONRPCResponsePayload": true,
         "MnemonicWalletSubproviderConfigs": true,
         "NextCallback": true,
-        "PartialTxParams": true
+        "PartialTxParams": true,
+        "StandardOutput": true,
+        "Web3ProviderEngine": true,
+        "Web3Wrapper": true
     },
     "ignoredExcessiveTypes": [
         "NonceSubproviderErrors",
