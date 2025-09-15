@@ -1,3 +1,4 @@
+import { Interface } from '@ethersproject/abi';
 import {
     AbiDefinition,
     AbiType,
@@ -9,7 +10,6 @@ import {
     MethodAbi,
     RawLog,
 } from 'ethereum-types';
-import * as ethers from 'ethers';
 import * as _ from 'lodash';
 
 import { AbiEncoder } from '.';
@@ -151,7 +151,7 @@ export class AbiDecoder {
         if (abiArray === undefined) {
             return;
         }
-        const ethersInterface = new ethers.utils.Interface(abiArray);
+        const ethersInterface = new Interface(abiArray);
         _.map(abiArray, (abi: AbiDefinition) => {
             switch (abi.type) {
                 case AbiType.Event:
@@ -170,8 +170,8 @@ export class AbiDecoder {
             }
         });
     }
-    private _addEventABI(eventAbi: EventAbi, ethersInterface: ethers.utils.Interface): void {
-        const topic = ethersInterface.events[eventAbi.name].topic;
+    private _addEventABI(eventAbi: EventAbi, ethersInterface: Interface): void {
+        const topic = ethersInterface.getEventTopic(eventAbi.name);
         const numIndexedArgs = _.reduce(eventAbi.inputs, (sum, input) => (input.indexed ? sum + 1 : sum), 0);
         this._eventIds[topic] = {
             ...this._eventIds[topic],
